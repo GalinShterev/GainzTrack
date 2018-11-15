@@ -1,0 +1,12 @@
+﻿@model GainzTrack.Web.ViewModels.WorkoutViewModels.CreateWorkoutViewModel
+
+<h2>Create page</h2>
+
+<h3>Form will be here</h3>
+
+<form asp-controller="Workout" asp-action="Create" method="post">
+    Name: <input asp-for="Name" /><br />
+    <input type="radio" asp-for="IsPublic" value="true" checked> Public
+    <input type="radio" asp-for="IsPublic" value="false"> Private<br>
+    <button type="submit">Create</button>
+</form>

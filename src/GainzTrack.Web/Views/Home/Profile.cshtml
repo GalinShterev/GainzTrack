@@ -1,0 +1,29 @@
+﻿@model GainzTrack.Web.ViewModels.HomeViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>Profile</h2>
+
+<h3>Logged in as, @this.User.Identity.Name</h3>
+<h4>AP:@Model.User.AchievementPoints</h4>
+<h4>Title:@Model.User.Title.Name</h4>
+
+
+<div class="workout-container">
+    @foreach (var item in Model.Workouts)
+    {
+    <div class="workout-item">
+        <input type="checkbox" id="click-@item.Name" class="hide-it" />
+        <h2>@item.Name</h2>
+        <label class="open-button" for="click-@item.Name"><a>Open</a></label>
+        <div class="modal-item">
+            <h2>@item.Name</h2>
+            <label class="open-button" for="click-@item.Name"><a>Close</a></label>
+        </div>
+        <div class="overlay"></div>
+    </div>
+    }
+    
+</div>
+

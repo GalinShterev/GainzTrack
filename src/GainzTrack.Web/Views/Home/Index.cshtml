@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "IndexTest";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GainzTrack.Web</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css />
+
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+          asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+          asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+
+
+</head>
+<body>
+    <div class="container-fluid">      
+        <main class="mt-3">
+            <div class="jumbotron mt-3 bg-panda">
+                <h1 class="text-white">Welcome to GainzTrack</h1>
+                <hr class="bg-white hr-2" />
+                <h3 class="text-white"><a href="Account/Login">Login</a> if you have an account.</h3>
+                <h3 class="text-white"><a href="Account/Register">Register</a> if you don't.</h3>
+            </div>
+        </main>
+        <footer>
+            <div class="container-fluid bg-panda">
+                <div class="text-white p-2 text-center">
+                    &copy; CopyRight GainzTrack. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
+
+

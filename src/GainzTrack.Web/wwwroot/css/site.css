@@ -1,0 +1,101 @@
+﻿html,body {
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.hide-it{
+    display:none;
+}
+
+.workout-container{
+    display:flex;
+    justify-content:flex-start;
+    flex-flow:row wrap;
+}
+.workout-item{
+    border:1px solid grey;
+    margin-right:2em;
+    flex-basis:30%;
+    text-align:center;
+    padding:2em 0 2em 0;
+    margin-bottom:1em;
+}
+
+.open-button{
+
+}
+.open-button:hover {
+    cursor:pointer;
+}
+
+.overlay{
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:99;
+    background: #000000;
+    pointer-events:none;
+    opacity:0;
+    transform:scale(0.5);
+}
+input[type="checkbox"]:checked ~ .overlay{
+    pointer-events:auto;
+    opacity:0.9;
+    transform:scale(1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.modal-item{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0.5);
+    width:100%;
+    max-width:700px;
+    pointer-events:none;
+    opacity:0;
+    z-index:100;
+}
+input[type="checkbox"]:checked ~ .modal-item{
+    pointer-events:auto;
+    opacity:1;
+    transform: translate(-50%,-50%) scale(1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    transition-delay: 0.1s;
+}
+.modal-item > h2{
+    display:block;
+    padding:20px;
+    font-size:70px;
+    color:white;
+}

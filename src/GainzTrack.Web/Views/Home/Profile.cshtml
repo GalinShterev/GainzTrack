@@ -19,6 +19,15 @@
         <label class="open-button" for="click-@item.Name"><a>Open</a></label>
         <div class="modal-item">
             <h2>@item.Name</h2>
+            @foreach (var workoutDay in item.WorkoutDays)
+            {
+                <button class="accordion">@workoutDay.Day</button>
+                <div class="accordion-panel">
+                    <p>
+                     
+                    </p>
+                </div>
+            }
             <label class="open-button" for="click-@item.Name"><a>Close</a></label>
         </div>
         <div class="overlay"></div>

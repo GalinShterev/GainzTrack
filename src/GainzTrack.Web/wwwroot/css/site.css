@@ -41,14 +41,17 @@
     justify-content:flex-start;
     flex-flow:row wrap;
 }
-.workout-item{
-    border:1px solid grey;
-    margin-right:2em;
-    flex-basis:30%;
-    text-align:center;
-    padding:2em 0 2em 0;
-    margin-bottom:1em;
+.workout-item {
+    border: 1px solid grey;
+    margin-right: 2em;
+    flex-basis: 320px;
+    text-align: center;
+    padding: 2em 0 2em 0;
+    margin-bottom: 1em;
+    word-wrap:break-word;
+    word-break:break-all;
 }
+
 
 .open-button{
 

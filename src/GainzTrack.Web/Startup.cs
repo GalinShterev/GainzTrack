@@ -12,8 +12,6 @@ using GainzTrack.Core.Models;
 using GainzTrack.Core.Data;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
-using GainzTrack.Core.Interfaces;
-
 
 namespace GainzTrack.Web
 {
@@ -39,7 +37,6 @@ namespace GainzTrack.Web
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();          
             services.AddMvc();
-            services.AddScoped<IExercisesService, ExercisesService>();
 
 
             //Configure services

@@ -32,7 +32,7 @@
     }
 }
 
-/*MODAL STYLING(Home/Index) for workouts*/
+/*MODAL STYLING*/
 
 .hide-it{
     display:none;
@@ -110,7 +110,7 @@ input[type="checkbox"]:checked ~ .modal-item{
     color:white;
 }
 
-/*ACCORDION STYLING(Home/Workout) listing days*/
+/*ACCORDION STYLING*/
 
 .accordion{
     background-color: #808080;
@@ -148,4 +148,3 @@ input[type="checkbox"]:checked ~ .modal-item{
     overflow:hidden;
     transition: max-height 0.2s ease-out;
 }
-

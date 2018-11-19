@@ -37,7 +37,7 @@ namespace GainzTrack.Web
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();          
             services.AddMvc();
-
+            services.AddScoped<IExercisesService, ExercisesService>();
 
             //Configure services
             services.Configure<IdentityOptions>(options =>

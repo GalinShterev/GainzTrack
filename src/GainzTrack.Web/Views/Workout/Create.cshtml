@@ -1,12 +1,38 @@
-﻿@model GainzTrack.Web.ViewModels.WorkoutViewModels.CreateWorkoutViewModel
+﻿@using GainzTrack.Core.Interfaces
+@model GainzTrack.Web.ViewModels.WorkoutViewModels.CreateWorkoutViewModel
+@inject IExercisesService ExercisesService
 
 <h2>Create page</h2>
 
 <h3>Form will be here</h3>
 
-<form asp-controller="Workout" asp-action="Create" method="post">
-    Name: <input asp-for="Name" /><br />
-    <input type="radio" asp-for="IsPublic" value="true" checked> Public
-    <input type="radio" asp-for="IsPublic" value="false"> Private<br>
-    <button type="submit">Create</button>
+<form id="ms-form" asp-controller="Workout" asp-action="Create" method="post">
+    <ul id="progress-bar">
+        <li class="active-bar">Information Setup</li>
+        <li>Exercises Setup</li>
+    </ul>
+    <fieldset>
+        <h2 class="fs-title"></h2>
+        <input asp-for="Name" />
+        <input type="radio" asp-for="IsPublic" value="true" checked> Public
+        <input type="radio" asp-for="IsPublic" value="false"> Private
+        <button class="next-action-btn" type="submit">Create</button>
+    </fieldset>
+    <fieldset>
+        <h2 class="fs-title">Exercises Setup</h2>
+        <select name="days">
+            @foreach (var day in Enum.GetNames(typeof(DayOfWeek)))
+            {
+                <option value="@day">@day</option>
+            }
+        </select>
+        <select name="exercises">
+            @foreach (var exercise in ExercisesService.ReturnExercisesNames())
+            {
+                <option value="@exercise">@exercise</option>
+            }
+        </select>
+        <a href="#">Add exercise</a>
+        <button class="submit-action-btn" type="submit">Submit</button>
+    </fieldset>
 </form>

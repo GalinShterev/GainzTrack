@@ -14,5 +14,7 @@ namespace GainzTrack.Web.ViewModels.WorkoutViewModels
         public bool IsPublic { get; set; }
 
 
+
+
     }
 }

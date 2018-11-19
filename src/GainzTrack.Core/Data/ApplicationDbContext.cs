@@ -13,12 +13,19 @@ namespace GainzTrack.Core.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
             
         }
+
+        public ApplicationDbContext()
+        {
+
+        }
+
 
         public DbSet<ApplicationUser> User { get; set; }
         public DbSet<Achievement> Achievements { get; set; }

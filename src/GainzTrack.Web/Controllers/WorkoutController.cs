@@ -32,17 +32,66 @@ namespace GainzTrack.Web.Controllers
         {
             var user = _context.User.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
 
+
+
             var workout = new WorkoutRoutine
             {
                 IsPublic = viewModel.IsPublic,
                 Name = viewModel.Name,
-                CreatorId = user.Id
+                CreatorId = user.Id,
             };
+
+            var workoutDays = SetUpInitialWorkoutDays(workout.Id);
+
+            workout.WorkoutDays = workoutDays;
             //TODO:Validation maybe
             _context.WorkoutRoutines.Add(workout);
             _context.SaveChanges();
 
             return Redirect("/Home/Index");
+        }
+
+        private ICollection<WorkoutDay> SetUpInitialWorkoutDays(string workoutRoutineId)
+        {
+            var workouts = new WorkoutDay[]
+             {
+                new WorkoutDay
+                {
+                    Day = DayOfWeek.Monday,
+                    WorkoutRoutineId =workoutRoutineId
+                },
+                new WorkoutDay
+                {
+                    Day = DayOfWeek.Tuesday,
+                    WorkoutRoutineId = workoutRoutineId
+                },
+                new WorkoutDay
+                {
+                    Day = DayOfWeek.Wednesday,
+                    WorkoutRoutineId = workoutRoutineId
+                },
+                new WorkoutDay
+                {
+                    Day = DayOfWeek.Thursday,
+                    WorkoutRoutineId = workoutRoutineId
+                },
+                new WorkoutDay
+                {
+                    Day = DayOfWeek.Friday,
+                    WorkoutRoutineId = workoutRoutineId
+                },
+                new WorkoutDay
+                {
+                    Day = DayOfWeek.Saturday,
+                    WorkoutRoutineId = workoutRoutineId
+                },
+                new WorkoutDay
+                {
+                    Day = DayOfWeek.Sunday,
+                    WorkoutRoutineId = workoutRoutineId
+                }
+            };
+            return workouts.ToList();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace GainzTrack.Web.Controllers
             if(this.User.Identity.IsAuthenticated == true)
             {
                 var user = _context.User.Include(x => x.Title).FirstOrDefault(x => x.UserName == this.User.Identity.Name);
-                var workouts = _context.WorkoutRoutines.Where(x => x.CreatorId == user.Id).ToArray();
+                var workouts = _context.WorkoutRoutines.Include(x=>x.WorkoutDays).Where(x => x.CreatorId == user.Id).ToArray();
 
                 var model = new HomeViewModel
                 {

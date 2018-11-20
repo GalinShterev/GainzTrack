@@ -2,36 +2,40 @@
 @model GainzTrack.Web.ViewModels.WorkoutViewModels.CreateWorkoutViewModel
 @inject IExercisesService ExercisesService
 
-<h2>Create page</h2>
-
 <h3>Form will be here</h3>
 
-<form id="ms-form" asp-controller="Workout" asp-action="Create" method="post">
-    <ul id="progress-bar">
-        <li class="active-bar">Information Setup</li>
-        <li>Exercises Setup</li>
-    </ul>
-    <fieldset>
-        <h2 class="fs-title">Information Setup</h2>
-        <input asp-for="Name" placeholder="Workout name" />
-        <input type="radio" asp-for="IsPublic" value="true" checked> Public
-        <input type="radio" asp-for="IsPublic" value="false"> Private<br>
-        <button class="next action-btn" type="button">Next</button>
-    </fieldset>
-    <fieldset>
-        <select name="days">
-            @foreach (var day in Enum.GetNames(typeof(DayOfWeek)).OrderBy(x => x))
-            {
-                <option value="@day">@day</option>
-            }
-        </select>
-        <select name="exercises">
-            @foreach (var exercise in ExercisesService.GetExercisesNames())
-            {
-                <option value="@exercise">@exercise</option>
-            }
-        </select>
-        <button class="previous action-btn" type="button"></button>
-        <button class="submit action-btn" type="submit">Submit</button>
-    </fieldset>
-</form>
+<div class="form-container">
+    <form id="ms-form" asp-controller="Workout" asp-action="Create" method="post">
+        <ul id="progress-bar">
+            <li class="active-bar">Information Setup</li>
+            <li>Exercises Setup</li>
+        </ul>
+        <fieldset>
+            <h2 class="fs-title">Information Setup</h2>
+            <div>
+                <input asp-for="Name" placeholder="Workout name" />
+            </div>
+            <div>
+                <input id="toggle-on" type="radio" asp-for="IsPublic" value="true" checked class="toggle toggle-left">
+                <label for="toggle-on" class="toggle-btn">Public</label>
+                <input id="toggle-off" type="radio" asp-for="IsPublic" value="false" class="toggle toggle-right">
+                <label for="toggle-off" class="toggle-btn">Private</label>
+            </div>
+            <button class="next action-btn" type="button">Next</button>
+        </fieldset>
+        <fieldset>
+            <div>
+                <h2 class="fs-title">Exercises Setup</h2>
+                <div class="days-dropdown">
+                    <h4 id="add-day" class="add-day-style">Add day</h4> 
+                    
+                </div>
+            </div>          
+            <button class="previous action-btn" type="button">Prev</button>
+            <button class="submit action-btn" type="submit">Submit</button>
+        </fieldset>
+    </form>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>

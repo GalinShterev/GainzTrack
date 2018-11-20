@@ -30,6 +30,11 @@ namespace GainzTrack.Web.Controllers
         [HttpPost]
         public IActionResult Create(CreateWorkoutViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return Redirect("/Home/Index");
+            }
+
             var user = _context.User.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
 
 

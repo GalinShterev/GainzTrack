@@ -14,4 +14,8 @@
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GainzTrack.Infrastructure\GainzTrack.Core.csproj" />
+  </ItemGroup>
+
 </Project>

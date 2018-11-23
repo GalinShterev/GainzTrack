@@ -1,10 +1,11 @@
-﻿using GainzTrack.Core.Data;
+﻿using GainzTrack.Core.Interfaces;
+using GainzTrack.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GainzTrack.Web.Services
+namespace GainzTrack.Infrastructure.Services
 {
     public class ExercisesService : IExercisesService
     {

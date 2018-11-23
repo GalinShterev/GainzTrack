@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GainzTrack.Core.Models
+namespace GainzTrack.Core.Entities
 {
     public class BaseEntity<T>
     {

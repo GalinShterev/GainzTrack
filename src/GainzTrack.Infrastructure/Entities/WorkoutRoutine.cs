@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GainzTrack.Core.Models
+namespace GainzTrack.Core.Entities
 {
     public class WorkoutRoutine : BaseEntity
     {
@@ -16,7 +16,7 @@ namespace GainzTrack.Core.Models
         public bool IsPublic { get; set; }
 
         public string CreatorId { get; set; }
-        public ApplicationUser Creator { get; set; }
+        public MainUser Creator { get; set; }
 
         public virtual ICollection<WorkoutDay> WorkoutDays{ get; set; }
         public virtual ICollection<CopiedWorkoutsFromUsers> TimesCopied { get; set; }

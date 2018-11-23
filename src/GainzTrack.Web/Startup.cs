@@ -8,10 +8,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using GainzTrack.Web.Services;
-using GainzTrack.Core.Models;
-using GainzTrack.Core.Data;
+using GainzTrack.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Razor;
+using GainzTrack.Infrastructure.Data;
+using GainzTrack.Infrastructure.Identity;
+using GainzTrack.Core.Interfaces;
+using GainzTrack.Infrastructure.Services;
 
 namespace GainzTrack.Web
 {
@@ -30,14 +34,17 @@ namespace GainzTrack.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<IdentityApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+
+
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();          
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc();
             services.AddScoped<IExercisesService, ExercisesService>();
+            services.AddTransient<IUserService, UserService>();
 
             //Configure services
             services.Configure<IdentityOptions>(options =>

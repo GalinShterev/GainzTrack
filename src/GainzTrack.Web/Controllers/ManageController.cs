@@ -13,7 +13,9 @@ using Microsoft.Extensions.Options;
 using GainzTrack.Web.Models;
 using GainzTrack.Web.Models.ManageViewModels;
 using GainzTrack.Web.Services;
-using GainzTrack.Core.Models;
+using GainzTrack.Core.Entities;
+using GainzTrack.Infrastructure.Identity;
+using GainzTrack.Core.Interfaces;
 
 namespace GainzTrack.Web.Controllers
 {
@@ -21,8 +23,8 @@ namespace GainzTrack.Web.Controllers
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<IdentityApplicationUser> _userManager;
+        private readonly SignInManager<IdentityApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
@@ -31,8 +33,8 @@ namespace GainzTrack.Web.Controllers
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
         public ManageController(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
+          UserManager<IdentityApplicationUser> userManager,
+          SignInManager<IdentityApplicationUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder)
@@ -528,7 +530,7 @@ namespace GainzTrack.Web.Controllers
                 unformattedKey);
         }
 
-        private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user, EnableAuthenticatorViewModel model)
+        private async Task LoadSharedKeyAndQrCodeUriAsync(IdentityApplicationUser user, EnableAuthenticatorViewModel model)
         {
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             if (string.IsNullOrEmpty(unformattedKey))

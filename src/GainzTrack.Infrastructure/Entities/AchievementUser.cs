@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GainzTrack.Core.Models
+namespace GainzTrack.Core.Entities
 {
     public class AchievementUser : BaseEntity
     {
@@ -10,6 +10,6 @@ namespace GainzTrack.Core.Models
         public Achievement Achievement { get; set; }
 
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public MainUser User { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace GainzTrack.Core.Data.Migrations
+namespace GainzTrack.Infrastructure.Data.Migrations
 {
     public partial class Initial : Migration
     {

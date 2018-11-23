@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using GainzTrack.Core.Models;
+using GainzTrack.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore.Design;
 using System.IO;
+using GainzTrack.Infrastructure.Identity;
 
-namespace GainzTrack.Core.Data
+namespace GainzTrack.Infrastructure.Data
+
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<IdentityApplicationUser>
     {
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -20,7 +22,7 @@ namespace GainzTrack.Core.Data
             
         }
 
-        public DbSet<ApplicationUser> User { get; set; }
+        public DbSet<MainUser> MainUsers { get; set; }
         public DbSet<Achievement> Achievements { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Title> Titles { get; set; }

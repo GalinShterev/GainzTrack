@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using GainzTrack.Core.Interfaces;
 using GainzTrack.Web.Services;
 
 namespace GainzTrack.Web.Services

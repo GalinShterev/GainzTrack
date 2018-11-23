@@ -12,8 +12,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using GainzTrack.Web.Services;
 using GainzTrack.Web.Models.AccountViewModels;
-using GainzTrack.Core.Models;
-using GainzTrack.Core.Data;
+using GainzTrack.Core.Entities;
+using GainzTrack.Infrastructure.Data;
+using GainzTrack.Infrastructure.Identity;
+using Microsoft.EntityFrameworkCore;
+using GainzTrack.Core.Interfaces;
 
 namespace GainzTrack.Web.Controllers
 {
@@ -21,15 +24,15 @@ namespace GainzTrack.Web.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<IdentityApplicationUser> _userManager;
+        private readonly SignInManager<IdentityApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly ApplicationDbContext _context;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<IdentityApplicationUser> userManager,
+            SignInManager<IdentityApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
             ApplicationDbContext context)
@@ -228,17 +231,33 @@ namespace GainzTrack.Web.Controllers
             {
                 var titleId = _context.Titles.FirstOrDefault(x=>x.RequiredAP <= INITIAL_ACHIEVEMENT_POINTS).Id;
                 var title = _context.Titles.FirstOrDefault(x => x.Id == titleId);
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,TitleId = titleId,AchievementPoints = INITIAL_ACHIEVEMENT_POINTS,Title = title};
-                var result = await _userManager.CreateAsync(user, model.Password);
+
+                
+
+                var identityUser = new IdentityApplicationUser { UserName = model.Email, Email = model.Email };
+
+                var user = new MainUser { IdentityUserId = identityUser.Id, TitleId = titleId, AchievementPoints = INITIAL_ACHIEVEMENT_POINTS };
+
+                _context.MainUsers.Add(user);
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch(DbUpdateConcurrencyException ex)
+                {
+                    return View(model);
+                }
+
+                var result = await _userManager.CreateAsync(identityUser, model.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
+                    var callbackUrl = Url.EmailConfirmationLink(identityUser.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    await _signInManager.SignInAsync(identityUser, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -318,7 +337,7 @@ namespace GainzTrack.Web.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new IdentityApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

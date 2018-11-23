@@ -21,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GainzTrack.Core\GainzTrack.Core.csproj" />
+    <ProjectReference Include="..\GainzTrack.Core\GainzTrack.Infrastructure.csproj" />
+    <ProjectReference Include="..\GainzTrack.Infrastructure\GainzTrack.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

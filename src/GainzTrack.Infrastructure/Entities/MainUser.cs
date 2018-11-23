@@ -1,19 +1,19 @@
-﻿using System;
+﻿using GainzTrack.Core.Entities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+using System.Text;
 
-namespace GainzTrack.Core.Models
+namespace GainzTrack.Core.Entities
 {
-    // Add profile data for application users by adding properties to the ApplicationUser class
-    public class ApplicationUser : IdentityUser
+    public class MainUser : BaseEntity
     {
-        public ApplicationUser()
+        public MainUser()
         {
             this.WorkoutRoutines = new HashSet<WorkoutRoutine>();
             this.AchievementUsers = new HashSet<AchievementUser>();
         }
+
+        public string IdentityUserId { get; set; }
 
         public int AchievementPoints { get; set; }
 
@@ -23,7 +23,6 @@ namespace GainzTrack.Core.Models
         public virtual ICollection<WorkoutRoutine> WorkoutRoutines { get; set; }
         public virtual ICollection<AchievementUser> AchievementUsers { get; set; }
         public virtual ICollection<CopiedWorkoutsFromUsers> CopiedWorkoutsFromUsers { get; set; }
-
 
     }
 }

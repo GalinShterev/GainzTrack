@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GainzTrack.Core.Data;
-using GainzTrack.Core.Models;
+using GainzTrack.Core.Entities;
+using GainzTrack.Core.Interfaces;
+using GainzTrack.Infrastructure.Data;
 using GainzTrack.Web.ViewModels.WorkoutViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +13,11 @@ namespace GainzTrack.Web.Controllers
     public class WorkoutController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public WorkoutController(ApplicationDbContext context)
+        private readonly IUserService _userService;
+        public WorkoutController(ApplicationDbContext context,IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         public IActionResult Index()
@@ -34,16 +37,15 @@ namespace GainzTrack.Web.Controllers
             {
                 return Redirect("/Home/Index");
             }
+            var identityUserId = _userService.GetIdentityIdWithUsername(this.User.Identity.Name);
 
-            var user = _context.User.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
-
-
+            var mainUserId = _context.MainUsers.FirstOrDefault(x => x.IdentityUserId == identityUserId).Id;
 
             var workout = new WorkoutRoutine
             {
                 IsPublic = viewModel.IsPublic,
                 Name = viewModel.Name,
-                CreatorId = user.Id,
+                CreatorId = mainUserId,
             };
 
             var workoutDays = SetUpInitialWorkoutDays(workout.Id);
@@ -52,6 +54,7 @@ namespace GainzTrack.Web.Controllers
             //TODO:Validation maybe
             _context.WorkoutRoutines.Add(workout);
             _context.SaveChanges();
+
 
             return Redirect("/Home/Index");
         }

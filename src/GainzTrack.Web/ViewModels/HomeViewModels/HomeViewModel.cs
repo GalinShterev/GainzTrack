@@ -1,4 +1,4 @@
-﻿using GainzTrack.Core.Models;
+﻿using GainzTrack.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace GainzTrack.Web.ViewModels.HomeViewModels
 {
     public class HomeViewModel
     {
-        public ApplicationUser User { get; set; }
+        public MainUser User { get; set; }
         public WorkoutRoutine[] Workouts { get; set; }
     }
 }

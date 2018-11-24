@@ -9,35 +9,28 @@ using GainzTrack.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using GainzTrack.Web.ViewModels.HomeViewModels;
 using GainzTrack.Core.Interfaces;
+using GainzTrack.Web.Interfaces;
 
 namespace GainzTrack.Web.Controllers
 { 
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IUserService _userService;
+        private readonly IHomeViewService _homeViewService;
 
-        public HomeController(ApplicationDbContext context,IUserService userService)
+        public HomeController(ApplicationDbContext context,
+            IHomeViewService homeViewService)
         {
             _context = context;
-            _userService = userService;
+            _homeViewService = homeViewService;
         }
 
         public IActionResult Index()
         {
             if(this.User.Identity.IsAuthenticated == true)
             {
-                var user = _context.MainUsers.Include(x => x.Title).FirstOrDefault(x => x.IdentityUserId == _userService.GetIdentityIdWithUsername(this.User.Identity.Name));
-
-                var workouts = _context.WorkoutRoutines.Include(x=>x.WorkoutDays).Where(x => x.CreatorId == user.Id).ToArray();
-
-                var model = new HomeViewModel
-                {
-                    User = user,
-                    Workouts = workouts
-                };
-
-                return View("Profile", model);
+               var model = _homeViewService.GetHomeViewModel(this.User.Identity.Name);
+               return View("Profile", model);
             }
             return View();
         }

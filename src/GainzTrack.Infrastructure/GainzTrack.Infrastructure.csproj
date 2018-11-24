@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GainzTrack.Infrastructure\GainzTrack.Core.csproj" />
+    <ProjectReference Include="..\GainzTrack.Core\GainzTrack.Core.csproj" />
   </ItemGroup>
 
 </Project>

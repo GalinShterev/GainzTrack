@@ -21,12 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GainzTrack.Core\GainzTrack.Infrastructure.csproj" />
-    <ProjectReference Include="..\GainzTrack.Infrastructure\GainzTrack.Core.csproj" />
+    <Folder Include="Configuration\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\" />
+    <ProjectReference Include="..\GainzTrack.Core\GainzTrack.Core.csproj" />
+    <ProjectReference Include="..\GainzTrack.Infrastructure\GainzTrack.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

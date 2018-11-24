@@ -7,6 +7,7 @@ using GainzTrack.Core.Interfaces;
 using GainzTrack.Infrastructure.Data;
 using GainzTrack.Web.ViewModels.WorkoutViewModels;
 using Microsoft.AspNetCore.Mvc;
+using GainzTrack.Core.Expressions;
 
 namespace GainzTrack.Web.Controllers
 {
@@ -14,10 +15,12 @@ namespace GainzTrack.Web.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IUserService _userService;
-        public WorkoutController(ApplicationDbContext context,IUserService userService)
+        private readonly IRepository _repository;
+        public WorkoutController(ApplicationDbContext context,IUserService userService,IRepository repository)
         {
             _context = context;
             _userService = userService;
+            _repository = repository;
         }
 
         public IActionResult Index()
@@ -35,26 +38,27 @@ namespace GainzTrack.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Redirect("/Home/Index");
+                return this.BadRequest();
             }
+
+
             var identityUserId = _userService.GetIdentityIdWithUsername(this.User.Identity.Name);
 
-            var mainUserId = _context.MainUsers.FirstOrDefault(x => x.IdentityUserId == identityUserId).Id;
+            var mainUser = _repository
+                .GetBy<MainUser>(new MainUserByIdentityId(identityUserId));
 
             var workout = new WorkoutRoutine
             {
                 IsPublic = viewModel.IsPublic,
                 Name = viewModel.Name,
-                CreatorId = mainUserId,
+                CreatorId = mainUser.Id,
             };
 
             var workoutDays = SetUpInitialWorkoutDays(workout.Id);
-
             workout.WorkoutDays = workoutDays;
-            //TODO:Validation maybe
-            _context.WorkoutRoutines.Add(workout);
-            _context.SaveChanges();
 
+            //TODO:Validation maybe
+            _repository.Add<WorkoutRoutine>(workout);
 
             return Redirect("/Home/Index");
         }

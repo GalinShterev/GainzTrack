@@ -9,6 +9,6 @@ namespace GainzTrack.Web.ViewModels.HomeViewModels
     public class HomeViewModel
     {
         public MainUser User { get; set; }
-        public WorkoutRoutine[] Workouts { get; set; }
+        public IEnumerable<WorkoutRoutine> Workouts { get; set; }
     }
 }

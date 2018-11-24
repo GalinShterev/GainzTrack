@@ -16,6 +16,7 @@ using GainzTrack.Infrastructure.Data;
 using GainzTrack.Infrastructure.Identity;
 using GainzTrack.Core.Interfaces;
 using GainzTrack.Infrastructure.Services;
+using GainzTrack.Web.Interfaces;
 
 namespace GainzTrack.Web
 {
@@ -39,12 +40,14 @@ namespace GainzTrack.Web
                 .AddDefaultTokenProviders();
 
 
+            services.AddMvc();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddMvc();
             services.AddScoped<IExercisesService, ExercisesService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddScoped<IRepository, DbRepository>();
+            services.AddScoped<IHomeViewService, HomeViewService>();
 
             //Configure services
             services.Configure<IdentityOptions>(options =>

@@ -54,7 +54,7 @@ namespace GainzTrack.Web.Controllers
                 CreatorId = mainUser.Id,
             };
 
-            var workoutDays = SetUpInitialWorkoutDays(workout.Id);
+            var workoutDays = SetUpInitialWorkoutDays(workout.Id,viewModel.Days);
             workout.WorkoutDays = workoutDays;
 
             //TODO:Validation maybe
@@ -63,47 +63,21 @@ namespace GainzTrack.Web.Controllers
             return Redirect("/Home/Index");
         }
 
-        private ICollection<WorkoutDay> SetUpInitialWorkoutDays(string workoutRoutineId)
+        private ICollection<WorkoutDay> SetUpInitialWorkoutDays(string workoutRoutineId,DayOfWeek[] days)
         {
-            var workouts = new WorkoutDay[]
-             {
-                new WorkoutDay
+            var workoutDays = new List<WorkoutDay>();
+            foreach (var day in days)
+            {
+                var workoutDay = new WorkoutDay
                 {
-                    Day = DayOfWeek.Monday,
-                    WorkoutRoutineId =workoutRoutineId
-                },
-                new WorkoutDay
-                {
-                    Day = DayOfWeek.Tuesday,
+                    Day = day,
                     WorkoutRoutineId = workoutRoutineId
-                },
-                new WorkoutDay
-                {
-                    Day = DayOfWeek.Wednesday,
-                    WorkoutRoutineId = workoutRoutineId
-                },
-                new WorkoutDay
-                {
-                    Day = DayOfWeek.Thursday,
-                    WorkoutRoutineId = workoutRoutineId
-                },
-                new WorkoutDay
-                {
-                    Day = DayOfWeek.Friday,
-                    WorkoutRoutineId = workoutRoutineId
-                },
-                new WorkoutDay
-                {
-                    Day = DayOfWeek.Saturday,
-                    WorkoutRoutineId = workoutRoutineId
-                },
-                new WorkoutDay
-                {
-                    Day = DayOfWeek.Sunday,
-                    WorkoutRoutineId = workoutRoutineId
-                }
-            };
-            return workouts.ToList();
+                };
+
+                workoutDays.Add(workoutDay);
+            }
+
+            return workoutDays;
         }
     }
 }

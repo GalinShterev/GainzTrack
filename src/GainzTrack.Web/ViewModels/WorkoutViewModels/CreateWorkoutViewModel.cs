@@ -13,6 +13,8 @@ namespace GainzTrack.Web.ViewModels.WorkoutViewModels
 
         public bool IsPublic { get; set; }
 
+        public DayOfWeek[] Days { get; set; }
+
 
     }
 }

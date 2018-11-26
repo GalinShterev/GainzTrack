@@ -97,16 +97,29 @@ $(".previous").click(function () {
 
 $('.days-dropdown').on('click', '#add-day', function () {
     var id = 1;
-    $('.days-dropdown').append('<h4 id="'+id+'" class="remove-day-style">Remove</h4>');
+    $('.days-dropdown').append('<h4 id="'+id +'" class="remove-day-style">Remove</h4>');
     $('.days-dropdown').append('<select id="remove-'+id+'" class="select-dropdown" name="days">' +
-        '<option value = "monday">Monday</option>' +
-        '<option value = "tuesday">Tuesday</option>' +
-        '<option value = "wednesday">Wednesday</option>' +
-        '<option value = "thursday">Thursday</option>' +
-        '<option value = "friday">Friday</option>' +
-        '<option value = "saturday">Saturday</option>' +
-        '<option value = "sunday">Sunday</option>' +
+        '<option value = "1">Monday</option>' +
+        '<option value = "2">Tuesday</option>' +
+        '<option value = "3">Wednesday</option>' +
+        '<option value = "4">Thursday</option>' +
+        '<option value = "5">Friday</option>' +
+        '<option value = "6">Saturday</option>' +
+        '<option value = "0">Sunday</option>' +
         '</select>');
+
+    $('.days-dropdown').append('<div id="remove-ex-' + id +'" class="add-exercise-style">' +
+        '<input type = "checkbox" id = "click" class= "hide-it" />' +
+        '<label for="click"><a>Add Exercise</a></label>' +
+        '<div class="modal-item">' +
+        '<div class="exercises-modal">' +
+        '<label class="open-button" for="click"><a>Close</a></label>' +
+        '</div>' +
+        '</div>' +
+        '<div class="overlay"></div>' +
+        '</div >' +
+        '<hr id="hr-'+id+'"/>');
+
     $('.add-day-style').css('display', 'none');
     $('.days-dropdown').append('<h4 id="add-day" class="add-day-style">Add day</h4>');
 });
@@ -115,5 +128,7 @@ $('.days-dropdown').on('click', '.remove-day-style', function () {
     var button_id = $(this).attr("id");
 
     $('#remove-' + button_id).remove();
+    $('#remove-ex-' + button_id).remove();
+    $('#hr-' + button_id).remove();
     $('#' + button_id).remove();
 });

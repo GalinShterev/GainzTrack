@@ -50,11 +50,11 @@ $(".next").click(function () {
         duration: 500,
         complete: function () {
             current_fs.hide();
-           
+
             animating = false;
-            
+
         },
-        
+
     });
 });
 
@@ -78,27 +78,33 @@ $(".previous").click(function () {
             scale = 0.8 + (1 - now) * 0.2;
             //2. take current_fs to the right(50%) - from 0%
             left = ((1 - now) * 50) + "%";
-            var newLeft = ((1-now)*50) - 50 + '%';
+            var newLeft = ((1 - now) * 50) - 50 + '%';
             //3. increase opacity of previous_fs to 1 as it moves in
             opacity = 1 - now;
-            current_fs.css({ 'left': left, 'display':'none' });
-            previous_fs.css({ 'left':newLeft,'transform': 'scale(' + scale + ')', 'opacity': opacity,'position': 'relative' });
+            current_fs.css({ 'left': left, 'display': 'none' });
+            previous_fs.css({ 'left': newLeft, 'transform': 'scale(' + scale + ')', 'opacity': opacity, 'position': 'relative' });
         },
         duration: 800,
         complete: function () {
             current_fs.hide();
             animating = false;
         },
-        
-        
+
+
     });
 });
 
-
+var triggered = false;
+var id;
 $('.days-dropdown').on('click', '#add-day', function () {
-    var id = 1;
-    $('.days-dropdown').append('<h4 id="'+id +'" class="remove-day-style">Remove</h4>');
-    $('.days-dropdown').append('<select id="remove-'+id+'" class="select-dropdown" name="days">' +
+    if (!triggered) {
+        id = 1;
+        triggered = true;
+    }
+    
+
+    $('.days-dropdown').append('<h4 id="' + id + '" class="remove-day-style">Remove</h4>');
+    $('.days-dropdown').append('<select id="remove-' + id + '" class="select-dropdown" name="days">' +
         '<option value = "1">Monday</option>' +
         '<option value = "2">Tuesday</option>' +
         '<option value = "3">Wednesday</option>' +
@@ -108,20 +114,32 @@ $('.days-dropdown').on('click', '#add-day', function () {
         '<option value = "0">Sunday</option>' +
         '</select>');
 
-    $('.days-dropdown').append('<div id="remove-ex-' + id +'" class="add-exercise-style">' +
-        '<input type = "checkbox" id = "click" class= "hide-it" />' +
-        '<label for="click"><a>Add Exercise</a></label>' +
-        '<div class="modal-item">' +
-        '<div class="exercises-modal">' +
-        '<label class="open-button" for="click"><a>Close</a></label>' +
-        '</div>' +
-        '</div>' +
+    
+    $('.days-dropdown').append('<div id="remove-ex-' + id + '" class="add-exercise-style">' +
+        '<input type = "checkbox" id="click" class= "hide-it" />' +
+        '<label for="click" id="add-exercise"><a>Add Exercise</a></label>' +
+        '<div id="modal-item-'+id+'" class="exercises-modal-item">' +
+        '</div>'+
         '<div class="overlay"></div>' +
         '</div >' +
-        '<hr id="hr-'+id+'"/>');
+        '<hr id="hr-' + id + '"/>');
+
+
+    $.ajax({
+        url: '/Workout/GetExercises',
+        dataType: "html",
+        success: function (data) {
+            $('#modal-item-' + id +'').append(data);
+            id++;
+        }
+    });
+
+    
+
 
     $('.add-day-style').css('display', 'none');
     $('.days-dropdown').append('<h4 id="add-day" class="add-day-style">Add day</h4>');
+   
 });
 
 $('.days-dropdown').on('click', '.remove-day-style', function () {
@@ -131,4 +149,9 @@ $('.days-dropdown').on('click', '.remove-day-style', function () {
     $('#remove-ex-' + button_id).remove();
     $('#hr-' + button_id).remove();
     $('#' + button_id).remove();
+    $('#add-day').remove();
+
+    if ($('.days-dropdown').has('select').length == 0) {
+        triggered = false;
+    }
 });

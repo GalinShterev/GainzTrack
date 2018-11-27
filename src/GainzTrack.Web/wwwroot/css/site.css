@@ -95,18 +95,41 @@ input[type="checkbox"]:checked ~ .overlay {
     opacity: 0;
     z-index: 100;
     height: 100vh;
-    overflow-y: auto;
+    overflow-y: auto;    
 }
-.exercises-modal {
-    position: relative;
+.exercises-modal-item {
+    position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    height: 100%;
+    transform: translate(-50%,-50%) scale(0.5);
+    max-width: 700px;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 100;
+    height: 90vh;
+    overflow-y: auto;
+    margin-top:20px;
+    flex-direction: column;
+    width: 60%;
+    z-index: 100;
     background: white;
+}
+.exercises-modal-close{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    cursor:pointer;
 }
 
 input[type="checkbox"]:checked ~ .modal-item {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translate(-50%,-50%) scale(1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    transition-delay: 0.1s;
+}
+input[type="checkbox"]:checked ~ .exercises-modal-item {
     pointer-events: auto;
     opacity: 1;
     transform: translate(-50%,-50%) scale(1);
@@ -409,3 +432,123 @@ input[type="radio"].toggle {
     input[type="radio"].toggle:checked + label:after {
         left: 0;
     }
+
+
+    /*Add Exercises Modal Styling*/
+
+iframe {
+    width: 100%;
+    height: 40vh;
+}
+
+.tab {
+    position: relative;
+    margin-bottom: 1px;
+    width: 100%;
+    color: #fff;
+    overflow: hidden;
+    text-align: center;
+}
+
+    .tab input {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+    }
+
+    .tab label {
+        position: relative;
+        display: block;
+        padding: 0 0 0 1em;
+        background: white;
+        color: black;
+        font-weight: bold;
+        padding-top: 15px;
+        cursor: pointer;
+        line-height: 2;
+        font-size: 20px;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+    }
+
+.blue label {
+    background: #2980b9;
+}
+
+.tab-content {
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: max-height .35s;
+    -o-transition: max-height .35s;
+    transition: max-height .35s;
+}
+
+.blue .tab-content {
+    background: #3498db;
+}
+
+.tab-content p {
+    margin: 1em;
+}
+/* :checked */
+.tab input:checked ~ .tab-content {
+    max-height: 100vh;
+}
+
+/* Icon */
+.tab label::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 3em;
+    height: 3em;
+    line-height: 3;
+    text-align: center;
+    -webkit-transition: all .35s;
+    -o-transition: all .35s;
+    transition: all .35s;
+}
+
+.tab label::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 40px;
+    content: "\f144";
+    position: absolute;
+    left: 15px;
+    top: -10px;
+    -webkit-transition: all .35s;
+    -o-transition: all .35s;
+    transition: all .35s;
+}
+
+.tab input[type=checkbox] + label::after {
+    content: "+";
+}
+
+.tab input[type=radio] + label::after {
+    content: "\25BC";
+}
+
+.tab input[type=checkbox]:checked + label::after {
+    transform: rotate(315deg);
+}
+
+.tab input[type=checkbox]:checked + label::before {
+    transform: rotate(360deg);
+    content: "\f28d";
+}
+
+.tab input[type=radio]:checked + label::after {
+    transform: rotateX(180deg);
+}
+
+.exercise-item {
+    position: relative;
+    flex-basis: 10%;
+    width: 60%;
+    margin: 0 auto;
+
+}

@@ -63,6 +63,11 @@ namespace GainzTrack.Web.Controllers
             return Redirect("/Home/Index");
         }
 
+        public IActionResult GetExercises()
+        {
+            return ViewComponent("AddExercises");
+        }
+
         private ICollection<WorkoutDay> SetUpInitialWorkoutDays(string workoutRoutineId,DayOfWeek[] days)
         {
             var workoutDays = new List<WorkoutDay>();

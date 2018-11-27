@@ -1,0 +1,24 @@
+﻿@using GainzTrack.Web.Utilities
+@model List<Exercise>
+@{
+    Layout = null;
+}
+
+@{ var id = 0;}
+
+@foreach (var item in Model)
+{
+
+    <div class="exercise-item">
+        <div class="tab">
+            <input id="tab-@id" type="checkbox" name="tabs">
+            <label for="tab-@id">@item.Name</label>
+            <div class="tab-content">
+                <iframe src="@item.VideoUrl.DecodeUrl()" frameborder="0"></iframe>
+            </div>
+        </div>
+        <hr />
+    </div>
+    <label for="click" class="exercises-modal-close">Close</label>
+    id++;
+}

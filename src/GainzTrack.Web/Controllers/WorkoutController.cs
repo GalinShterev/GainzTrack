@@ -8,6 +8,7 @@ using GainzTrack.Infrastructure.Data;
 using GainzTrack.Web.ViewModels.WorkoutViewModels;
 using Microsoft.AspNetCore.Mvc;
 using GainzTrack.Core.Expressions;
+using GainzTrack.Web.Attributes;
 
 namespace GainzTrack.Web.Controllers
 {
@@ -63,6 +64,7 @@ namespace GainzTrack.Web.Controllers
             return Redirect("/Home/Index");
         }
 
+        [IsAjax]
         public IActionResult GetExercises()
         {
             return ViewComponent("AddExercises");

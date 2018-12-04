@@ -1,0 +1,20 @@
+﻿@using GainzTrack.Web.Utilities
+@model Exercise
+@{
+    Layout = null;
+}
+
+@{var id = Guid.NewGuid().ToString();}
+
+<div class="tab">
+    <input asp-for="@Model.ExerciseName" value="@Model.ExerciseName-@ViewData["DayId"]" readonly="readonly" style="display:none;" />
+    <input id="tab-@id" type="checkbox" name="tabs">
+    <label for="tab-@id">@Model.ExerciseName</label>
+    <span id="exercise-@id" class="remove-exercise-button">Remove</span>
+    <div class="tab-content">
+        <iframe src="@Model.VideoUrl.DecodeUrl()" frameborder="0"></iframe>
+    </div>
+    <hr />
+</div>
+
+

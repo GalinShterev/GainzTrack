@@ -13,31 +13,38 @@
             <li>Exercises Setup</li>
         </ul>
         <fieldset>
-            <h2 class="fs-title">Information Setup</h2>
             <div>
-                <input asp-for="Name" placeholder="Workout name" />
-            </div>
-            <div>
-                <input id="toggle-on" type="radio" asp-for="IsPublic" value="true" checked class="toggle toggle-left">
-                <label for="toggle-on" class="toggle-btn">Public</label>
-                <input id="toggle-off" type="radio" asp-for="IsPublic" value="false" class="toggle toggle-right">
-                <label for="toggle-off" class="toggle-btn">Private</label>
-            </div>
-            <button class="next action-btn" type="button">Next</button>
+                <h2 class="fs-title">Information Setup</h2>           
+                    <input id="workoutcreate-name" asp-for="Name" placeholder="Workout name" />
+                    <div style="margin-bottom:10px;">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div>
+                    <input id="toggle-on" type="radio" asp-for="IsPublic" value="true" checked class="toggle toggle-left">
+                    <label for="toggle-on" class="toggle-btn">Public</label>
+                    <input id="toggle-off" type="radio" asp-for="IsPublic" value="false" class="toggle toggle-right">
+                    <label for="toggle-off" class="toggle-btn">Private</label>
+                </div>
+                <button class="next action-btn" type="button">Next</button>
+            
         </fieldset>
         <fieldset>
             <div>
                 <h2 class="fs-title">Exercises Setup</h2>
                 <div class="days-dropdown">
-                    
-                    <h4 id="add-day" class="add-day-style">Add day</h4>                
+
+                    <h4 id="add-day" class="add-day-style">Add day</h4>
                 </div>
-            </div>          
+            </div>
             <button class="previous action-btn" type="button">Prev</button>
-            <button class="submit action-btn" type="submit">Submit</button>
+            <button id="submit-workout" class="submit action-btn" type="submit">Submit</button>
         </fieldset>
     </form>
 
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -33,11 +33,19 @@ namespace GainzTrack.Infrastructure.Data
 
         public T GetBy<T>(IExpression<T> expression) where T : BaseEntity
         {
-            var resultWithAllIncludes = expression.Includes
+            var queryableResultWithncludes = expression.Includes
                 .Aggregate(_context.Set<T>().AsQueryable(),
                     (current, include) => current.Include(include));
 
-            return resultWithAllIncludes
+
+            var finalResult = expression.IncludeStrings
+                .Aggregate(queryableResultWithncludes,
+                    (current, include) => current.Include(include));
+
+
+
+
+            return finalResult
                  .SingleOrDefault(expression.Criteria);
         }
 
@@ -53,13 +61,18 @@ namespace GainzTrack.Infrastructure.Data
 
         public IEnumerable<T> List<T>(IExpression<T> expression) where T : BaseEntity
         {
-            var resultWithAllIncludes = expression.Includes
+            var queryableResultWithncludes = expression.Includes
                 .Aggregate(_context.Set<T>().AsQueryable(),
                     (current, include) => current.Include(include));
 
-            return resultWithAllIncludes
+
+            var finalResult = expression.IncludeStrings
+                .Aggregate(queryableResultWithncludes,
+                    (current, include) => current.Include(include));
+
+            return finalResult
                  .Where(expression.Criteria)
-                 .AsEnumerable();
+                 .ToList();
         }
 
         public void Update<T>(T entity) where T : BaseEntity

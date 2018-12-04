@@ -11,7 +11,7 @@ namespace GainzTrack.Core.Entities
             this.ExerciseWorkoutDays = new HashSet<ExerciseWorkoutDay>();
         }
 
-        public string Name { get; set; }
+        public string ExerciseName { get; set; }
 
         public string VideoUrl { get; set; }
 

@@ -11,6 +11,7 @@ namespace GainzTrack.Core.Expressions
             :base(b=>b.CreatorId == userId)
         {
             AddInclude(b => b.WorkoutDays);
+            AddInclude("WorkoutDays.ExerciseWorkoutDay.Exercise");
         }
     }
 }

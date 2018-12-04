@@ -15,6 +15,8 @@ namespace GainzTrack.Web.ViewModels.WorkoutViewModels
 
         public DayOfWeek[] Days { get; set; }
 
+        public string[] ExerciseName { get; set; }
+
 
     }
 }

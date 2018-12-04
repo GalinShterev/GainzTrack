@@ -23,7 +23,11 @@
                 <button class="accordion">@workoutDay.Day</button>
                 <div class="accordion-panel">
                     <p>
-                     
+                        @foreach (var exercise in workoutDay.ExerciseWorkoutDay)
+                        {
+                            <h1>@exercise.Exercise.ExerciseName</h1>
+                        }
+                        
                     </p>
                 </div>
             }

@@ -9,6 +9,7 @@ using GainzTrack.Web.ViewModels.WorkoutViewModels;
 using Microsoft.AspNetCore.Mvc;
 using GainzTrack.Core.Expressions;
 using GainzTrack.Web.Attributes;
+using GainzTrack.Web.ViewModels.ExerciseViewModels;
 
 namespace GainzTrack.Web.Controllers
 {
@@ -17,11 +18,13 @@ namespace GainzTrack.Web.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IUserService _userService;
         private readonly IRepository _repository;
-        public WorkoutController(ApplicationDbContext context,IUserService userService,IRepository repository)
+        private readonly IExercisesService _exercisesService;
+        public WorkoutController(ApplicationDbContext context,IUserService userService,IRepository repository,IExercisesService exercisesService)
         {
             _context = context;
             _userService = userService;
             _repository = repository;
+            _exercisesService = exercisesService;
         }
 
         public IActionResult Index()
@@ -39,7 +42,7 @@ namespace GainzTrack.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return this.BadRequest();
+                return this.View(viewModel);
             }
 
 
@@ -48,6 +51,9 @@ namespace GainzTrack.Web.Controllers
             var mainUser = _repository
                 .GetBy<MainUser>(new MainUserByIdentityId(identityUserId));
 
+
+
+
             var workout = new WorkoutRoutine
             {
                 IsPublic = viewModel.IsPublic,
@@ -55,7 +61,7 @@ namespace GainzTrack.Web.Controllers
                 CreatorId = mainUser.Id,
             };
 
-            var workoutDays = SetUpInitialWorkoutDays(workout.Id,viewModel.Days);
+            var workoutDays = SetUpInitialWorkoutDays(workout.Id,viewModel.Days,viewModel.ExerciseName);
             workout.WorkoutDays = workoutDays;
 
             //TODO:Validation maybe
@@ -65,12 +71,22 @@ namespace GainzTrack.Web.Controllers
         }
 
         [IsAjax]
-        public IActionResult GetExercises()
+        public IActionResult GetExercises(string id)
         {
+            this.ViewData["DivId"] = id;
             return ViewComponent("AddExercises");
         }
 
-        private ICollection<WorkoutDay> SetUpInitialWorkoutDays(string workoutRoutineId,DayOfWeek[] days)
+        [IsAjax]
+        [HttpPost]
+        public IActionResult GetSingleExercise(ExerciseWithNameAndDayViewModel viewModel)
+        {  
+            return ViewComponent("GetSingleExercise",viewModel);
+        }
+
+
+
+        private ICollection<WorkoutDay> SetUpInitialWorkoutDays(string workoutRoutineId,DayOfWeek[] days,string[] exercises)
         {
             var workoutDays = new List<WorkoutDay>();
             foreach (var day in days)
@@ -78,13 +94,41 @@ namespace GainzTrack.Web.Controllers
                 var workoutDay = new WorkoutDay
                 {
                     Day = day,
-                    WorkoutRoutineId = workoutRoutineId
+                    WorkoutRoutineId = workoutRoutineId,
                 };
 
+
+                var dayIntValue = (int)day;
+
+                var exercisesForWorkoutDayCollection = GetExercisesForCurrentDay(dayIntValue,exercises,workoutDay);
+
+               
+
+                workoutDay.ExerciseWorkoutDay = exercisesForWorkoutDayCollection;
                 workoutDays.Add(workoutDay);
             }
 
             return workoutDays;
+        }
+
+        private List<ExerciseWorkoutDay> GetExercisesForCurrentDay(int dayIntValue,string[] exercises, WorkoutDay workoutDay)
+        {
+            var exercisesForWorkoutDayCollection = new List<ExerciseWorkoutDay>();
+            if (exercises.Any(x => x.Contains(dayIntValue.ToString())))
+            {
+                foreach (var exercise in exercises.Where(x => x.Contains(dayIntValue.ToString())))
+                {
+                    var parsedExerciseName = exercise.Split('-').First();
+                    var exerciseEntity = _exercisesService.GetSingleExerciseByName(parsedExerciseName);
+
+                    exercisesForWorkoutDayCollection.Add(new ExerciseWorkoutDay
+                    {
+                        Exercise = exerciseEntity,
+                        WorkoutDay = workoutDay
+                    });
+                }
+            }
+            return exercisesForWorkoutDayCollection;
         }
     }
 }

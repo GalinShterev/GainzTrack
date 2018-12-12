@@ -5,6 +5,12 @@
 
 <h2>Profile</h2>
 
+@if(this.User.IsInRole("Admin"))
+{
+    <h1>Hello Admin</h1>
+
+}
+
 <h3>Logged in as, @this.User.Identity.Name</h3>
 <h4>AP:@Model.User.AchievementPoints</h4>
 <h4>Title:@Model.User.Title.Name</h4>

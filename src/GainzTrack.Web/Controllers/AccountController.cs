@@ -232,8 +232,6 @@ namespace GainzTrack.Web.Controllers
                 var titleId = _context.Titles.FirstOrDefault(x=>x.RequiredAP <= INITIAL_ACHIEVEMENT_POINTS).Id;
                 var title = _context.Titles.FirstOrDefault(x => x.Id == titleId);
 
-                
-
                 var identityUser = new IdentityApplicationUser { UserName = model.Email, Email = model.Email };
 
                 var user = new MainUser { IdentityUserId = identityUser.Id, TitleId = titleId, AchievementPoints = INITIAL_ACHIEVEMENT_POINTS };
@@ -252,6 +250,8 @@ namespace GainzTrack.Web.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    await _userManager.AddToRoleAsync(identityUser, "User");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
                     var callbackUrl = Url.EmailConfirmationLink(identityUser.Id, code, Request.Scheme);

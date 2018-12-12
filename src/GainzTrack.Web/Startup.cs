@@ -59,7 +59,7 @@ namespace GainzTrack.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -82,6 +82,54 @@ namespace GainzTrack.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            CreateRoles(serviceProvider).Wait();
         }
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            //adding custom roles
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityApplicationUser>>();
+            var Context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            string[] roleNames = { "Admin", "Moderator", "User" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                //creating the roles and seeding them to the database
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            var powerUser = new IdentityApplicationUser
+            {
+                UserName = Configuration.GetSection("UserSettings")["UserEmail"],
+                Email = Configuration.GetSection("UserSettings")["UserEmail"]
+            };
+            string userPassword = Configuration.GetSection("UserSettings")["UserPassword"];
+            var _user = await UserManager.FindByEmailAsync(Configuration.GetSection("UserSettings")["UserEmail"]);
+
+            if (_user == null)
+            {
+
+                var createPowerUser = await UserManager.CreateAsync(powerUser, userPassword);
+                Context.MainUsers.Add(new MainUser
+                {
+                    IdentityUserId = powerUser.Id,
+                    AchievementPoints = 500,
+
+                });
+
+                if (createPowerUser.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(powerUser, "Admin");
+                }
+            }
+        }
+
     }
 }
+

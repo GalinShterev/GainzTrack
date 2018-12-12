@@ -1,4 +1,5 @@
 ﻿using GainzTrack.Core.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace GainzTrack.Infrastructure.Data
 
                     context.SaveChanges();
                 }
+               
 
             }
             catch(Exception ex)

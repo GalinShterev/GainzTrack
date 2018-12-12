@@ -124,7 +124,7 @@ namespace GainzTrack.Web.Controllers
         private ICollection<WorkoutDay> SetUpInitialWorkoutDays(string workoutRoutineId, DayOfWeek[] days, string[] exercises)
         {
             var workoutDays = new List<WorkoutDay>();
-            if (days == null)
+            if (days == null || exercises == null)
                 return workoutDays;
 
             foreach (var day in days)

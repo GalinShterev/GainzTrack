@@ -15,6 +15,7 @@ namespace GainzTrack.Core.Entities
         public string Name { get; set; }
         public bool IsPublic { get; set; }
 
+
         public string CreatorId { get; set; }
         public MainUser Creator { get; set; }
 

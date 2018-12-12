@@ -1,0 +1,16 @@
+﻿@model Dictionary<string,string>
+
+<div id="exercise">
+    <div class="tab">
+        <input value="@Model["ExerciseName"]" readonly="readonly" style="display:none;" type="text"
+               id="ExerciseName" name="ExerciseName" />
+        @{var guid = Guid.NewGuid().ToString();}
+        <input id="tab-@guid" type="checkbox" name="tabs" />
+        <label for="tab-@guid">@Model["ExerciseName"]</label>
+        <span class="remove-exercise-button">Remove</span>
+        <div class="tab-content">
+            <iframe src="@Model["VideoUrl"]" frameborder="0"></iframe>
+        </div>
+        <hr />
+    </div>
+</div>

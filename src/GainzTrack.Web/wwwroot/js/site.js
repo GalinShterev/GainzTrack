@@ -94,7 +94,7 @@ $(".previous").click(function () {
     });
 });
 
-var triggered = false;
+
 var id = 0;
 $('.days-dropdown').on('click', '#add-day', function () {
 
@@ -142,57 +142,65 @@ $('.days-dropdown').on('click', '#add-day', function () {
 
 
 
-    $('.days-dropdown').on('click', '#exercise-'+id+'', function () {
-        var exercisesAddDiv = $(this).parents().eq(4).children().eq(0);
-        var selectedExerciseName = $(this).parents().eq(0).children().eq(1).text();
-        var selectedDay = $(this).parents().eq(5).children().eq(1).val();
-        $.ajax({
-            url: '/Workout/GetSingleExercise',
-            type: "POST",
-            data: { Name: selectedExerciseName,Day: selectedDay},
-            dataType: "html",
-            success: function (data) {
-                exercisesAddDiv.append(data);
-                $('.remove-exercise-button').on('click', function () {
-                    $(this).parent().remove();
-                });
-            }
-        });      
-    });
-
-
-
-
-
     $('.add-day-style').css('display', 'none');
     $('.days-dropdown').append('<h4 id="add-day" class="add-day-style">Add day</h4>');
 
 
 });
 
+var triggered = true;
 
-//$('#submit-workout').on('click', function () {
-//    var data = $('.days-dropdown').children('form').toArray();
-//    var result;
-//    for (var i = 0; i < data.length; i++) {
-//        result+= 
-//    }
-//    $.ajax({
-//        url: '/Workout/Create',
-//        method: 'post',
-//        data: data
-//    });
-//});
+if (triggered) {
+
+    $('.days-dropdown').on('click', '.add-exercise-button', function () {
+        var exercisesAddDiv = $(this).first().parents().eq(4).children().eq(0);
+        var selectedExerciseName = $(this).first().parents().eq(0).children().eq(1).text();
+        var selectedDay = $(this).first().parents().eq(5).children().eq(1).val();
+        $.ajax({
+            url: '/Workout/GetSingleExercise',
+            type: "POST",
+            data: { Name: selectedExerciseName, Day: selectedDay },
+            dataType: "html",
+            success: function (data) {
+                exercisesAddDiv.append(data);
+                $('.remove-exercise-button').on('click', function () {
+                    $(this).parent().remove();
+                });
+
+            }
+        });
+    });
+    triggered = false;
+}
 
 
+//allExercises - var b = $('div[id=exercise]').toArray();
+//day - b[0].parentElement.parentElement.children[1].value
+//exerciseName - b[0].children[0].children[0].value
+$('.edit').on('click', function () {
+    var allExercises = $('div[id=exercise]').toArray();
+    for (var i = 0; i < allExercises.length; i++) {
+        var day = allExercises[i].parentElement.parentElement.children[1].value;
+        var exerciseName = allExercises[i].children[0].children[0].value;
+
+        $('.days-dropdown').append('<input value="'+exerciseName+'-'+day+'" readonly="readonly" style="display:none;" type="text" id = "ExerciseName" name = "ExerciseName" />')
+    }
+});
+
+
+
+
+$('.remove-exercise-button').on('click', function () {
+    $(this).parent().remove();
+});
 
 $('.days-dropdown').on('click', '.remove-day-style', function () {
-    var button_id = $(this).attr("id");
+    //var button_id = $(this).attr("id");
 
+    $(this).parent().remove()
 
-
-    $('#' + button_id).remove();
-    $('#add-day').remove();
+    //$('#' + button_id).remove();
+    //$('#add-day').remove();
 
     if ($('.days-dropdown').has('select').length == 0) {
         id = 0;

@@ -8,34 +8,65 @@
 <h3>Logged in as, @this.User.Identity.Name</h3>
 <h4>AP:@Model.User.AchievementPoints</h4>
 <h4>Title:@Model.User.Title.Name</h4>
-
+<h1>Private Workouts</h1>
 <div class="workout-container">
-    @foreach (var item in Model.Workouts)
-    {
-    <div class="workout-item">
-        <input type="checkbox" id="click-@item.Name" class="hide-it" />
-        <h2>@item.Name</h2>
-        <label class="open-button" for="click-@item.Name"><a>Open</a></label>
-        <div class="modal-item">
-            <h2>@item.Name</h2>
-            @foreach (var workoutDay in item.WorkoutDays)
-            {
-                <button class="accordion">@workoutDay.Day</button>
-                <div class="accordion-panel">
-                    <p>
-                        @foreach (var exercise in workoutDay.ExerciseWorkoutDay)
-                        {
-                            <h1>@exercise.Exercise.ExerciseName</h1>
-                        }
-                        
-                    </p>
-                </div>
-            }
-            <label class="open-button" for="click-@item.Name"><a>Close</a></label>
-        </div>
-        <div class="overlay"></div>
-    </div>
-    }
     
-</div>
+    @foreach (var item in Model.Workouts.Where(x => x.IsPublic == false))
+    {
+        <div class="workout-item">
+            <input type="checkbox" id="click-@item.Name" class="hide-it" />
+            <h2>@item.Name</h2>
+            <label class="open-button" for="click-@item.Name"><a>Open</a></label>
+            <div class="modal-item">
+                <h2>@item.Name</h2>
+                @foreach (var workoutDay in item.WorkoutDays)
+                {
+                    <button class="accordion">@workoutDay.Day</button>
+                    <div class="accordion-panel">
+                        <p>
+                            @foreach (var exercise in workoutDay.ExerciseWorkoutDay)
+                            {
+                                <h1>@exercise.Exercise.ExerciseName</h1>
+                            }
 
+                        </p>
+                    </div>
+                }
+                <label><a href="/Workout/Edit?id=@item.Id&name=@item.Name">Edit</a></label>
+                <label class="open-button" for="click-@item.Name"><a>Close</a></label>
+            </div>
+            <div class="overlay"></div>
+        </div>
+    }
+</div>
+<h1>Public Workouts</h1>
+<div class="workout-container">
+
+    @foreach (var item in Model.Workouts.Where(x => x.IsPublic == true))
+    {
+        <div class="workout-item">
+            <input type="checkbox" id="click-@item.Name" class="hide-it" />
+            <h2>@item.Name</h2>
+            <label class="open-button" for="click-@item.Name"><a>Open</a></label>
+            <div class="modal-item">
+                <h2>@item.Name</h2>
+                @foreach (var workoutDay in item.WorkoutDays)
+                {
+                    <button class="accordion">@workoutDay.Day</button>
+                    <div class="accordion-panel">
+                        <p>
+                            @foreach (var exercise in workoutDay.ExerciseWorkoutDay)
+                            {
+                                <h1>@exercise.Exercise.ExerciseName</h1>
+                            }
+
+                        </p>
+                    </div>
+                }
+                <label><a href="/Workout/Edit?id=@item.Id&name=@item.Name">Edit</a></label>
+                <label class="open-button" for="click-@item.Name"><a>Close</a></label>
+            </div>
+            <div class="overlay"></div>
+        </div>
+    }
+</div>

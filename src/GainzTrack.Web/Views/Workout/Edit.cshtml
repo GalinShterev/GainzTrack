@@ -1,0 +1,90 @@
+﻿@using GainzTrack.Core.Interfaces
+@model GainzTrack.Core.Entities.WorkoutRoutine
+@inject IExercisesService ExercisesService
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+<h3>Form will be here</h3>
+
+<div class="form-container">
+    <form id="ms-form" asp-controller="Workout" asp-action="Edit" method="post">
+        <ul id="progress-bar">
+            <li class="active-bar">Information Setup</li>
+            <li>Exercises Setup</li>
+        </ul>
+        <fieldset>
+            <div>
+                <h2 class="fs-title">Information Setup</h2>
+                <input id="workoutcreate-name" asp-for="Name" placeholder="Workout name" />
+                <div style="margin-bottom:10px;">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div>
+                <input id="toggle-on" type="radio" asp-for="IsPublic" value="true" checked class="toggle toggle-left">
+                <label for="toggle-on" class="toggle-btn">Public</label>
+                <input id="toggle-off" type="radio" asp-for="IsPublic" value="false" class="toggle toggle-right">
+                <label for="toggle-off" class="toggle-btn">Private</label>
+            </div>
+            <button class="next action-btn" type="button">Next</button>
+
+        </fieldset>
+        <fieldset>
+            <div>
+                <h2 class="fs-title">Exercises Setup</h2>
+                <div class="days-dropdown">
+                    
+                    @foreach (var day in Model.WorkoutDays)
+                    {
+                        <div>
+                            <h4 class="remove-day-style">Remove</h4>
+                            <select class="select-dropdown" name="days">
+
+                                @await Html.PartialAsync("~/Views/Workout/Partials/_GetDaysOfWeekDropdown.cshtml", day.Day)
+                                
+                            </select>
+                            <div class="add-exercise-style">
+
+
+                                @foreach (var exercise in day.ExerciseWorkoutDay)
+                                {
+
+                                    @await Html.PartialAsync("~/Views/Workout/Partials/_RenderCurrentExercises.cshtml", 
+                                                             new Dictionary<string, string> { {"ExerciseName",exercise.Exercise.ExerciseName},
+                                                                                              {"Day", Convert.ToInt32(day.Day).ToString()},
+                                                                                              {"VideoUrl",exercise.Exercise.VideoUrl } })
+                                    
+                                }
+
+                                @{ var guidModal = Guid.NewGuid().ToString();}
+                                <input type="checkbox" id="click-@guidModal" class="hide-it" />
+                                <label for="click-@guidModal"><a>Add Exercise</a></label>
+                                <div class="exercises-modal-item">
+                                    <div>
+                                        @await Component.InvokeAsync("AddExercises", guidModal)
+                                    </div>
+                                    <div class="close-button-wraper">
+                                        <label for="click-@guidModal" class="exercises-modal-close">Close</label>
+                                    </div>
+                                </div>
+                                <div class="overlay"></div>
+                            </div>
+                            <hr />
+                        </div>
+                    }
+                    <h4 id="add-day" class="add-day-style">Add day</h4>
+                </div>
+            </div>
+            <input value="@Model.Id" readonly="readonly" style="display:none" type="text" name="WorkoutId" />
+            <button class="previous action-btn" type="button">Prev</button>
+            <button id="submit-workout" class="edit action-btn" type="submit">Save</button>
+        </fieldset>
+
+    </form>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

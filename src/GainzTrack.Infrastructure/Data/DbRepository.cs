@@ -31,6 +31,13 @@ namespace GainzTrack.Infrastructure.Data
             
         }
 
+        public void DeleteAllBy<T>(IExpression<T> expression) where T : BaseEntity
+        {
+            var allEntites = _context.Set<T>().Where(expression.Criteria).ToArray();
+            _context.Set<T>().RemoveRange(allEntites);
+            _context.SaveChanges();
+        }
+
         public T GetBy<T>(IExpression<T> expression) where T : BaseEntity
         {
             var queryableResultWithncludes = expression.Includes

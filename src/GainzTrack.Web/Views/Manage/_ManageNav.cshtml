@@ -1,5 +1,6 @@
 ﻿@using GainzTrack.Web.Views.Manage
-@inject SignInManager<ApplicationUser> SignInManager
+@using GainzTrack.Infrastructure.Identity
+@inject SignInManager<IdentityApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

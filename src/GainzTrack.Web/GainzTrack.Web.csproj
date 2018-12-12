@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-GainzTrack.Web-374D3CF2-1654-44B4-B769-017158123BA0</UserSecretsId>
+	<MvcBuildViews>true</MvcBuildViews>
   </PropertyGroup>
-
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />

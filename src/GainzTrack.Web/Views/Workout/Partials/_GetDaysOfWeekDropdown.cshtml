@@ -1,0 +1,13 @@
+﻿@model DayOfWeek
+
+@foreach (var item in Enum.GetValues(typeof(DayOfWeek))
+                          .OfType<DayOfWeek>()
+                          .OrderBy(d => d < DayOfWeek.Monday))
+{
+    if (Model == item)
+    {
+        <option value="@Convert.ToInt32(item)" selected>@item</option>
+        continue;
+    }
+    <option value="@Convert.ToInt32(item)">@item</option>
+}

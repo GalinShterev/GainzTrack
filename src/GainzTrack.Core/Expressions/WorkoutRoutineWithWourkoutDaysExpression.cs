@@ -13,5 +13,12 @@ namespace GainzTrack.Core.Expressions
             AddInclude(b => b.WorkoutDays);
             AddInclude("WorkoutDays.ExerciseWorkoutDay.Exercise");
         }
+        public WorkoutRoutineWithWourkoutDaysExpression(string workoutId,string workoutName)
+            : base(b => b.Id == workoutId)
+        {
+            AddInclude(b => b.WorkoutDays);
+            AddInclude("WorkoutDays.ExerciseWorkoutDay.Exercise");
+        }
+        
     }
 }

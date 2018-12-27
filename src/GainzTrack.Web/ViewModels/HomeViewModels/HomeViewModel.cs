@@ -8,6 +8,7 @@ namespace GainzTrack.Web.ViewModels.HomeViewModels
 {
     public class HomeViewModel
     {
+        public string Username { get; set; }
         public MainUser User { get; set; }
         public IEnumerable<WorkoutRoutine> Workouts { get; set; }
     }

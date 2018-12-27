@@ -13,6 +13,8 @@ namespace GainzTrack.Core.Entities
             this.AchievementUsers = new HashSet<AchievementUser>();
         }
 
+        public string Username { get; set; }
+
         public string IdentityUserId { get; set; }
 
         public int AchievementPoints { get; set; }

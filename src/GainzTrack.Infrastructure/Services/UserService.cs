@@ -1,5 +1,8 @@
-﻿using GainzTrack.Core.Interfaces;
+﻿using GainzTrack.Core.Entities;
+using GainzTrack.Core.Expressions;
+using GainzTrack.Core.Interfaces;
 using GainzTrack.Infrastructure.Data;
+using GainzTrack.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +12,26 @@ namespace GainzTrack.Infrastructure.Services
 {
     public class UserService : IUserService
     {
-        private readonly ApplicationDbContext _context;
-        public UserService(ApplicationDbContext context)
+        private readonly IRepository _repository;
+        public UserService(IRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
-        public string GetIdentityIdWithUsername(string username)
+        public string GetIdentityIdByUsername(string username)
         {
-            var identityUser = _context.Users.FirstOrDefault(x => x.UserName == username);
-
+            var identityUser = _repository.GetBy<IdentityApplicationUser>(x=>x.UserName == username);
             return identityUser.Id;
+        }
+
+        public MainUser GetMainUserByIdentityId(string identityId)
+        {
+           return  _repository
+                .GetBy<MainUser>(new MainUserByIdentityId(identityId));
+        }
+
+        public MainUser GetMainUserByUsername(string username)
+        {
+            return _repository.GetBy<MainUser>(b => b.Username == username);
         }
     }
 }

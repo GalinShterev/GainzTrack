@@ -21,12 +21,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\" />
+    <ProjectReference Include="..\GainzTrack.Core\GainzTrack.Core.csproj" />
+    <ProjectReference Include="..\GainzTrack.Infrastructure\GainzTrack.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GainzTrack.Core\GainzTrack.Core.csproj" />
-    <ProjectReference Include="..\GainzTrack.Infrastructure\GainzTrack.Infrastructure.csproj" />
+    <Content Update="Views\Workout\GetPrivateWorkouts.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\AchievementsViewModels\" />
   </ItemGroup>
 
 </Project>

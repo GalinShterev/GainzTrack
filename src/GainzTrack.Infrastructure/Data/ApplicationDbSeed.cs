@@ -20,6 +20,12 @@ namespace GainzTrack.Infrastructure.Data
 
                     context.SaveChanges();
                 }
+                if (!context.Exercises.Any())
+                {
+                    context.AddRange(GetConfiguredExercises());
+
+                    context.SaveChanges();
+                }
                
 
             }
@@ -27,6 +33,21 @@ namespace GainzTrack.Infrastructure.Data
             {
                 logger.LogError(ex.Message);
             }
+        }
+
+        private static IEnumerable<Exercise> GetConfiguredExercises()
+        {
+            return new List<Exercise>()
+            {
+                new Exercise(){ExerciseName = "Pull up",VideoUrl = "https://www.youtube.com/embed/eGo4IYlbE5g"},
+                new Exercise(){ExerciseName = "Muscule up",VideoUrl = "https://www.youtube.com/embed/3SduiaXqAT4"},
+                new Exercise(){ExerciseName = "Front lever",VideoUrl = "https://www.youtube.com/embed/H1jsJf8edpw"},
+                new Exercise(){ExerciseName = "Planche",VideoUrl = "https://www.youtube.com/embed/YO5Ae08CgEE"},
+                new Exercise(){ExerciseName = "Squat",VideoUrl = "https://www.youtube.com/embed/nEQQle9-0NA"},
+                new Exercise(){ExerciseName = "Handstand",VideoUrl = "https://www.youtube.com/embed/-SL0l4JZ-44"},
+                new Exercise(){ExerciseName = "Push up",VideoUrl = "https://www.youtube.com/embed/IODxDxX7oi4"},
+
+            };
         }
 
         private static IEnumerable<Title> GetConfiguredTitles()

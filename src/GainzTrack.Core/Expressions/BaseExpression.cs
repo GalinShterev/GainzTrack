@@ -19,7 +19,12 @@ namespace GainzTrack.Core.Expressions
             this.Includes = new List<Expression<Func<T, object>>>();
             this.IncludeStrings = new List<string>();
         }
-        
+        protected BaseExpression()
+        {
+            this.Includes = new List<Expression<Func<T, object>>>();
+            this.IncludeStrings = new List<string>();
+        }
+
         protected virtual void AddInclude(Expression<Func<T,object>> expression)
         {
             this.Includes.Add(expression);

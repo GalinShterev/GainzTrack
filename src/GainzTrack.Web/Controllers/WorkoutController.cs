@@ -10,26 +10,31 @@ using Microsoft.AspNetCore.Mvc;
 using GainzTrack.Core.Expressions;
 using GainzTrack.Web.Attributes;
 using GainzTrack.Web.ViewModels.ExerciseViewModels;
+using GainzTrack.Web.Interfaces;
 
 namespace GainzTrack.Web.Controllers
 {
     public class WorkoutController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IUserService _userService;
         private readonly IRepository _repository;
         private readonly IExercisesService _exercisesService;
-        public WorkoutController(ApplicationDbContext context, IUserService userService, IRepository repository, IExercisesService exercisesService)
+        private readonly IHomeViewService _homeViewService;
+        private readonly IWorkoutViewService _workoutViewService;
+
+        public WorkoutController(IUserService userService, IRepository repository, IExercisesService exercisesService,IHomeViewService homeViewService, IWorkoutViewService workoutViewService)
         {
-            _context = context;
             _userService = userService;
             _repository = repository;
             _exercisesService = exercisesService;
+            _homeViewService = homeViewService;
+            _workoutViewService = workoutViewService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = _homeViewService.GetHomeViewModel(this.User.Identity.Name);
+            return View("WorkoutFeed",model);
         }
 
         public IActionResult Create()
@@ -45,9 +50,9 @@ namespace GainzTrack.Web.Controllers
                 return this.View(viewModel);
             }
 
-            var identityUserId = _userService.GetIdentityIdWithUsername(this.User.Identity.Name);
-            var mainUser = _repository
-                .GetBy<MainUser>(new MainUserByIdentityId(identityUserId));
+            var identityUserId = _userService.GetIdentityIdByUsername(this.User.Identity.Name);
+
+            var mainUser = _userService.GetMainUserByIdentityId(identityUserId);
 
             var workout = new WorkoutRoutine
             {
@@ -62,12 +67,12 @@ namespace GainzTrack.Web.Controllers
             //TODO:Validation maybe
             _repository.Add<WorkoutRoutine>(workout);
 
-            return Redirect("/Home/Index");
+            return Redirect("/Workout/Index");
         }
 
         public IActionResult Edit(string id, string name)
         {
-            var expression = new WorkoutRoutineWithWourkoutDaysExpression(id, name);
+            var expression = new WorkoutWithDaysByWorkoutNameExpression(id, name);
             var workoutRoutine = _repository.GetBy<WorkoutRoutine>(expression);
 
             return this.View(workoutRoutine);
@@ -82,7 +87,7 @@ namespace GainzTrack.Web.Controllers
 
             //Check if workout with such name and id exists in case its modified
 
-            var getExpression = new WorkoutRoutineWithWourkoutDaysExpression(viewModel.WorkoutId, viewModel.Name);
+            var getExpression = new WorkoutWithDaysByWorkoutNameExpression(viewModel.WorkoutId, viewModel.Name);
             var workout = _repository.GetBy<WorkoutRoutine>(getExpression);
 
             var removeExpression = new WorkoutDaysByWorkoutRoutine(viewModel.WorkoutId);
@@ -100,25 +105,46 @@ namespace GainzTrack.Web.Controllers
 
             _repository.Update<WorkoutRoutine>(workout);
 
-            return Redirect("/Home/Index");
+            return Redirect("/Workout/Index");
         }
 
 
 
-        [IsAjax]
+        [AjaxOnlyAttribute]
         public IActionResult GetExercises(string id)
         {
             this.ViewData["DivId"] = id;
             return ViewComponent("AddExercises");
         }
 
-        [IsAjax]
+        [AjaxOnlyAttribute]
         [HttpPost]
         public IActionResult GetSingleExercise(ExerciseWithNameAndDayViewModel viewModel)
         {
             return ViewComponent("GetSingleExercise", viewModel);
         }
 
+        public IActionResult WorkoutFeed()
+        {
+            var model = _homeViewService.GetHomeViewModel(this.User.Identity.Name);
+            return this.View(model);
+        }
+
+        public IActionResult WorkoutPreview(string workoutName)
+        {
+            var model = _workoutViewService.GetWorkoutPreview(workoutName,this.User.Identity.Name);
+            return this.View(model);
+        }
+        public IActionResult GetWorkoutsByAvailability(string availability)
+        {
+            var model = _workoutViewService.GetWorkoutsPreview(this.User.Identity.Name);
+            if (availability == "Public")
+            {
+                return this.View("GetPublicWorkouts",model);
+            }
+          
+            return this.View("GetPrivateWorkouts",model);
+        }
 
 
         private ICollection<WorkoutDay> SetUpInitialWorkoutDays(string workoutRoutineId, DayOfWeek[] days, string[] exercises)
@@ -148,7 +174,6 @@ namespace GainzTrack.Web.Controllers
 
             return workoutDays;
         }
-
         private List<ExerciseWorkoutDay> GetExercisesForCurrentDay(int dayIntValue, string[] exercises, WorkoutDay workoutDay)
         {
             var exercisesForWorkoutDayCollection = new List<ExerciseWorkoutDay>();

@@ -207,3 +207,217 @@ $('.days-dropdown').on('click', '.remove-day-style', function () {
     }
 });
 
+
+//animating = false;
+
+//$('#home-feed').on('click', function () {
+//    if (animating) { return false; }
+//    animating = true;
+//    $.ajax({
+//        url: '/Home/GetHomeFeed',
+//        dataType: "html",
+//        success: function (data) {
+//            $('.dashboard-content').html("");
+//            $('.dashboard-content').append(data);
+//            animating = false;
+//        }
+//    });
+//});
+
+//$('#workouts-feed').on('click', function () {
+//    if (animating) { return false; }
+//    animating = true;
+//    $.ajax({
+//        url: '/Workout/WorkoutFeed',
+//        dataType: "html",
+//        success: function (data) {
+//            $('.dashboard-content').html("");
+//            $('.dashboard-content').append(data);
+//            animating = false;
+//        }
+//    });
+//});
+
+//$('#athletes-feed').on('click', function () {
+//    if (animating) { return false; }
+//    animating = true;
+//    $.ajax({
+//        url: '/Users/GetAllUsers',
+//        dataType: "html",
+//        success: function (data) {
+//            $('.dashboard-content').html("");
+//            $('.dashboard-content').append(data);
+//            animating = false;
+//        }
+//    });
+//});
+
+//$('#administration-feed').on('click', function () {
+//    if (animating) { return false; }
+//    animating = true;
+//    $.ajax({
+//        url: '/Administration/Index',
+//        dataType: "html",
+//        success: function (data) {
+//            $('.dashboard-content').html("");
+//            $('.dashboard-content').append(data);
+//            animating = false;
+//        }
+//    });
+//});
+
+
+////$('#create-workout').on('click', function () {
+////    $.ajax({
+////        url: '/Workout/Create',
+////        dataType: "html",
+////        success: function (data) {
+////            $('.dashboard-content').html("");
+////            $('.dashboard-content').append(data);
+////        }
+////    });
+////});
+
+
+
+    //$('.dashboard-nav__item').on('click', function (e) {
+    //    var itemId;
+    //    $('.dashboard-nav__item').removeClass('dashboard-nav__item--selected');
+    //    $(this).addClass('dashboard-nav__item--selected');
+    //    itemId = $(this).attr('id');
+    //    $('.dashboard-content__panel').hide();
+    //    $('.dashboard-content__panel[data-panel-id=' + itemId + ']').show();
+    //    if (itemId === 'workouts-feed') {
+    //        $('.dashboard-preview').show();
+    //    } else {
+    //        $('.dashboard-preview').hide();
+    //    }
+    //});
+
+//    $('.dashboard-list__item').on('click', function (e) {
+//        var itemId;
+//        $('.dashboard-list__item').removeClass('dashboard-list__item--active');
+//        $(this).addClass('dashboard-list__item--active');
+//        itemId = $(this).attr('data-item-id');
+//        $('.dashboard-preview__panel').hide();
+//        $('.dashboard-preview__panel[data-panel-id=' + itemId + ']').show();
+//        return console.log(itemId);
+//    });
+
+//}).call(this);
+
+
+$('.workout-func-btn').on('click', function () {
+    $('.preview-container').html("");
+    var workoutName = $(this).attr('id');
+    $.ajax({
+        url: '/Workout/WorkoutPreview',
+        dataType: "html",
+        data: { Workoutname: workoutName },
+        success: function (data) {
+            $('.preview-container').append(data);
+        }
+    });
+});
+
+$('.dashboard-toggle-btn').on('click', function () {
+
+    if ($('.dashboard-sidebar').hasClass('dashboard-sidebar--active')) {
+        setTimeout(function () {
+            $('.navbar-item-text').toggleClass('hide-opacity');
+        }, 500);
+        $('.dashboard-sidebar').toggleClass('dashboard-sidebar--active');
+        $('.dashboard-content-wrapper').toggleClass('dashboard-content-wrapper--active');
+        $('.dashboard-logo').toggleClass('dashboard-logo--active');
+        $('.dashboard-toggle-btn').toggleClass('dashboard-toggle-btn--active');
+    }
+    else {
+        setTimeout(function () {
+            $('.dashboard-sidebar').toggleClass('dashboard-sidebar--active');
+            $('.dashboard-content-wrapper').toggleClass('dashboard-content-wrapper--active');
+            $('.dashboard-logo').toggleClass('dashboard-logo--active');
+            $('.dashboard-toggle-btn').toggleClass('dashboard-toggle-btn--active');
+        }, 500);
+
+        $('.navbar-item-text').toggleClass('hide-opacity');
+    }
+});
+
+$('.dashboard-list-img').on('click', function () {
+    $('.dashboard-dropmenu-item').toggleClass('dashboard-dropmenu-item--active');
+});
+
+jQuery(document).ready(function ($) {
+
+    $('#checkbox').change(function () {
+        setInterval(function () {
+            moveRight();
+        }, 3000);
+    });
+
+    var slideCount = $('#slider ul li').length;
+    var slideWidth = $('#slider ul li').width();
+    var slideHeight = $('#slider ul li').height();
+    var sliderUlWidth = slideCount * slideWidth;
+
+    $('#slider').css({ width: slideWidth, height: slideHeight });
+
+    $('#slider ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
+
+    $('#slider ul li:last-child').prependTo('#slider ul');
+
+    function moveLeft() {
+        $('#slider ul').animate({
+            left: + slideWidth
+        }, 200, function () {
+            $('#slider ul li:last-child').prependTo('#slider ul');
+            $('#slider ul').css('left', '');
+        });
+    };
+
+    function moveRight() {
+        $('#slider ul').animate({
+            left: - slideWidth
+        }, 200, function () {
+            $('#slider ul li:first-child').appendTo('#slider ul');
+            $('#slider ul').css('left', '');
+        });
+    };
+
+    $('a.control_prev').click(function () {
+        moveLeft();
+    });
+
+    $('a.control_next').click(function () {
+        moveRight();
+    });
+
+});  
+
+$('.workout-create-btn').on('click', function () {
+    var dropmenu = $('.workout-dropmenu-item').toggleClass('workout-dropmenu-item--active');
+    var menuWidth = 0;
+    if (dropmenu.hasClass('workout-dropmenu-item--active')) {
+        menuWidth = $('.workout-dropmenu-item').width() + 5;
+    }
+    var style = $('<style>.workout-create-btn{ margin-right:' + menuWidth+'px; }</style>');
+    $('html > head').append(style);
+});
+
+$('.workouts-selector-item').on('click', function () {
+    $('.workouts-selector-item').removeClass('workouts-selector-item--active');
+    var spanValue = $(this).children().eq(0).text();
+    $(this).addClass('workouts-selector-item--active');
+
+        $.ajax({
+            url: '/Workout/GetWorkoutsByAvailability',
+            dataType: "html",
+            data: { availability: spanValue},
+            success: function (data) {
+                $('.workouts-list').html("");
+                $('.workouts-list').append(data);
+
+            }
+        });
+});
+

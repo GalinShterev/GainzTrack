@@ -2,7 +2,11 @@
 @model GainzTrack.Core.Entities.WorkoutRoutine
 @inject IExercisesService ExercisesService
 
+@{ Layout = null;}
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/css/site.css" />
 
 <h3>Form will be here</h3>
 
@@ -33,7 +37,7 @@
             <div>
                 <h2 class="fs-title">Exercises Setup</h2>
                 <div class="days-dropdown">
-                    
+
                     @foreach (var day in Model.WorkoutDays)
                     {
                         <div>
@@ -41,7 +45,7 @@
                             <select class="select-dropdown" name="days">
 
                                 @await Html.PartialAsync("~/Views/Workout/Partials/_GetDaysOfWeekDropdown.cshtml", day.Day)
-                                
+
                             </select>
                             <div class="add-exercise-style">
 
@@ -49,11 +53,11 @@
                                 @foreach (var exercise in day.ExerciseWorkoutDay)
                                 {
 
-                                    @await Html.PartialAsync("~/Views/Workout/Partials/_RenderCurrentExercises.cshtml", 
+                                    @await Html.PartialAsync("~/Views/Workout/Partials/_RenderCurrentExercises.cshtml",
                                                              new Dictionary<string, string> { {"ExerciseName",exercise.Exercise.ExerciseName},
                                                                                               {"Day", Convert.ToInt32(day.Day).ToString()},
                                                                                               {"VideoUrl",exercise.Exercise.VideoUrl } })
-                                    
+
                                 }
 
                                 @{ var guidModal = Guid.NewGuid().ToString();}
@@ -84,7 +88,12 @@
 
 </div>
 
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

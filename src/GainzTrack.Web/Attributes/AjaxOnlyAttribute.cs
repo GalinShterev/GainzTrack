@@ -9,7 +9,7 @@ using GainzTrack.Web.Extensions;
 
 namespace GainzTrack.Web.Attributes
 {
-    public class IsAjaxAttribute : ActionMethodSelectorAttribute
+    public class AjaxOnlyAttributeAttribute : ActionMethodSelectorAttribute
     {
         public override bool IsValidForRequest(RouteContext routeContext, ActionDescriptor action)
         {

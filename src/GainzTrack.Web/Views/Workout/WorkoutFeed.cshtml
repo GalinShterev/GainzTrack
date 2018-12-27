@@ -1,0 +1,130 @@
+﻿@model GainzTrack.Web.ViewModels.HomeViewModels.HomeViewModel
+
+<div class="dashboard-content-fluid">
+    <div class="content-fluid">
+        <div class="workouts-container">
+            <div class="workouts-header">
+                <h2>Workouts</h2>
+            </div>
+            <div class="workouts-selector">
+                <div class="workouts-selector-item workouts-selector-item--active"><span>Public</span></div>
+                <div class="workouts-selector-item"><span>Private</span></div>
+            </div>
+            <div class="workout-create-btn-container">
+                <button class="workout-create-btn"></button>
+                <ul class="workout-dropmenu-item dashboard-dropmenu-item--active">
+                    <li class="workout-notification-item">
+                        <a href="/Workout/Create" class="dashboard-notification-content">
+                            <i class="fa fa-dumbbell"></i>
+                            Create Workout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="workouts-list">
+                @foreach (var item in Model.Workouts.Where(x=>x.IsPublic == true))
+                {
+                    <div class="workout-list-item">
+                        <div class="workout-list-item-left">
+                            <h3>@item.Name</h3>
+                            <div class="buttons-holder">
+                                <button class="workout-func-btn">Get Gainz</button>
+                                <button  id="@item.Name" class="workout-func-btn">View</button>
+                                <button class="workout-func-btn"><a href="/Workout/Edit?id=@item.Id&name=@item.Name">Edit</a></button>
+                            </div>
+
+                        </div>
+                        <div class="workout-list-item-right">
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="preview-container">
+
+        </div>
+    </div>
+
+
+    @*<div id="create-workout"><a href="/Workout/Create">Create workout</a></div>
+
+        <hr />
+
+        @foreach (var item in Model.Workouts.Where(x => x.IsPublic == false))
+        {
+            <div class="workout-item">
+                <input type="checkbox" id="click-@item.Name" class="hide-it" />
+                <h2>@item.Name</h2>
+                <label class="open-button" for="click-@item.Name"><a>Open</a></label>
+                <div class="modal-item">
+                    <h2>@item.Name</h2>
+                    @foreach (var workoutDay in item.WorkoutDays)
+                    {
+                        <button class="accordion">@workoutDay.Day</button>
+                        <div class="accordion-panel">
+                            <p>
+                                @foreach (var exercise in workoutDay.ExerciseWorkoutDay)
+                                {
+                                    <h1>@exercise.Exercise.ExerciseName</h1>
+                                }
+                            </p>
+                        </div>
+                    }
+                    <label><a href="/Workout/Edit?id=@item.Id&name=@item.Name">Edit</a></label>
+                    <label class="open-button" for="click-@item.Name"><a>Close</a></label>
+                </div>
+                <div class="overlay"></div>
+            </div>
+        }*@
+</div>
+    @*<div class="dashboard-preview">
+            <!-- Panel (Element)-->
+            <div class="dashboard-preview__panel" data-panel-id="kulon_progo">
+                <!-- Header (Element)-->
+                <div class="dashboard-preview__header">
+                    <h2>Kulon Progo</h2>
+                    <h3>34<span>C</span></h3>
+                </div>
+                <!-- Content (Element)-->
+                <div class="dashboard-preview__content">
+                    <section>
+                        <h2>My Tasks</h2><label><input type="checkbox" /><span>Book tickets</span></label><label><input type="checkbox" /><span>Get passports ready</span></label><label><input type="checkbox" /><span>Book hotel rooms</span></label>
+                    </section>
+                    <section>
+                        <h2>Discussion <span>(36 unread)</span></h2>
+                    </section>
+                    <section>
+                        <h2>Progress <span>(Day 6 of 10)</span></h2>
+                        <div class="progress-bar">
+                            <div class="progress-bar__bar" style="width: #{percetange}%;"></div>
+                            <div class="progress-bar__badge" style="left: #{percetange}%;">58%</div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- Panel (Element)-->
+            <div class="dashboard-preview__panel dashboard-preview__panel--active" data-panel-id="bromo">
+                <!-- Header (Element)-->
+                <div class="dashboard-preview__header">
+                    <h2>Bromo</h2>
+                    <h3>21<span>C</span></h3>
+                </div>
+                <!-- Content (Element)-->
+                <div class="dashboard-preview__content">
+                    <section>
+                        <h2>My Tasks</h2><label><input type="checkbox" /><span>Prepare the Sound Recorder</span></label><label><input type="checkbox" /><span>Book a resturant</span></label><label><input type="checkbox" /><span>Book 24 hotel rooms</span></label>
+                    </section>
+                    <section>
+                        <h2>Discussion <span>(16 unread)</span></h2>
+                    </section>
+                    <section>
+                        <h2>Progress <span>(Day 3 of 10)</span></h2>
+                        <div class="progress-bar">
+                            <div class="progress-bar__bar" style="width: #{percetange}%;"></div>
+                            <div class="progress-bar__badge" style="left: #{percetange}%;">78%</div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>*@

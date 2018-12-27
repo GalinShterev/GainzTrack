@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using GainzTrack.Infrastructure.Identity
+@inject SignInManager<IdentityApplicationUser> SignInManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -6,7 +9,6 @@
     <title>@ViewData["Title"] - GainzTrack.Web</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -14,42 +16,104 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        @*<link rel="stylesheet" href="~/css/site.css" />*@
     </environment>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
 </head>
 <body>
 
+    <div class="dashboard">
+        <header>
+            <nav class="dashboard-header-nav">
+                <div class="dashboard-logo-container">
+                    <a href="#" class="dashboard-logo">GainzTrack</a>
+                    <a href="#" class="dashboard-toggle-btn">
+                        <i class="fa fa-bars">
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">GainzTrack.Web</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>            
+                        </i>
+                    </a>
+                </div>
+                <div class="dashboard-top-nav-container">
+                    <ul class="links">
+                        <li class="dashboard-dropwdown">
+                            <a href="#" class="dashboard-menu-item">
+                                <img src="https://t4.ftcdn.net/jpg/00/58/27/69/240_F_58276968_qorIPJG2Ec0IyJVq5IIxaGv0UKwx6FPn.jpg" class="dashboard-list-img" />
+                            </a>
+                            <ul class="dashboard-dropmenu-item">
+                                <li class="dashboard-notification-item">
+                                    <a href="#" class="dashboard-notification-content">
+                                        <i class="fa fa-edit"></i>
+                                       My Profile
+                                    </a>
+                                </li>
+                                <li class="dashboard-notification-item">
+                                    <a href="#" class="dashboard-notification-content">
+                                        <i class="fa fa-power-off"></i>
+                                        Log out
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside>
+            <!-- Dashboard Sidebar (Block)-->
+            <nav class="dashboard-sidebar">
+                <!-- Dashboard Nav (Block)-->
+
+                <ul>
+                    <!-- Item (Element)-->
+                    <li id="home-feed" class="dashboard-nav__item">
+                        <a href="/Home/Index">
+                            <i class="fa fa-home">
+                                <span class="icon-bg"></span>
+                            </i>
+                            <span class="navbar-item-text">Home</span>
+                        </a>
+                    </li>
+                    <li id="workouts-feed" class="dashboard-nav__item">
+                        <a href="/Workout/Index">
+                            <i class="fa fa-dumbbell">
+                                <span class="icon-bg"></span>
+                            </i>
+                            <span class="navbar-item-text">Workouts</span>
+                        </a>
+                    </li>
+                    <li id="athletes-feed-feed" class="dashboard-nav__item">
+                        <a href="/Users/All">
+                            <i class="fa fa-users">
+                                <span class="icon-bg"></span>
+                            </i>
+                            <span class="navbar-item-text">Discover athletes</span>
+                        </a>
+                    </li>
+                    <li id="achievements-feed" class="dashboard-nav__item">
+                        <a href="#">
+                            <i class="fa fa-trophy">
+                                <span class="icon-bg"></span>
+                            </i>
+                            <span class="navbar-item-text">Achievements</span>
+                        </a>
+                    </li>
+                    @if(this.User.IsInRole("Admin"))
+                    {
+                        @await Html.PartialAsync("_AdministrationPartial.cshtml")
+                    }
                 </ul>
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
+            </nav>
+        </aside>
+        <!-- Dashboard Content (Block)-->
+        <div class="dashboard-content-wrapper">
+            @RenderBody()
         </div>
-    </nav>
 
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - GainzTrack.Web</p>
-        </footer>
     </div>
 
+
     <environment include="Development">
+
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>

@@ -48,6 +48,9 @@ namespace GainzTrack.Web
             services.AddTransient<IUserService, UserService>();
             services.AddScoped<IRepository, DbRepository>();
             services.AddScoped<IHomeViewService, HomeViewService>();
+            services.AddScoped<IWorkoutViewService, WorkoutViewService>();
+            services.AddScoped<IUsersViewService, UsersViewService>();
+            services.AddTransient<IAchievementService, AchievementService>();
 
             //Configure services
             services.Configure<IdentityOptions>(options =>
@@ -129,7 +132,6 @@ namespace GainzTrack.Web
                 }
             }
         }
-
     }
 }
 

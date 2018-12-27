@@ -1,0 +1,28 @@
+﻿@{Layout = null;}
+@model GainzTrack.Web.ViewModels.HomeViewModels.HomeViewModel
+
+
+<div class="card" style="width:100%">
+    <div class="ds-top"></div>
+    <div class="avatar-holder">
+        <img src="http://pluspng.com/img-png/fitness-hd-png-fitness-point-workout-exercise-journal-personal-trainer-body-tracker-3111-1024.png" alt="Default profile">
+    </div>
+    <div class="name">
+        <a href="#" target="_blank">@Model.Username</a>
+        <p>@Model.User.Title.Name</p>
+    </div>
+    <div class="stats-container">
+        <div class="stats-item">
+            <h5>Workouts</h5>
+            <p>@Model.Workouts.Count()</p>
+        </div>
+        <div class="stats-item">
+            <h5>Achievements</h5>
+            <p>@Model.User.AchievementUsers.Count</p>
+        </div>
+        <div class="stats-item">
+            <h5>Points</h5>
+            <p>@Model.User.AchievementPoints</p>
+        </div>
+    </div>
+</div>

@@ -7,8 +7,12 @@
 @inject SignInManager<IdentityApplicationUser> SignInManager
 
 @{
+    Layout = null;
     ViewData["Title"] = "Log in";
 }
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/css/site.css" />
 
 <h2>@ViewData["Title"]</h2>
 <div class="row">

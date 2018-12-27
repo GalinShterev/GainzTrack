@@ -26,11 +26,17 @@ namespace GainzTrack.Infrastructure.Data.Migrations
 
                     b.Property<int>("AchievementPointsGain");
 
+                    b.Property<string>("CreatedById");
+
                     b.Property<string>("ExerciseId");
 
-                    b.Property<string>("Name");
+                    b.Property<int>("OverloadAmount");
+
+                    b.Property<int>("OverloadType");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("ExerciseId");
 
@@ -115,6 +121,8 @@ namespace GainzTrack.Infrastructure.Data.Migrations
                     b.Property<string>("IdentityUserId");
 
                     b.Property<string>("TitleId");
+
+                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 
@@ -334,6 +342,10 @@ namespace GainzTrack.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("GainzTrack.Core.Entities.Achievement", b =>
                 {
+                    b.HasOne("GainzTrack.Core.Entities.MainUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
                     b.HasOne("GainzTrack.Core.Entities.Exercise", "Exercise")
                         .WithMany("InAchievements")
                         .HasForeignKey("ExerciseId");

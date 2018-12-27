@@ -14,6 +14,7 @@ namespace GainzTrack.Core.Interfaces
         void Delete<T>(T entity) where T : BaseEntity;
         IEnumerable<T> List<T>(IExpression<T> expression) where T : BaseEntity;
         T GetBy<T>(IExpression<T> expression) where T : BaseEntity;
+        T GetBy<T>(Func<T, bool> predicate)where T : class;
         void DeleteAllBy<T>(IExpression<T> expression) where T : BaseEntity;
     }
 }

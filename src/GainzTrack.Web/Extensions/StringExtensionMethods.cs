@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace GainzTrack.Web.Utilities
+namespace GainzTrack.Web.Extensions
 {
     public static class StringExtensionMethods
     {

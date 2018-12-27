@@ -49,11 +49,13 @@ namespace GainzTrack.Infrastructure.Data
                 .Aggregate(queryableResultWithncludes,
                     (current, include) => current.Include(include));
 
-
-
-
             return finalResult
                  .SingleOrDefault(expression.Criteria);
+        }
+
+        public T GetBy<T>(Func<T, bool> prediacte) where T : class
+        {
+            return _context.Set<T>().SingleOrDefault(prediacte);
         }
 
         public T GetById<T>(string id) where T : BaseEntity

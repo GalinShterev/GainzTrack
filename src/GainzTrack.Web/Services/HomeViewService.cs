@@ -22,7 +22,7 @@ namespace GainzTrack.Web.Services
 
         public HomeViewModel GetHomeViewModel(string username)
         {
-            var identityUserId = _userService.GetIdentityIdWithUsername(username);
+            var identityUserId = _userService.GetIdentityIdByUsername(username);
             var userExpression = new MainUserWithTitleExpression(identityUserId);
 
             var user = _repository.GetBy<MainUser>(userExpression);
@@ -30,8 +30,10 @@ namespace GainzTrack.Web.Services
             var workoutExpression = new WorkoutRoutineWithWourkoutDaysExpression(user.Id);
             var workout = _repository.List<WorkoutRoutine>(workoutExpression);
 
+
             return new HomeViewModel
             {
+                Username = username,
                 User = user,
                 Workouts = workout
             };

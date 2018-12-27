@@ -18,7 +18,6 @@ namespace GainzTrack.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var exercises = _repository.List<Exercise>();
-
             return this.View(exercises);
         }
     }

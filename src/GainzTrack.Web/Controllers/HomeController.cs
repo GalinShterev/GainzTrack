@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using GainzTrack.Web.ViewModels.HomeViewModels;
 using GainzTrack.Core.Interfaces;
 using GainzTrack.Web.Interfaces;
+using GainzTrack.Web.Attributes;
 
 namespace GainzTrack.Web.Controllers
 { 
@@ -30,9 +31,16 @@ namespace GainzTrack.Web.Controllers
             if(this.User.Identity.IsAuthenticated == true)
             {
                var model = _homeViewService.GetHomeViewModel(this.User.Identity.Name);
-               return View("Profile", model);
+               return View("HomeTestView", model);
             }
             return View();
+        }
+
+        [AjaxOnlyAttribute]
+        public IActionResult GetHomeFeed()
+        {
+            var model = _homeViewService.GetHomeViewModel(this.User.Identity.Name);
+            return this.View(model);
         }
 
         public IActionResult About()

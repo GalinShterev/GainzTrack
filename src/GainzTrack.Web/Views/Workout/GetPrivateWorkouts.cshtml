@@ -1,0 +1,24 @@
+﻿@model GainzTrack.Web.ViewModels.WorkoutViewModels.WorkoutsPreviewViewModel
+
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model.Workouts.Where(x => x.IsPublic == false))
+{
+    <div class="workout-list-item">
+        <div class="workout-list-item-left">
+            <h3>@item.Name</h3>
+            <div class="buttons-holder">
+                <button class="workout-func-btn">Get Gainz</button>
+                <button id="@item.Name" class="workout-func-btn">View</button>
+                <button class="workout-func-btn"><a href="/Workout/Edit?id=@item.Id&name=@item.Name">Edit</a></button>
+            </div>
+
+        </div>
+        <div class="workout-list-item-right">
+
+        </div>
+    </div>
+}
+    <script src="~/js/workout-preview.js"></script>

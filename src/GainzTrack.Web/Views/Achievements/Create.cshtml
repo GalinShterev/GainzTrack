@@ -1,0 +1,47 @@
+﻿@using GainzTrack.Core.Interfaces
+@model GainzTrack.Core.DTOs.AchievementsDTOs.CreateAchievementDto
+@inject IExercisesService ExercisesService
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<div class="form-container">
+    <form id="ms-form" asp-controller="Achievements" asp-action="Create" method="post">
+        <fieldset>
+            <div>
+                <select name="OverloadType" class="form-control" style="width:80%;margin:0 auto;">
+                        <option value="Repetitions">Repetitions</option>
+                        <option value="Seconds">Seconds</option>
+                </select>
+
+                <input asp-for="OverloadAmount" placeholder="Overload amount" />
+                <div style="margin-bottom:10px;">
+                    <span asp-validation-for="OverloadAmount" class="text-danger"></span>
+                </div>
+                <input asp-for="AchievementPoints" placeholder="Points gain" />
+                <div style="margin-bottom:10px;">
+                    <span asp-validation-for="AchievementPoints" class="text-danger"></span>
+                </div>
+                <select name="ExerciseName" class="form-control" style="width:80%;margin:0 auto;">
+                    @foreach (var exercise in ExercisesService.GetExercisesNames())
+                    {
+                        <option value="@exercise">@exercise</option>
+                    }
+                </select>
+            </div>
+            <button class="submit action-btn" type="submit">Create</button>
+        </fieldset>
+    </form>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

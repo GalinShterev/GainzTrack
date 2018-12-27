@@ -1,0 +1,47 @@
+﻿@model GainzTrack.Web.ViewModels.WorkoutViewModels.WorkoutPreviewViewModel
+@{
+    Layout = null;
+}
+
+<div class="table-title">
+    <h2>@Model.Workout.Name Preview</h2>
+</div>
+<table class="table-fill">
+    <thead>
+        <tr>
+            <th class="text-left">Day</th>
+            <th class="text-left">Exercises</th>
+        </tr>
+    </thead>
+    <tbody class="table-hover">
+
+        @foreach (var item in Model.Workout.WorkoutDays)
+        {
+            <tr>
+                <td class="text-left">@item.Day.ToString()</td>
+                <td class="text-left">
+                    @foreach(var exercise in item.ExerciseWorkoutDay)
+                    {
+                        @exercise.Exercise.ExerciseName<br/>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@*<h1>@Model.Workout.Name</h1>
+    <hr />
+    @foreach (var item in Model.Workout.WorkoutDays)
+    {
+        <h2>@item.Day.ToString()</h2>
+        <hr />
+        @foreach (var exercise in item.ExerciseWorkoutDay)
+        {
+            <div><p class="exercise-preview">@exercise.Exercise.ExerciseName</p></div>
+        }
+
+    }
+    <div class="exercise-preview"><a href="/Workout/Edit?id=@Model.Workout.Id&name=@Model.Workout.Name">Edit</a></div>*@
+@*<div class="exercise-preview"><a href="/Workout/Delete?id=@Model.Workout.Id&name=@Model.Workout.Name">Delete</a></div>*@

@@ -207,106 +207,6 @@ $('.days-dropdown').on('click', '.remove-day-style', function () {
     }
 });
 
-
-//animating = false;
-
-//$('#home-feed').on('click', function () {
-//    if (animating) { return false; }
-//    animating = true;
-//    $.ajax({
-//        url: '/Home/GetHomeFeed',
-//        dataType: "html",
-//        success: function (data) {
-//            $('.dashboard-content').html("");
-//            $('.dashboard-content').append(data);
-//            animating = false;
-//        }
-//    });
-//});
-
-//$('#workouts-feed').on('click', function () {
-//    if (animating) { return false; }
-//    animating = true;
-//    $.ajax({
-//        url: '/Workout/WorkoutFeed',
-//        dataType: "html",
-//        success: function (data) {
-//            $('.dashboard-content').html("");
-//            $('.dashboard-content').append(data);
-//            animating = false;
-//        }
-//    });
-//});
-
-//$('#athletes-feed').on('click', function () {
-//    if (animating) { return false; }
-//    animating = true;
-//    $.ajax({
-//        url: '/Users/GetAllUsers',
-//        dataType: "html",
-//        success: function (data) {
-//            $('.dashboard-content').html("");
-//            $('.dashboard-content').append(data);
-//            animating = false;
-//        }
-//    });
-//});
-
-//$('#administration-feed').on('click', function () {
-//    if (animating) { return false; }
-//    animating = true;
-//    $.ajax({
-//        url: '/Administration/Index',
-//        dataType: "html",
-//        success: function (data) {
-//            $('.dashboard-content').html("");
-//            $('.dashboard-content').append(data);
-//            animating = false;
-//        }
-//    });
-//});
-
-
-////$('#create-workout').on('click', function () {
-////    $.ajax({
-////        url: '/Workout/Create',
-////        dataType: "html",
-////        success: function (data) {
-////            $('.dashboard-content').html("");
-////            $('.dashboard-content').append(data);
-////        }
-////    });
-////});
-
-
-
-    //$('.dashboard-nav__item').on('click', function (e) {
-    //    var itemId;
-    //    $('.dashboard-nav__item').removeClass('dashboard-nav__item--selected');
-    //    $(this).addClass('dashboard-nav__item--selected');
-    //    itemId = $(this).attr('id');
-    //    $('.dashboard-content__panel').hide();
-    //    $('.dashboard-content__panel[data-panel-id=' + itemId + ']').show();
-    //    if (itemId === 'workouts-feed') {
-    //        $('.dashboard-preview').show();
-    //    } else {
-    //        $('.dashboard-preview').hide();
-    //    }
-    //});
-
-//    $('.dashboard-list__item').on('click', function (e) {
-//        var itemId;
-//        $('.dashboard-list__item').removeClass('dashboard-list__item--active');
-//        $(this).addClass('dashboard-list__item--active');
-//        itemId = $(this).attr('data-item-id');
-//        $('.dashboard-preview__panel').hide();
-//        $('.dashboard-preview__panel[data-panel-id=' + itemId + ']').show();
-//        return console.log(itemId);
-//    });
-
-//}).call(this);
-
-
 $('.workout-func-btn').on('click', function () {
     $('.preview-container').html("");
     var workoutName = $(this).attr('id');
@@ -421,3 +321,16 @@ $('.workouts-selector-item').on('click', function () {
         });
 });
 
+
+$('#logout-btn').on('click', function () {
+    $('#logout-form').submit();
+});
+
+
+$('.achievements-menu-item').on('click', function () {
+
+    var activeItemClass = 'achievements-menu-item--active';
+
+    $('.achievements-menu-item').removeClass(activeItemClass);
+    $(this).addClass(activeItemClass)
+});

@@ -16,6 +16,8 @@ namespace GainzTrack.Core.DTOs.AchievementsDTOs
         [Required]
         public string OverloadType { get; set; }
         [Required]
+        public string Difficulty { get; set; }
+        [Required]
         public int OverloadAmount { get; set; }
     }
 }

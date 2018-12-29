@@ -49,8 +49,13 @@ namespace GainzTrack.Infrastructure.Data
                 .Aggregate(queryableResultWithncludes,
                     (current, include) => current.Include(include));
 
+            if (expression.Criteria != null)
+                finalResult = finalResult.Where(expression.Criteria);
+            if (expression.OrderBy != null)
+                finalResult = finalResult.OrderBy(expression.OrderBy);
+
             return finalResult
-                 .SingleOrDefault(expression.Criteria);
+                 .SingleOrDefault();
         }
 
         public T GetBy<T>(Func<T, bool> prediacte) where T : class
@@ -79,9 +84,20 @@ namespace GainzTrack.Infrastructure.Data
                 .Aggregate(queryableResultWithncludes,
                     (current, include) => current.Include(include));
 
-            return finalResult
-                 .Where(expression.Criteria)
+            if(expression.Criteria != null)
+                finalResult = finalResult.Where(expression.Criteria);
+
+
+            if(expression.OrderBy != null)
+                finalResult = finalResult.OrderBy(expression.OrderBy);
+
+            return finalResult             
                  .ToList();
+        }
+
+        public IEnumerable<T> List<T>(Func<T, bool> predicate) where T : BaseEntity
+        {
+            return _context.Set<T>().Where(predicate).ToList();
         }
 
         public void Update<T>(T entity) where T : BaseEntity

@@ -16,13 +16,11 @@ namespace GainzTrack.Web.Controllers
 { 
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IHomeViewService _homeViewService;
 
         public HomeController(ApplicationDbContext context,
             IHomeViewService homeViewService)
         {
-            _context = context;
             _homeViewService = homeViewService;
         }
 

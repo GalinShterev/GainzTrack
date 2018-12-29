@@ -12,6 +12,7 @@
             <th>Id</th>
             <th>Exercise</th>
             <th>Reps/Secs</th>
+            <th>Difficulty</th>
             <th>Created By</th>
             <th>Actions</th>
         </tr>
@@ -19,28 +20,30 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.Exercise.ExerciseName</td>
-                <td>@item.OverloadAmount</td>
-                <td>@item.CreatedBy.Username</td>
-                <td>
-                    <label class="dropdown">
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Exercise.ExerciseName</td>
+            <td>@item.OverloadAmount</td>
+            <td>@item.Difficulty</td>
+            <td>@item.CreatedBy.Username</td>
 
-                        <div class="dd-button">
-                            Actions
-                        </div>
+            <td>
+                <label class="dropdown">
 
-                        <input type="checkbox" class="dd-input" id="test">
+                    <div class="dd-button">
+                        Actions
+                    </div>
 
-                        <ul class="dd-menu">
-                            <li>Edit</li>
-                            <li>Delete</li>
-                        </ul>
+                    <input type="checkbox" class="dd-input" id="test">
 
-                    </label>
-                </td>
-            </tr>
+                    <ul class="dd-menu">
+                        <li>Edit</li>
+                        <li>Delete</li>
+                    </ul>
+
+                </label>
+            </td>
+        </tr>
         }
 
     </tbody>

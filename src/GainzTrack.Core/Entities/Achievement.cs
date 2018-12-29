@@ -16,6 +16,8 @@ namespace GainzTrack.Core.Entities
 
         public OverloadType OverloadType { get; set; }
 
+        public ExerciseDifficulty Difficulty { get; set; }
+
         public int OverloadAmount { get; set; }
 
         public string ExerciseId { get; set; }

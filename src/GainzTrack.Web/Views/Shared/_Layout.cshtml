@@ -43,15 +43,19 @@
                                 <li class="dashboard-notification-item">
                                     <a href="#" class="dashboard-notification-content">
                                         <i class="fa fa-edit"></i>
-                                       My Profile
+                                        My Profile
                                     </a>
                                 </li>
+                                
                                 <li class="dashboard-notification-item">
-                                    <a href="#" class="dashboard-notification-content">
-                                        <i class="fa fa-power-off"></i>
-                                        Log out
-                                    </a>
+                                    <form id="logout-form" asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+                                        <a href="#" id="logout-btn" class="dashboard-notification-content">
+                                            <i class="fa fa-power-off"></i>
+                                            Log out
+                                        </a>
+                                    </form>
                                 </li>
+                                
                             </ul>
                         </li>
                     </ul>
@@ -90,7 +94,7 @@
                         </a>
                     </li>
                     <li id="achievements-feed" class="dashboard-nav__item">
-                        <a href="#">
+                        <a href="/Achievements/Index">
                             <i class="fa fa-trophy">
                                 <span class="icon-bg"></span>
                             </i>

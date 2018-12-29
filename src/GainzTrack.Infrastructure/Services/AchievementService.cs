@@ -1,6 +1,7 @@
 ﻿using GainzTrack.Core.DTOs.AchievementsDTOs;
 using GainzTrack.Core.Entities;
 using GainzTrack.Core.Enums;
+using GainzTrack.Core.Expressions;
 using GainzTrack.Core.Interfaces;
 using GainzTrack.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -26,21 +27,37 @@ namespace GainzTrack.Infrastructure.Services
             var exercise = _exercisesService.GetSingleExerciseByName(dto.ExerciseName);
             if(exercise == null)
             {
-                throw new Exception("Invalid exercise");
+                throw new InvalidOperationException("Invalid exercise");
             }
             var createdBy = _userService.GetMainUserByUsername(dto.CreatorUsername);
             var overloadType = (OverloadType)Enum.Parse(typeof(OverloadType), dto.OverloadType);
+            var difficulty = (ExerciseDifficulty)Enum.Parse(typeof(ExerciseDifficulty), dto.Difficulty);
             var achievementEntity = new Achievement
             {
                 AchievementPointsGain = dto.AchievementPoints,
                 CreatedBy = createdBy,
                 Exercise = exercise,
                 OverloadAmount = dto.OverloadAmount,
-                OverloadType = overloadType
+                OverloadType = overloadType,
+                Difficulty = difficulty
             };
 
            return _repository.Add<Achievement>(achievementEntity);
 
+        }
+
+        public IEnumerable<Achievement> FilterAchievements(ExerciseDifficulty difficulty)
+        {
+            //Int value of all flags summed
+            if((int)difficulty == 14)
+            {
+                var allExpression = new AchievementsFilterWithExercise();
+                return _repository.List<Achievement>(allExpression);
+            }
+              
+            var filterExpression = new AchievementsFilterWithExercise(difficulty);
+            return _repository.List<Achievement>(filterExpression);
+            
         }
     }
 }

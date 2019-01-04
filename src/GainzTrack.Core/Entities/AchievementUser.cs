@@ -9,6 +9,10 @@ namespace GainzTrack.Core.Entities
         public string AchievementId { get; set; }
         public Achievement Achievement { get; set; }
 
+        public string VideoId { get; set; }
+
+        public bool IsApproved { get; set; }
+
         public string UserId { get; set; }
         public MainUser User { get; set; }
     }

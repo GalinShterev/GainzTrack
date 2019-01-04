@@ -1,4 +1,5 @@
-﻿using GainzTrack.Core.Entities;
+﻿using GainzTrack.Core.DTOs.AchievementsDTOs;
+using GainzTrack.Core.Entities;
 using GainzTrack.Web.ViewModels.AchievementsViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,7 @@ namespace GainzTrack.Web.Interfaces
     public interface IAchievementsViewService
     {
         AchievementViewModel[] ListAchievements(IEnumerable<Achievement> achievements);
+        AttemptAchievementViewModel GetAchievementAttempt(string id);
+        CreateAchievementUserDto GetAchievementUserDto(string username, string videoId, string achievementId);
     }
 }

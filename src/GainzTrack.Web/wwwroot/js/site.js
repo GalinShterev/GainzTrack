@@ -202,7 +202,7 @@ $('.days-dropdown').on('click', '.remove-day-style', function () {
     //$('#' + button_id).remove();
     //$('#add-day').remove();
 
-    if ($('.days-dropdown').has('select').length == 0) {
+    if ($('.days-dropdown').has('select').length === 0) {
         id = 0;
     }
 });
@@ -334,3 +334,41 @@ $('.achievements-menu-item').on('click', function () {
     $('.achievements-menu-item').removeClass(activeItemClass);
     $(this).addClass(activeItemClass)
 });
+
+$(".show").on("click", function () {
+
+    var achievementId = $(this).parents().eq(1).children().eq(0).text();
+
+    $.ajax({
+        url: '/Moderation/GetAchievementUserModal',
+        dataType: "html",
+        data: { achievementUserId: achievementId },
+        success: function (data) {
+            $('.dashboard-content-wrapper').append(data);
+            $(".mask").addClass("active");
+        }
+    });
+
+    
+});
+
+// Function for close the Modal
+
+function closeModal() {
+    $(".mask").removeClass("active");
+    $('.mask').remove();
+    $('.modal').remove();
+}
+
+// Call the closeModal function on the clicks/keyboard
+
+$(".close, .mask").on("click", function () {
+    closeModal();
+});
+
+$(document).keyup(function (e) {
+    if (e.keyCode === 27) {
+        closeModal();
+    }
+});
+

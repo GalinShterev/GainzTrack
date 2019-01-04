@@ -1,6 +1,8 @@
 ﻿using GainzTrack.Core.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace GainzTrack.Core.Entities
@@ -17,7 +19,8 @@ namespace GainzTrack.Core.Entities
 
         public string IdentityUserId { get; set; }
 
-        public int AchievementPoints { get; set; }
+        [NotMapped]
+        public int AchievementPoints => this.AchievementUsers.Where(x => x.IsApproved == true).Sum(x => x.Achievement.AchievementPointsGain);
 
         public string TitleId { get; set; }
         public Title Title { get; set; }

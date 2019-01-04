@@ -12,6 +12,8 @@ namespace GainzTrack.Core.Expressions
         {
             AddInclude(b => b.Title);
             AddInclude(b => b.WorkoutRoutines);
+            AddInclude(b => b.AchievementUsers);
+            AddInclude("AchievementUsers.Achievement");
         }
     }
 }

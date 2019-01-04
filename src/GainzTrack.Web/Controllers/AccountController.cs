@@ -234,7 +234,7 @@ namespace GainzTrack.Web.Controllers
 
                 var identityUser = new IdentityApplicationUser { UserName = model.Email, Email = model.Email };
 
-                var user = new MainUser { Username = identityUser.UserName ,IdentityUserId = identityUser.Id, TitleId = titleId, AchievementPoints = INITIAL_ACHIEVEMENT_POINTS };
+                var user = new MainUser { Username = identityUser.UserName ,IdentityUserId = identityUser.Id, TitleId = titleId};
 
                 _context.MainUsers.Add(user);
                 try

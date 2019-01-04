@@ -1,0 +1,37 @@
+﻿@model GainzTrack.Core.Entities.AchievementUser[]
+
+<div class="admin-header">
+    <span><a class="remove-textdec option--active" asp-action="Index" asp-route-section="achievements">Achievements</a></span>
+    <span><a class="remove-textdec" asp-action="Index" asp-route-section="reports">Reports</a></span>
+</div>
+
+<div class="result-container"></div>
+
+<table class="table-administration" style="margin-top:10px;">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Exercise</th>
+            <th>Reps/Secs</th>
+            <th>Points</th>
+            <th>Video</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Where(x=>x.IsApproved == false))
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Achievement.Exercise.ExerciseName</td>
+                <td>@item.Achievement.OverloadAmount</td>
+                <td>@item.Achievement.AchievementPointsGain</td>
+                <td><button class="show">View Video</button></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+
+

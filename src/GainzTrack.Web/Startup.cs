@@ -17,6 +17,7 @@ using GainzTrack.Infrastructure.Identity;
 using GainzTrack.Core.Interfaces;
 using GainzTrack.Infrastructure.Services;
 using GainzTrack.Web.Interfaces;
+using GainzTrack.Infrastructure.Interfaces;
 
 namespace GainzTrack.Web
 {
@@ -52,6 +53,7 @@ namespace GainzTrack.Web
             services.AddScoped<IUsersViewService, UsersViewService>();
             services.AddTransient<IAchievementService, AchievementService>();
             services.AddTransient<IAchievementsViewService, AchievementsViewService>();
+            services.AddTransient<IVideoService, VideoService>();
 
             //Configure services
             services.Configure<IdentityOptions>(options =>
@@ -122,8 +124,7 @@ namespace GainzTrack.Web
                 var createPowerUser = await UserManager.CreateAsync(powerUser, userPassword);
                 Context.MainUsers.Add(new MainUser
                 {
-                    IdentityUserId = powerUser.Id,
-                    AchievementPoints = 500,
+                    IdentityUserId = powerUser.Id
 
                 });
 

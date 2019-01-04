@@ -1,0 +1,72 @@
+﻿@model GainzTrack.Web.ViewModels.AchievementsViewModels.AttemptAchievementViewModel
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<div class="form-container">
+    <form id="ms-form" asp-controller="Achievements" asp-action="Attempt" enctype="multipart/form-data" method="post">
+        <ul id="progress-bar">
+            <li class="active-bar">Exercise Information</li>
+            <li>Video Setup</li>
+        </ul>
+        <fieldset>
+            <div>
+                <h2 class="fs-title">@Model.ExerciseName</h2>
+            </div>
+                <div class="exercise-information-container">
+                    <div class="exercise-video-holder">
+                        @await Component.InvokeAsync("EmbedVideo", Model.Id)
+                    </div>
+                    <div class="achievement-information">
+                        <div class="achievement-information-item">
+                            <h4>Difficulty</h4>
+                            <span>@Model.Difficulty</span>
+                        </div>
+                        <div class="achievement-information-item">
+                            <h4>@Model.OverloadType</h4>
+                            <span>@Model.OverloadAmount</span>
+                        </div>
+                        <div class="achievement-information-item">
+                            <h4>Points</h4>
+                            <span>@Model.Points</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="next action-btn" type="button">Next</button>
+                
+
+        </fieldset>
+        <fieldset>
+            <div>
+                <h2 class="fs-title">Video Setup</h2>
+            </div>
+            <div class="setup-information">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Important!</strong> In order to attempt an achievement you have to upload a video to <a href="http://www.youtube.com" target="_blank">YouTube</a> of yourself doing the exercise with a proper form and doing the
+                    required amount of overload(Repetitions/Seconds).It's not mandatory that the video is public, it could be unlisted as long as the link
+                    is active so our moderation team can view it.The video will be public on GainzTrack though, as all achievements of everyone are public
+                    to avoid cheating and incorrect admissions.
+                </div>
+                <input asp-for="Video" formenctype="multipart/form-data"/>      
+                <input name="Id" type="hidden" value="@Model.Id" />
+            </div>
+            <button class="previous action-btn" type="button">Prev</button>
+            <button id="submit-workout" class="submit action-btn" type="submit">Submit</button>
+        </fieldset>
+    </form>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+
+

@@ -11,5 +11,10 @@ namespace GainzTrack.Core.Interfaces
     {
         Achievement CreateAchievement(CreateAchievementDto dto);
         IEnumerable<Achievement> FilterAchievements(ExerciseDifficulty difficulty);
+        AchievementUser CreateAchievementUser(CreateAchievementUserDto dto);
+        AchievementUser[] ListAchievementUsers();
+        AchievementUser GetAchievementUserById(string achievementUserId);
+        void ApproveAchievement(AchievementUser achievementUser);
+        void DenyAchievement(AchievementUser achievementUser);
     }
 }

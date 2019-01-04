@@ -101,6 +101,13 @@
                             <span class="navbar-item-text">Achievements</span>
                         </a>
                     </li>
+                    <hr />
+
+                    @if(this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+                    {
+                        @await Html.PartialAsync("_ModerationPartial.cshtml")
+
+                    }
                     @if(this.User.IsInRole("Admin"))
                     {
                         @await Html.PartialAsync("_AdministrationPartial.cshtml")

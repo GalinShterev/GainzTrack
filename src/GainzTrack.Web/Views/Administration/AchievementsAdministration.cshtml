@@ -1,1 +1,56 @@
-﻿
+﻿@model GainzTrack.Core.Entities.Achievement[]
+
+<div class="admin-header">
+    <span><a class="remove-textdec option--active" asp-action="Index" asp-route-section="achievements">Achievements</a></span>
+    <span><a class="remove-textdec" asp-action="Index" asp-route-section="users">Users</a></span>
+    <span><a class="remove-textdec" asp-action="Index" asp-route-section="exercises">Exercises</a></span>
+</div>
+
+<div class="create-achievement-btn-container">
+    <button class="create-achievement-btn"><a href="/Achievements/Create" class="create-achievement-btn">Create</a></button>
+</div>
+<table class="table-administration">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Exercise</th>
+            <th>Reps/Secs</th>
+            <th>Difficulty</th>
+            <th>Created By</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Exercise.ExerciseName</td>
+                <td>@item.OverloadAmount</td>
+                <td>@item.Difficulty</td>
+                <td>@item.CreatedBy.Username</td>
+
+                <td>
+                    <label class="dropdown">
+
+                        <div class="dd-button">
+                            Actions
+                        </div>
+
+                        <input type="checkbox" class="dd-input" id="test">
+
+                        <ul class="dd-menu">
+                            <li><a href="/Achievements/Edit?achievementId=@item.Id">Edit</a></li>
+                            <li>Delete</li>
+                        </ul>
+
+                    </label>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+

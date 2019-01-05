@@ -35,6 +35,23 @@ namespace GainzTrack.Web.Services
             };
         }
 
+        public EditAchievementDto GetEditAchievementDto(string achievementId)
+        {
+            var expression = new AchievementsWithExercisesExpression(achievementId);
+            var entity = _repository.GetBy<Achievement>(expression);
+
+            return new EditAchievementDto
+            {
+                AchievementPoints = entity.AchievementPointsGain,
+                CreatorUsername = entity.CreatedBy.Username,
+                Difficulty = entity.Difficulty.ToString(),
+                ExerciseName = entity.Exercise.ExerciseName,
+                OverloadAmount = entity.OverloadAmount,
+                OverloadType = entity.OverloadType.ToString(),
+                Id = achievementId
+            };
+        }
+
         public CreateAchievementUserDto GetAchievementUserDto(string username,string videoId,string achievementId)
         {
             return new CreateAchievementUserDto

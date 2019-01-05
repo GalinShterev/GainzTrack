@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using GainzTrack.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,27 @@ namespace GainzTrack.Web.Controllers
 {
     public class AdministrationController : Controller
     {
-        [Authorize(Roles="Admin")]
-        public IActionResult Index()
+        private readonly IAchievementService _achievementService;
+        public AdministrationController(IAchievementService achievementService)
         {
-            return this.View();
+            _achievementService = achievementService;
+        }
+        [Authorize(Roles="Admin")]
+        public IActionResult Index(string section)
+        {
+
+            switch (section)
+            {
+                case "achievements":
+                    return this.View("AchievementsAdministration", _achievementService.ListAchievements());
+                case "users":
+                    return this.View("UsersAdministration");
+                case "exercises":
+                    return this.View("ExercisesAdministration");
+
+            }
+
+            return this.Index("achievements");
         }
     }
 }

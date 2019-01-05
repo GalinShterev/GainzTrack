@@ -24,9 +24,10 @@ $('#control-button-approve').on('click', function () {
         dataType: "html",
         data: { achievementUserId: achievementUserId },
         success: function (data) {
-            location.reload();
+            closeModal();
         }
     });
+    closeModal();
 });
 
 $('#control-button-deny').on('click', function () {

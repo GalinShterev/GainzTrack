@@ -51,6 +51,21 @@ namespace GainzTrack.Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        public IActionResult Edit(string achievementId)
+        {
+            var model = _achivementsViewService.GetEditAchievementDto(achievementId);
+            return this.View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult Edit(EditAchievementDto dto)
+        {
+            _achievementService.EditAchievement(dto);
+            return Redirect("/Administration/Index");
+        }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return this.View();

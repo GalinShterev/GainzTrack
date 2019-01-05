@@ -82,6 +82,21 @@ namespace GainzTrack.Infrastructure.Services
             _repository.Delete<AchievementUser>(achievementUser);
         }
 
+        public void EditAchievement(EditAchievementDto achievementDto)
+        {
+            var entity = _repository.GetById<Achievement>(achievementDto.Id);
+
+            var exercise = _exercisesService.GetSingleExerciseByName(achievementDto.ExerciseName);
+
+            entity.AchievementPointsGain = achievementDto.AchievementPoints;
+            entity.Difficulty = (ExerciseDifficulty)Enum.Parse(typeof(ExerciseDifficulty), achievementDto.Difficulty);
+            entity.Exercise = exercise;
+            entity.OverloadAmount = achievementDto.OverloadAmount;
+            entity.OverloadType = (OverloadType)Enum.Parse(typeof(OverloadType), achievementDto.OverloadType);
+
+            _repository.Update<Achievement>(entity);
+        }
+
         public IEnumerable<Achievement> FilterAchievements(ExerciseDifficulty difficulty)
         {
             //Int value of all flags summed
@@ -102,6 +117,14 @@ namespace GainzTrack.Infrastructure.Services
             var model = _repository.GetBy<AchievementUser>(expression);
 
             return model;
+        }
+
+        public Achievement[] ListAchievements()
+        {
+            var expression = new AchievementsWithExercisesExpression();
+            var achievements = _repository.List<Achievement>(expression);
+
+            return achievements.ToArray();
         }
 
         public AchievementUser[] ListAchievementUsers()

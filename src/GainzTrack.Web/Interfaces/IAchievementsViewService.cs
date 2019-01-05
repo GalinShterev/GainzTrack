@@ -13,5 +13,6 @@ namespace GainzTrack.Web.Interfaces
         AchievementViewModel[] ListAchievements(IEnumerable<Achievement> achievements);
         AttemptAchievementViewModel GetAchievementAttempt(string id);
         CreateAchievementUserDto GetAchievementUserDto(string username, string videoId, string achievementId);
+        EditAchievementDto GetEditAchievementDto(string achievementId);
     }
 }

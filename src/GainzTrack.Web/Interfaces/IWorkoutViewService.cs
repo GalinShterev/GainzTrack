@@ -8,7 +8,8 @@ namespace GainzTrack.Web.Interfaces
 {
     public interface IWorkoutViewService
     {
-        WorkoutPreviewViewModel GetWorkoutPreview(string workoutName,string username);
-        WorkoutsPreviewViewModel GetWorkoutsPreview(string username);
+        WorkoutPreviewViewModel GetWorkoutPreviewByName(string workoutName,string username);
+        WorkoutPreviewViewModel GetWorkoutPreviewById(string id);
+        WorkoutsPreviewViewModel GetWorkoutsPreviewByName(string username);
     }
 }

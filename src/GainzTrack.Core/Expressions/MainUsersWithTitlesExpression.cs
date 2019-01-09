@@ -10,7 +10,6 @@ namespace GainzTrack.Core.Expressions
         public MainUsersWithTitlesExpression()
             :base(b=>b == b)
         {
-            AddInclude(b => b.Title);
             AddInclude(b => b.WorkoutRoutines);
             AddInclude(b => b.AchievementUsers);
             AddInclude("AchievementUsers.Achievement");

@@ -34,10 +34,30 @@
         </fieldset>
         <fieldset>
             <div>
+                <div id="custom-exercise-error" class="alert alert-danger" role="alert"></div>
+                <div id="custom-exercise-success" class="alert alert-success" role="alert"></div>
                 <h2 class="fs-title">Exercises Setup</h2>
-                <div class="days-dropdown">
 
+                <input type="checkbox" id="click-custom-modal" class="hide-it custom-exercise" />
+                <label id="add-custom-exercise" for="click-custom-modal"><a class="exercise-action-btn">Add custom exercise</a></label>
+
+
+                <div class="custom-exercises-modal-item">
+                    <label id="custom-exercises-close" class="close-exercises" for="click-custom-modal">X</label>
+                    <label>Exercise name</label>
+                    <input id="custom-exercise-name" type="text" placeholder="Exercise name" />
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Important!</strong> provide a valid video url using <a href="http://www.youtube.com" target="_blank">YouTube</a>
+                        of the proper form of the exercise.You can easily find one with simple search!
+                    </div>
+                    <input id="custom-exercise-videoUrl" type="url" placeholder="Video url" />
+
+                    <div class="custom-exercise-submit">Submit</div>
+                </div>
+                <div class="overlay"></div>
+                <div class="days-dropdown">
                     <h4 id="add-day" class="add-day-style">Add day</h4>
+
                 </div>
             </div>
             <button class="previous action-btn" type="button">Prev</button>

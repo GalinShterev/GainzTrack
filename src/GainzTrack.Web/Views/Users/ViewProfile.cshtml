@@ -1,0 +1,34 @@
+﻿@model GainzTrack.Web.ViewModels.UsersViewModels.ProfileViewModel
+
+<div class="profile-header" style="box-shadow: 1px 5px 5px #@Model.Color;">
+    <div class="profile-information">
+        <div class="profile-avatar-holder"><img src="/@Model.Avatar" /></div>
+        <div class="profile-name">
+            <h2 id="get-profile-user">@Model.Username</h2>
+            <h5><i>@Model.Title</i></h5>
+        </div>
+    </div>
+    <nav class="profile-navigation">
+        <a href="#" class="profile-navigation-item profile-navigation-item--active">Workouts</a>
+        <a href="#" class="profile-navigation-item">Achievements</a>
+    </nav>
+</div>
+
+<div class="profile-content-container">
+    @foreach (var workout in Model.Workouts)
+    {
+        <div class="profile-workout-item">
+            <h2 class="profile-workout-name">@workout.Name</h2>
+            <div class="profile-workout-footer">
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mask" role="dialog"></div>
+<div id="profile-workouts-modal" class="modal" role="alert">
+    <button class="close" role="button">X</button>
+    <div class="custom-modal-content"></div>
+</div>
+
+<script src="~/js/modal.js"></script>

@@ -5,6 +5,7 @@ using GainzTrack.Infrastructure.Data;
 using GainzTrack.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -17,6 +18,21 @@ namespace GainzTrack.Infrastructure.Services
         {
             _repository = repository;
         }
+
+        public string GetAvatar(string username)
+        {
+            var imgPath = this.GetMainUserByUsername(username).AvatarPath;
+
+            if(imgPath == "Default")
+            {
+                return Path.Combine("Avatars", "Default", "default.jpg");
+            }
+
+            var fileName = Path.GetFileName(Directory.GetFiles(imgPath).First());
+
+            return Path.Combine("Avatars", username, fileName);
+        }
+
         public string GetIdentityIdByUsername(string username)
         {
             var identityUser = _repository.GetBy<IdentityApplicationUser>(x=>x.UserName == username);
@@ -32,6 +48,30 @@ namespace GainzTrack.Infrastructure.Services
         public MainUser GetMainUserByUsername(string username)
         {
             return _repository.GetBy<MainUser>(b => b.Username == username);
+        }
+        public MainUser GetMainUserByUsernameWithIncludes(string username)
+        {
+            var expression = new MainUserWithAllIncludesExpression(username);
+            return _repository.GetBy<MainUser>(expression);
+        }
+
+        public Title GetTitleForAchievementPoints(int achievementPoints)
+        {
+            var title = _repository.List<Title>().Where(x=>x.RequiredAP <= achievementPoints)
+                .OrderByDescending(x=>x.RequiredAP).First();
+
+            return title;
+            
+        }
+
+        public void UpdateAvatar(string username,string path = "Default")
+        {
+            var user = this.GetMainUserByUsername(username);
+
+            user.AvatarPath = path;
+
+            _repository.Update<MainUser>(user);
+
         }
     }
 }

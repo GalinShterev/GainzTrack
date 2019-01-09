@@ -35,7 +35,30 @@
         </fieldset>
         <fieldset>
             <div>
+                <div id="custom-exercise-error" class="alert alert-danger" role="alert"></div>
+                <div id="custom-exercise-success" class="alert alert-success" role="alert"></div>
                 <h2 class="fs-title">Exercises Setup</h2>
+
+                <input type="checkbox" id="click-custom-modal" class="hide-it custom-exercise" />
+                <label id="add-custom-exercise" for="click-custom-modal"><a>Add custom exercise</a></label>
+
+                <hr />
+                <div class="custom-exercises-modal-item">
+                    <label id="custom-exercises-close" class="close-exercises" for="click-custom-modal">X</label>
+
+                    <label>Exercise name</label>
+                    <input id="custom-exercise-name" type="text" placeholder="Exercise name" />
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Important!</strong> provide a valid video url using <a href="http://www.youtube.com" target="_blank">YouTube</a>
+                        of the proper form of the exercise.You can easily find one with simple search!
+                    </div>
+                    <input id="custom-exercise-videoUrl" type="url" placeholder="Video url" />
+
+                    <div class="custom-exercise-submit">Submit</div>
+                </div>
+                <div class="overlay">
+                </div>
+
                 <div class="days-dropdown">
 
                     @foreach (var day in Model.WorkoutDays)
@@ -47,9 +70,7 @@
                                 @await Html.PartialAsync("~/Views/Workout/Partials/_GetDaysOfWeekDropdown.cshtml", day.Day)
 
                             </select>
-                            <div class="add-exercise-style">
-
-
+                            <div class="list-exercises">
                                 @foreach (var exercise in day.ExerciseWorkoutDay)
                                 {
 
@@ -59,19 +80,25 @@
                                                                                               {"VideoUrl",exercise.Exercise.VideoUrl } })
 
                                 }
+                            </div>
+                            <div class="add-exercise-style">
 
-                                @{ var guidModal = Guid.NewGuid().ToString();}
-                                <input type="checkbox" id="click-@guidModal" class="hide-it" />
-                                <label for="click-@guidModal"><a>Add Exercise</a></label>
+                                @{ var guidModal = Guid.NewGuid().ToString().Substring(4);}
+
+
+                                <input type="checkbox" id="click-@guidModal" class="hide-it existing-exercise" />
+
+                                <label id="add-existing-exercise" for="click-@guidModal"><a class="exercise-action-btn">Choose existing exercise</a></label>
                                 <div class="exercises-modal-item">
+                                    <label class="close-exercises" for="click-@guidModal">X</label>
                                     <div>
+
                                         @await Component.InvokeAsync("AddExercises", guidModal)
                                     </div>
-                                    <div class="close-button-wraper">
-                                        <label for="click-@guidModal" class="exercises-modal-close">Close</label>
-                                    </div>
                                 </div>
-                                <div class="overlay"></div>
+                                <div class="overlay">
+
+                                </div>
                             </div>
                             <hr />
                         </div>

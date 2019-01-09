@@ -1,0 +1,41 @@
+﻿@model GainzTrack.Web.ViewModels.WorkoutViewModels.WorkoutPreviewViewModel
+@{
+    Layout = null;
+}
+
+
+<div class="table-title">
+    <h2>@Model.Workout.Name Preview</h2>
+</div>
+
+<table class="table-fill">
+    <thead>
+        <tr>
+            <th class="text-left">Day</th>
+            <th class="text-left">Exercises</th>
+        </tr>
+    </thead>
+    <tbody class="table-hover">
+
+        @foreach (var item in Model.Workout.WorkoutDays)
+        {
+            <tr>
+                <td class="text-left">@item.Day.ToString()</td>
+                <td class="text-left">
+                    @foreach (var exercise in item.ExerciseWorkoutDay)
+                    {
+                        @exercise.Exercise.ExerciseName<br />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.Workout.Creator.Username == this.User.Identity.Name)
+{
+    <div class="profile-workout-controls">
+        <label class="profile-workout-controls-item"><a href="/Workout/Edit?id=@Model.Workout.Id&name=@Model.Workout.Name">Edit</a></label>
+        <label id="profile-workout-controls-item__delete" class="profile-workout-controls-item"><a href="/Workout/Delete?id=@Model.Workout.Id">Delete</a></label>
+    </div>
+}

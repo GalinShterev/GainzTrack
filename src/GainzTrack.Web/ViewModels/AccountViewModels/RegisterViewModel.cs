@@ -1,4 +1,8 @@
-﻿using System;
+﻿using GainzTrack.Infrastructure.Identity;
+using GainzTrack.Web.Attributes;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +12,10 @@ namespace GainzTrack.Web.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
+
+        [Required]
+        public string Username { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -23,5 +31,7 @@ namespace GainzTrack.Web.Models.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public IFormFile AvatarImage { get; set; }
     }
 }

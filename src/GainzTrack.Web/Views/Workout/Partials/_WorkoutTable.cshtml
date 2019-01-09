@@ -1,0 +1,30 @@
+﻿@model GainzTrack.Core.Entities.WorkoutRoutine
+@{ Layout = null;}
+
+<div class="table-title">
+    <h2>@Model.Name Preview</h2>
+</div>
+
+<table class="table-fill">
+    <thead>
+        <tr>
+            <th class="text-left">Day</th>
+            <th class="text-left">Exercises</th>
+        </tr>
+    </thead>
+    <tbody class="table-hover">
+
+        @foreach (var item in Model.WorkoutDays)
+        {
+            <tr>
+                <td class="text-left">@item.Day.ToString()</td>
+                <td class="text-left">
+                    @foreach (var exercise in item.ExerciseWorkoutDay)
+                    {
+                        @exercise.Exercise.ExerciseName<br />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -11,7 +11,6 @@ namespace GainzTrack.Core.Expressions
         public MainUserWithTitleExpression(string identityUserId)
             :base(b => b.IdentityUserId == identityUserId)
         {
-            AddInclude(t => t.Title);
         }
     }
 }

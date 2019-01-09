@@ -135,6 +135,84 @@ input[type="checkbox"]:checked ~ .overlay {
     z-index: 100;
     background: white;
 }
+.custom-exercises-modal-item {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0.5);
+    max-width: 500px;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 100;
+    overflow-y: auto;
+    margin-top: 20px;
+    flex-direction: column;
+    width: 60%;
+    z-index: 100;
+    background: white;
+}
+#add-custom-exercise {
+    padding:10px;
+    width: 300px;
+    background-color: crimson;
+    margin: 10px auto;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.5);
+
+}
+    #add-custom-exercise a{
+        color:white;
+        text-transform:uppercase;
+        transition:.6s;
+        cursor:pointer;
+        text-decoration:none;
+    }
+    #add-custom-exercise a:hover {
+        color: black;
+        font-size:16px;
+
+    }
+    #custom-exercise-error,#custom-exercise-success {
+        display: none;
+    }
+
+
+.custom-exercise-style {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    background-color: crimson;
+    margin: 10px auto;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.5);
+}
+    .custom-exercise-style label {
+        text-transform: uppercase;
+        font-size: 12px;
+        margin: 10px;
+    }
+    .custom-exercise-style a {
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        transition: .6s
+    }
+
+    .custom-exercise-style a:hover {
+        color: black;
+        font-size:16px;
+    }
+    .custom-exercise-submit {
+        border: none;
+        border-radius: 10px;
+        padding: 15px;
+        background-color: crimson;
+        color: white;
+        display: block;
+        margin: 2px auto;
+        width: 250px;
+        cursor: pointer;
+    }
 
 .exercises-modal-close {
     position: absolute;
@@ -144,22 +222,22 @@ input[type="checkbox"]:checked ~ .overlay {
     cursor: pointer;
 }
 
-input[type="checkbox"]:checked ~ .modal-item {
+
+
+.existing-exercise:checked ~ .exercises-modal-item {
     pointer-events: auto;
     opacity: 1;
     transform: translate(-50%,-50%) scale(1);
     transition: transform 0.5s ease, opacity 0.5s ease;
     transition-delay: 0.1s;
 }
-
-input[type="checkbox"]:checked ~ .exercises-modal-item {
+.custom-exercise:checked ~ .custom-exercises-modal-item {
     pointer-events: auto;
     opacity: 1;
     transform: translate(-50%,-50%) scale(1);
     transition: transform 0.5s ease, opacity 0.5s ease;
     transition-delay: 0.1s;
 }
-
 .modal-item > h2 {
     display: block;
     padding: 20px;
@@ -366,29 +444,33 @@ input[type="checkbox"]:checked ~ .exercises-modal-item {
     }
 
 .add-exercise-style {
-    width: 80%;
-    background: white;
+    display:flex;
+    flex-direction:column;
+    width: 300px;
+    background-color:crimson;
     margin: 0 auto;
-    border-top: 1px solid rgba(0,0,0,0.3);
-    border-bottom: 1px solid rgba(0,0,0,0.3);
+    border-radius:10px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.5);
 }
-
-    .add-exercise-style a {
-        color: red;
-        cursor: pointer;
-        text-decoration: none;
+    .add-exercise-style hr{
+        margin:0;
     }
 
-        .add-exercise-style a:before {
-            content: '+';
-            font-size: 15px;
-            margin-right: 5px;
+
+    .add-exercise-style .exercise-action-btn {
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        transition: .6s;
+    }
+        .add-exercise-style .exercise-action-btn:hover {
+            color: black;
+            font-size: 15.5px;
         }
 
-    .add-exercise-style label {
+    .add-exercise-style  label{
         text-transform: uppercase;
         font-size: 12px;
-        color: #ff3434;
         margin: 10px;
     }
 
@@ -398,18 +480,32 @@ input[type="checkbox"]:checked ~ .exercises-modal-item {
     cursor: pointer;
 }
 
+.custom-exercise-form-container{
+}
+
+#custom-exercises-close{
+    position:absolute;
+    right:0;
+    top:0;
+}
+
 .remove-exercise-button {
     color: red;
     font-size: 15px;
     cursor: pointer;
 }
 
-.close-button-wraper {
-    position: relative;
-    bottom: -150px;
-    left: 50%;
-    transform: translateX(-50%);
+.list-exercises{
+    width:80%;
+    margin:0 auto;
 }
+    
+
+    .close-button-wraper {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 
 
 .toggle-btn {
@@ -504,7 +600,6 @@ iframe {
         background: white;
         color: black;
         font-weight: bold;
-        padding-top: 15px;
         cursor: pointer;
         line-height: 2;
         font-size: 20px;
@@ -514,6 +609,12 @@ iframe {
         -webkit-font-smoothing: antialiased;
     }
 
+.list-exercises label {
+    padding: 15px 0 15px 0;
+    box-shadow: 0 2px 13px rgba(0,0,0,0.5);
+    border-radius:15px;
+    margin:5px;
+}
 .blue label {
     background: #2980b9;
 }
@@ -1150,6 +1251,7 @@ html {
 
         .card .name a {
             color: black;
+            text-shadow: 0 0 1px rgba(255, 0, 0, 0.4), 1px 1px 1px rgba(0, 0, 0, 0.2);
             text-decoration: none;
             font-weight: 700;
         }
@@ -1460,9 +1562,9 @@ a.control_next {
     background: white;
     border-radius: 3px;
     border-collapse: collapse;
-    height: 320px;
-    margin-top:10px;
-    max-width: 600px;
+    height:auto;
+    margin:10px auto;
+    max-width: 800px;
     padding: 5px;
     width: 100%;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -1471,13 +1573,13 @@ a.control_next {
 
     .table-fill th {
         color: #D5DDE5;
-        ;
+        
         background: crimson;
         border-bottom: 4px solid #9ea7af;
         border-right: 1px solid #343a45;
         font-size: 23px;
         font-weight: 100;
-        padding: 24px;
+        padding: 10px;
         text-align: left;
         text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         vertical-align: middle;
@@ -1494,7 +1596,7 @@ a.control_next {
 
     .table-fill tr {
         border-top: 1px solid #C1C3D1;
-        border-bottom-: 1px solid #C1C3D1;
+        border-bottom: 1px solid #C1C3D1;
         color: #666B85;
         font-size: 16px;
         font-weight: normal;
@@ -1955,6 +2057,18 @@ a.control_next {
     cursor: pointer;
     border: 0;
 }
+.close-exercises {
+    position: sticky;
+    line-height:30px;
+    top: 0;
+    float:right;
+    width: 35px;
+    height: 30px;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+    border: 0;
+}
 
 .mask {
     position: fixed;
@@ -1975,14 +2089,11 @@ a.control_next {
     left: 50%;
     width: 400px;
     height: 300px;
-    margin-left: -200px;
-    margin-top: -150px;
     background: #bdc3c7;
     z-index: 100;
     visibility: hidden;
     opacity: 0;
     transition: 0.5s ease-out;
-    transform: translateY(45px);
 }
 
 .active {
@@ -2023,6 +2134,240 @@ a.control_next {
 #control-button-deny:hover{
     background-color:crimson;
 }
+
+
+.profile-header {
+    height: 50vh;
+    box-shadow: 1px 5px 5px rgba(0,0,0,0.4);
+    width: 100%;
+    position: relative;
+}
+
+.profile-information {
+    position: absolute;
+    height: 200px;
+    width: 300px;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.profile-avatar-holder {
+    text-align: center;
+}
+
+    .profile-avatar-holder img {
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        margin: 0 auto;
+    }
+
+.profile-name {
+    width: 100%;
+    height: 48%;
+    text-align: center;
+}
+
+    .profile-name h2 {
+        margin-bottom: 0;
+    }
+
+    .profile-name h5 {
+        margin-top: 0;
+    }
+
+.profile-navigation {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.profile-navigation-item {
+    text-decoration: none;
+    padding: 10px;
+    color: grey;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.profile-navigation-item--active {
+    color: crimson;
+    font-size: 30px;
+}
+
+.media-container {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    top:30%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    vertical-align: middle
+}
+
+.media-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(180, 180, 180, 0.6);
+}
+
+#media-input {
+    display: block;
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    opacity: 0;
+    position: relative;
+    z-index: 9;
+}
+
+.media-icon {
+    display: block;
+    color: #ffffff;
+    font-size: 2em;
+    height: 200px;
+    line-height: 200px;
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.media-object {
+}
+
+.img-object {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    display: block;
+}
+
+.media-control {
+    margin-top: 30px;
+}
+
+.edit-profile {
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border:none;
+    background-color:crimson;
+    padding:15px;
+    color:white;
+}
+
+.save-profile {
+    color:white;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    border:none;
+    transform: translate(-50%,-50%);
+    background-color: crimson;
+    padding: 15px;
+}
+.edit-profile-form{
+    position:relative;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+.profile-content-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap:wrap;
+}
+
+.profile-workout-item {
+    flex-basis: 225px;
+    height: 200px;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.72);
+    cursor:pointer;
+    transition:.5s;
+}
+
+    .profile-workout-item h2 {
+        text-transform: uppercase;
+        color: #333333;
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.4), 1px 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+.profile-workout-footer {
+    position: absolute;
+    bottom: 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-color: crimson;
+}
+.profile-workout-item:hover{
+    box-shadow:none;
+}
+
+#profile-workouts-modal{
+    min-width:300px;
+    width:80%;
+    max-height:80vh;
+    height:auto;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    transform:translate(-50%,-45%);
+}
+.profile-workout-controls{
+    display:flex;
+    width:350px;
+    margin:0 auto;
+    height:50px;
+}
+.profile-workout-controls-item{
+    flex-basis:45%;
+    margin:0 3px 0 3px;
+    text-align:center;
+    background-color:crimson;
+    border-radius:10px;
+    height:70%;
+}
+    .profile-workout-controls-item a{
+        font-size:22px;
+        text-decoration:none;
+        color:white;
+    }
+#profile-workout-controls-item__delete{
+    background-color:transparent;
+    border:1px solid crimson;
+}
+
+.profile-workout-hidden-option{
+   display:none;
+}
+.profile-workout-hidden-option--deactivate{
+    display:block;
+}
+.profile-workout-delete-btn{
+    color:black;
+    font-size:22px;
+    cursor:pointer;
+}
+
+
+
 /*MEDIA QUERIES*/
 @media only screen and (max-width: 600px) {
     .card {

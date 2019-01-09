@@ -10,6 +10,7 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/css/site.css" />
+
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,8 +18,8 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
 <body>
 
@@ -36,17 +37,24 @@
                 <div class="dashboard-top-nav-container">
                     <ul class="links">
                         <li class="dashboard-dropwdown">
-                            <a href="#" class="dashboard-menu-item">
-                                <img src="https://t4.ftcdn.net/jpg/00/58/27/69/240_F_58276968_qorIPJG2Ec0IyJVq5IIxaGv0UKwx6FPn.jpg" class="dashboard-list-img" />
-                            </a>
+
+                            @await  Component.InvokeAsync("AvatarImage",User.Identity.Name)
+
                             <ul class="dashboard-dropmenu-item">
                                 <li class="dashboard-notification-item">
-                                    <a href="#" class="dashboard-notification-content">
+                                    <a href="/Users/ViewProfile?username=@User.Identity.Name" class="dashboard-notification-content">
                                         <i class="fa fa-edit"></i>
                                         My Profile
                                     </a>
                                 </li>
-                                
+
+                                <li class="dashboard-notification-item">
+                                    <a href="/Users/EditProfile" class="dashboard-notification-content">
+                                        <i class="fa fa-cog"></i>
+                                        Edit Profile
+                                    </a>
+                                </li>
+
                                 <li class="dashboard-notification-item">
                                     <form id="logout-form" asp-area="" asp-controller="Account" asp-action="Logout" method="post">
                                         <a href="#" id="logout-btn" class="dashboard-notification-content">
@@ -55,7 +63,7 @@
                                         </a>
                                     </form>
                                 </li>
-                                
+
                             </ul>
                         </li>
                     </ul>

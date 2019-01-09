@@ -1,0 +1,44 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div>
+    <h4 class="remove-day-style">Remove</h4>
+    <select id="remove-' + id + '" class="select-dropdown" name="days">
+        <option value="1">Monday</option>
+        <option value="2">Tuesday</option>
+        <option value="3">Wednesday</option>
+        <option value="4">Thursday</option>
+        <option value="5">Friday</option>
+        <option value="6">Saturday</option>
+        <option value="0">Sunday</option>
+    </select>
+    <div class="list-exercises">
+
+    </div>
+    <div class="add-exercise-style">
+
+
+        @{string existingId = @Guid.NewGuid().ToString().Substring(4);
+            string customId = @Guid.NewGuid().ToString().Substring(4);}
+
+        <input type="checkbox" id="click-@existingId" class="hide-it existing-exercise" />
+        
+        <label id="add-existing-exercise" for="click-@existingId"><a class="exercise-action-btn">Choose existing exercise</a></label>
+       
+        <div class="exercises-modal-item">
+            <label class="close-exercises" for="click-@existingId">X</label>
+            <div>
+                @await Component.InvokeAsync("AddExercises");'
+            </div>
+        </div>
+        
+        <div class="overlay">
+
+        </div>
+    </div>
+
+    <hr />
+
+</div>

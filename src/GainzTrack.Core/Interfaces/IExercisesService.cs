@@ -1,4 +1,5 @@
-﻿using GainzTrack.Core.Entities;
+﻿using GainzTrack.Core.DTOs.ExercisesDTOs;
+using GainzTrack.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace GainzTrack.Core.Interfaces
     {
         IEnumerable<string> GetExercisesNames();
         Exercise GetSingleExerciseByName(string exerciseName);
-
-
+        bool HasExercise(string exerciseName);
+        Exercise AddExercise(AddExerciseDto dto);
     }
 }

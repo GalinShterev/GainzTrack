@@ -92,6 +92,8 @@ namespace GainzTrack.Infrastructure.Data.Migrations
 
                     b.Property<string>("ExerciseName");
 
+                    b.Property<int>("MusculeGroup");
+
                     b.Property<string>("VideoUrl");
 
                     b.HasKey("Id");
@@ -122,17 +124,13 @@ namespace GainzTrack.Infrastructure.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AchievementPoints");
+                    b.Property<string>("AvatarPath");
 
                     b.Property<string>("IdentityUserId");
-
-                    b.Property<string>("TitleId");
 
                     b.Property<string>("Username");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TitleId");
 
                     b.ToTable("MainUsers");
                 });
@@ -141,6 +139,8 @@ namespace GainzTrack.Infrastructure.Data.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Color");
 
                     b.Property<string>("Name");
 
@@ -383,32 +383,29 @@ namespace GainzTrack.Infrastructure.Data.Migrations
                 {
                     b.HasOne("GainzTrack.Core.Entities.Exercise", "Exercise")
                         .WithMany("ExerciseWorkoutDays")
-                        .HasForeignKey("ExerciseId");
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("GainzTrack.Core.Entities.WorkoutDay", "WorkoutDay")
                         .WithMany("ExerciseWorkoutDay")
-                        .HasForeignKey("WorkoutDayId");
-                });
-
-            modelBuilder.Entity("GainzTrack.Core.Entities.MainUser", b =>
-                {
-                    b.HasOne("GainzTrack.Core.Entities.Title", "Title")
-                        .WithMany("AchievedUsers")
-                        .HasForeignKey("TitleId");
+                        .HasForeignKey("WorkoutDayId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("GainzTrack.Core.Entities.WorkoutDay", b =>
                 {
                     b.HasOne("GainzTrack.Core.Entities.WorkoutRoutine", "WorkoutRoutine")
                         .WithMany("WorkoutDays")
-                        .HasForeignKey("WorkoutRoutineId");
+                        .HasForeignKey("WorkoutRoutineId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("GainzTrack.Core.Entities.WorkoutRoutine", b =>
                 {
                     b.HasOne("GainzTrack.Core.Entities.MainUser", "Creator")
                         .WithMany("WorkoutRoutines")
-                        .HasForeignKey("CreatorId");
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

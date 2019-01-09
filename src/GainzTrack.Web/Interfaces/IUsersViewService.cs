@@ -9,5 +9,6 @@ namespace GainzTrack.Web.Interfaces
     public interface IUsersViewService
     {
         GetAllUsersViewModel FetchAllUsers();
+        ProfileViewModel GetUserProfile(string username);
     }
 }

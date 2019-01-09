@@ -11,6 +11,10 @@ namespace GainzTrack.Web.ViewModels.UsersViewModels
 
         public string Title { get; set; }
 
+        public string Avatar { get; set; }
+
+        public string Color { get; set; }
+
         public string AchievementPoints { get; set; }
 
         public string WorkoutsCreated { get; set; }

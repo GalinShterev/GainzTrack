@@ -19,11 +19,10 @@ namespace GainzTrack.Core.Entities
 
         public string IdentityUserId { get; set; }
 
+        public string AvatarPath { get; set; }
+
         [NotMapped]
         public int AchievementPoints => this.AchievementUsers.Where(x => x.IsApproved == true).Sum(x => x.Achievement.AchievementPointsGain);
-
-        public string TitleId { get; set; }
-        public Title Title { get; set; }
 
         public virtual ICollection<WorkoutRoutine> WorkoutRoutines { get; set; }
         public virtual ICollection<AchievementUser> AchievementUsers { get; set; }

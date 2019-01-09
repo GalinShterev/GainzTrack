@@ -10,13 +10,14 @@
 
 @foreach (var item in Model)
 {
-    
+    var guid = Guid.NewGuid().ToString().Substring(4);
+
     <div class="exercise-item">
         <div class="tab">
-            <input id="tab-@ViewData["DivId"]-@counter" type="checkbox" name="tabs">
-            <label for="tab-@ViewData["DivId"]-@counter">@item.ExerciseName</label>
+            <input id="tab-@guid-@counter" type="checkbox" name="tabs">
+            <label for="tab-@guid-@counter">@item.ExerciseName</label>
 
-            <span id="exercise-@ViewData["DivId"]" class="add-exercise-button">Add</span>
+            <span id="exercise-@guid" class="add-exercise-button">Add</span>
             <div class="tab-content">
                 <iframe src="@item.VideoUrl.DecodeUrl()" frameborder="0"></iframe>
             </div>

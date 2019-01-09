@@ -10,5 +10,9 @@ namespace GainzTrack.Core.Interfaces
         string GetIdentityIdByUsername(string username);
         MainUser GetMainUserByIdentityId(string identityId);
         MainUser GetMainUserByUsername(string username);
+        MainUser GetMainUserByUsernameWithIncludes(string username);
+        Title GetTitleForAchievementPoints(int achievementPoints);
+        string GetAvatar(string username);
+        void UpdateAvatar(string username,string path = "Default");
     }
 }

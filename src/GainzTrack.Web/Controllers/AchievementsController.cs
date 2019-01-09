@@ -65,6 +65,7 @@ namespace GainzTrack.Web.Controllers
             return Redirect("/Administration/Index");
         }
 
+            
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {

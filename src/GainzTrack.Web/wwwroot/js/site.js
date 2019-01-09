@@ -100,51 +100,18 @@ $('.days-dropdown').on('click', '#add-day', function () {
 
     id++;
 
-    $('.days-dropdown').append('<div id="' + id + '"></div>')
-    $('#' + id + '').append('<h4 id="' + id + '" class="remove-day-style">Remove</h4>');
-
-
-    $('#' + id + '').append('<select id="remove-' + id + '" class="select-dropdown" name="days">' +
-        '<option value = "1">Monday</option>' +
-        '<option value = "2">Tuesday</option>' +
-        '<option value = "3">Wednesday</option>' +
-        '<option value = "4">Thursday</option>' +
-        '<option value = "5">Friday</option>' +
-        '<option value = "6">Saturday</option>' +
-        '<option value = "0">Sunday</option>' +
-        '</select>');
-
-    $('#' + id + '').append('<div id="remove-ex-' + id + '" class="add-exercise-style">' +
-        '<div id="exercises-' + id + '">' +
-        '</div>' +
-        '<input type = "checkbox" id="click-'+id+'" class= "hide-it" />' +
-        '<label for="click-'+id+'" id="add-exercise-' + id + '"><a>Add Exercise</a></label>' +
-        '<div id="modal-item-' + id + '" class="exercises-modal-item">' +
-        '<div id="items-'+id+'"></div>' +
-        '<div class="close-button-wraper">' +
-        '<label for="click-'+id+'" class="exercises-modal-close">Close</label>' +
-        '</div >' +
-        '</div>' +
-        '<div class="overlay"></div>' +
-        '</div >' +      
-        '<hr />');
-
+    $('.add-day-style').remove();
 
     $.ajax({
 
-        url: '/Workout/GetExercises',
-        data: { Id: id },
+        url: '/Workout/AddExercise',
         dataType: "html",
         success: function (data) {
-            $('#items-' + id + '').append(data);
+            $('.days-dropdown').append(data);
+
+            $('.days-dropdown').append('<h4 id="add-day" class="add-day-style">Add day</h4>');
         }
     });
-
-
-
-    $('.add-day-style').css('display', 'none');
-    $('.days-dropdown').append('<h4 id="add-day" class="add-day-style">Add day</h4>');
-
 
 });
 
@@ -153,9 +120,9 @@ var triggered = true;
 if (triggered) {
 
     $('.days-dropdown').on('click', '.add-exercise-button', function () {
-        var exercisesAddDiv = $(this).first().parents().eq(4).children().eq(0);
-        var selectedExerciseName = $(this).first().parents().eq(0).children().eq(1).text();
-        var selectedDay = $(this).first().parents().eq(5).children().eq(1).val();
+        var exercisesAddDiv = $(this).parents().eq(5).children().eq(2);
+        var selectedExerciseName = $(this).parents().eq(0).children().eq(1).text();
+        var selectedDay = $(this).parents().eq(5).children().eq(1).val();
         $.ajax({
             url: '/Workout/GetSingleExercise',
             type: "POST",
@@ -166,7 +133,6 @@ if (triggered) {
                 $('.remove-exercise-button').on('click', function () {
                     $(this).parent().remove();
                 });
-
             }
         });
     });
@@ -178,14 +144,15 @@ if (triggered) {
 //day - b[0].parentElement.parentElement.children[1].value
 //exerciseName - b[0].children[0].children[0].value
 $('.edit').on('click', function () {
-    var allExercises = $('div[id=exercise]').toArray();
+    var allExercises = $('div[id=onPost]').toArray();
     for (var i = 0; i < allExercises.length; i++) {
         var day = allExercises[i].parentElement.parentElement.children[1].value;
-        var exerciseName = allExercises[i].children[0].children[0].value;
+        var exerciseName = allExercises[i].children[0].value;
 
         $('.days-dropdown').append('<input value="'+exerciseName+'-'+day+'" readonly="readonly" style="display:none;" type="text" id = "ExerciseName" name = "ExerciseName" />')
     }
 });
+
 
 
 
@@ -344,20 +311,81 @@ $(".show").on("click", function () {
         dataType: "html",
         data: { achievementUserId: achievementId },
         success: function (data) {
-            $('.dashboard-content-wrapper').append(data);
+            $('.custom-modal-content').append(data);
             $(".mask").addClass("active");
         }
-    });
+    }); 
+});
 
+$(".profile-workout-item").on('click', function () {
+
+    var workoutName = $(this).find('.profile-workout-name').text();
+    var username = $('#get-profile-user').text();
+    $.ajax({
+        url: '/Workout/GetWorkoutModal',
+        dataType: "html",
+        data: { workoutName: workoutName, username : username },
+        success: function (data) {
+            $('.custom-modal-content').append(data);
+            $(".mask").addClass("active");
+        }
+    }); 
+
+    $('.mask').addClass("active");
     
+});
+
+$('.custom-exercise-submit').on('click', function () {
+
+    var exerciseName = $('#custom-exercise-name').val();
+    var videoUrl = $('#custom-exercise-videoUrl').val();
+
+    $.ajax({
+        url: '/Exercises/AddNewExercise',
+        type: "POST",
+        data: { exerciseName: exerciseName, videoUrl: videoUrl },
+        dataType: "json",
+        success: function (response) {
+            if (!response.success) {
+                $('#click-custom-modal').prop('checked', false);
+                $('#custom-exercise-error').css('display', 'block');
+                $('#custom-exercise-error').append(response.responseText);
+                setTimeout(function () {
+                    $('#custom-exercise-error').css('display', 'none');
+                    $('#custom-exercise-error').html("");
+                }, 3000);
+            } else {
+                $.ajax({
+                    url: '/Exercises/AddExercisesToModal',
+                    type: "GET",
+                    dataType: "html",
+                    success: function (data) {
+                        var g = $('.exercises-modal-item').toArray();
+                        for (var i = 0; i < g.length; i++) {
+                            g[i].children[1].innerHTML = ""
+                            g[i].children[1].innerHTML = data;
+                        }                  
+                    }
+                });  
+                $('#click-custom-modal').prop('checked', false);
+                $('#custom-exercise-success').css('display', 'block');
+                $('#custom-exercise-success').append(response.responseText);
+                setTimeout(function () {
+                    $('#custom-exercise-success').css('display', 'none');
+                    $('#custom-exercise-success').html("");
+                }, 3000);
+
+            }   
+        }
+    });
+   
 });
 
 // Function for close the Modal
 
 function closeModal() {
     $(".mask").removeClass("active");
-    $('.mask').remove();
-    $('.modal').remove();
+    $('.custom-modal-content').html("");
 }
 
 // Call the closeModal function on the clicks/keyboard
@@ -372,3 +400,7 @@ $(document).keyup(function (e) {
     }
 });
 
+
+$('.profile-workout-delete-btn').on('click', function () {
+    $('.profile-workout-hidden-option').toggleClass('profile-workout-hidden-option--deactivate');
+});

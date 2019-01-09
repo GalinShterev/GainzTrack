@@ -8,7 +8,6 @@ namespace GainzTrack.Core.Entities
     {
         public string Name { get; set; }
         public int RequiredAP { get; set; }
-
-        public virtual ICollection<MainUser> AchievedUsers { get; set; }
+        public string Color { get; set; }
     }
 }

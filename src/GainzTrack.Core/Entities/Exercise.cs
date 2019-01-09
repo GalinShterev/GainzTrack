@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GainzTrack.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +11,8 @@ namespace GainzTrack.Core.Entities
         {
             this.ExerciseWorkoutDays = new HashSet<ExerciseWorkoutDay>();
         }
+
+        public MusculeGroupEnum MusculeGroup { get; set; }
 
         public string ExerciseName { get; set; }
 

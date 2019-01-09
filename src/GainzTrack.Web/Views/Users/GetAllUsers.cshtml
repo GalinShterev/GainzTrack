@@ -3,13 +3,13 @@
     @foreach (var user in Model.Users)
     {
         <div class="card" style="box-shadow: 5px 5px 50px #888888;margin-left:10px;margin-top:10px;">
-            <div class="ds-top"></div>
+            <div class="ds-top" style="background-color:#@user.Color"></div>
             <div class="avatar-holder">
-                <img src="http://pluspng.com/img-png/fitness-hd-png-fitness-point-workout-exercise-journal-personal-trainer-body-tracker-3111-1024.png" alt="Default profile">
+                <img src="/@user.Avatar" alt="Default profile">
             </div>
             <div class="name">
-                <a href="#" target="_blank">@user.Username</a>
-                <p>@user.Title</p>
+                <a href="/Users/ViewProfile?username=@user.Username" target="_blank">@user.Username</a>
+                <p style="color:#@user.Color; text-shadow: 0 0 1px #@user.Color, 1px 1px 1px rgba(0, 0, 0, 0.5);">@user.Title</p>
             </div>
             <div class="stats-container">
                 <div class="stats-item">

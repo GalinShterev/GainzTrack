@@ -1,7 +1,7 @@
 ﻿@model Dictionary<string,string>
 
-<div id="exercise">
-    <div class="tab">
+
+    <div id="onPost" class="tab">
         <input value="@Model["ExerciseName"]" readonly="readonly" style="display:none;" type="text"
                id="ExerciseName" name="ExerciseName" />
         @{var guid = Guid.NewGuid().ToString();}
@@ -13,4 +13,3 @@
         </div>
         <hr />
     </div>
-</div>

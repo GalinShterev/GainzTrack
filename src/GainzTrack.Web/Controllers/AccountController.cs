@@ -17,6 +17,8 @@ using GainzTrack.Infrastructure.Data;
 using GainzTrack.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using GainzTrack.Core.Interfaces;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace GainzTrack.Web.Controllers
 {
@@ -24,24 +26,29 @@ namespace GainzTrack.Web.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
+        private const string DEFAULT_AVATAR_IMAGE_NAME = "default.jpg";
+
         private readonly UserManager<IdentityApplicationUser> _userManager;
         private readonly SignInManager<IdentityApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _environment;
 
         public AccountController(
             UserManager<IdentityApplicationUser> userManager,
             SignInManager<IdentityApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IHostingEnvironment environment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _context = context;
+            _environment = environment;
         }
 
         [TempData]
@@ -68,7 +75,7 @@ namespace GainzTrack.Web.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -219,8 +226,6 @@ namespace GainzTrack.Web.Controllers
             return View();
         }
 
-        private const int INITIAL_ACHIEVEMENT_POINTS = 0;
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -229,12 +234,33 @@ namespace GainzTrack.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var titleId = _context.Titles.FirstOrDefault(x=>x.RequiredAP <= INITIAL_ACHIEVEMENT_POINTS).Id;
-                var title = _context.Titles.FirstOrDefault(x => x.Id == titleId);
+                
+               
+                if (_userManager.Users.Any(x => x.UserName.ToLower() == model.Username.ToLower()))
+                {
+                    ModelState.AddModelError(string.Empty, "This username is taken, username must be unique");
+                    return View(model);
+                }
 
-                var identityUser = new IdentityApplicationUser { UserName = model.Email, Email = model.Email };
+                string uploadDir = Path.Combine(_environment.WebRootPath, "Avatars");
+                string filePath = "Default";
 
-                var user = new MainUser { Username = identityUser.UserName ,IdentityUserId = identityUser.Id, TitleId = titleId};
+                if (model.AvatarImage != null)
+                {
+                    var userDir = Path.Combine(uploadDir, model.Username);
+                    Directory.CreateDirectory(userDir);
+                    var uploadTemp = Path.Combine(uploadDir, userDir, model.AvatarImage.FileName);
+                    filePath = Path.Combine(uploadDir, userDir);
+                    using (var stream = new FileStream(uploadTemp, FileMode.Create))
+                    {
+                        model.AvatarImage.CopyTo(stream);
+                    }
+
+                }
+
+                var identityUser = new IdentityApplicationUser { UserName = model.Username, Email = model.Email };
+                var user = new MainUser { Username = identityUser.UserName ,IdentityUserId = identityUser.Id,
+                    AvatarPath = filePath };
 
                 _context.MainUsers.Add(user);
                 try

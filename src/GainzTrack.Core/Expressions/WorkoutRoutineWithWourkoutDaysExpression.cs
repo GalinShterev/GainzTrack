@@ -18,6 +18,7 @@ namespace GainzTrack.Core.Expressions
         {
             AddInclude(b => b.WorkoutDays);
             AddInclude("WorkoutDays.ExerciseWorkoutDay.Exercise");
+            AddInclude(b => b.Creator);
         }
 
         //public WorkoutRoutineWithWourkoutDaysExpression(string workoutId,string workoutName)

@@ -54,6 +54,8 @@ namespace GainzTrack.Web
             services.AddTransient<IAchievementService, AchievementService>();
             services.AddTransient<IAchievementsViewService, AchievementsViewService>();
             services.AddTransient<IVideoService, VideoService>();
+            services.AddTransient<IExercisesViewService, ExercisesViewService>();
+            services.AddTransient<IWorkoutService, WorkoutService>();
 
             //Configure services
             services.Configure<IdentityOptions>(options =>
@@ -112,7 +114,7 @@ namespace GainzTrack.Web
 
             var powerUser = new IdentityApplicationUser
             {
-                UserName = Configuration.GetSection("UserSettings")["UserEmail"],
+                UserName = Configuration.GetSection("UserSettings")["UserName"],
                 Email = Configuration.GetSection("UserSettings")["UserEmail"]
             };
             string userPassword = Configuration.GetSection("UserSettings")["UserPassword"];
@@ -124,7 +126,9 @@ namespace GainzTrack.Web
                 var createPowerUser = await UserManager.CreateAsync(powerUser, userPassword);
                 Context.MainUsers.Add(new MainUser
                 {
-                    IdentityUserId = powerUser.Id
+                    IdentityUserId = powerUser.Id,
+                    AvatarPath = "Default",
+                    Username = "BosaNaKokosa"
 
                 });
 

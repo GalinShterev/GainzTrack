@@ -1,0 +1,38 @@
+﻿@model GainzTrack.Web.ViewModels.WorkoutViewModels.WorkoutPreviewViewModel
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<a href="/Home/Index">Back to home</a>
+
+<div class="form-container">
+    <form id="ms-form" asp-controller="Workout" asp-action="Delete" method="post">
+        <ul id="progress-bar">
+            <li class="active-bar">Workout Information</li>
+        </ul>
+        <fieldset>
+            <div>
+                <h2 class="fs-title">Are you sure you want to delete</h2>
+                <label asp-for="Workout.Name"></label>
+                <input name="id" type="hidden" value="@Model.Workout.Id"/>
+            </div>
+            <div>
+                @await Html.PartialAsync("~/Views/Workout/Partials/_WorkoutTable.cshtml", Model.Workout)
+            </div>
+            <button id="submit-workout" class="submit action-btn" type="submit">Submit</button>
+
+        </fieldset>
+    </form>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

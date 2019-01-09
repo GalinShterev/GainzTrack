@@ -1,7 +1,6 @@
 ﻿function closeModal() {
     $(".mask").removeClass("active");
-    $('.mask').remove();
-    $('.modal').remove();
+    $('.custom-modal-content').html("");
 }
 
 // Call the closeModal function on the clicks/keyboard

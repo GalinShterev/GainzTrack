@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Where(x=>x.IsApproved == false))
+        @foreach (var item in Model.Where(x => x.IsApproved == false))
         {
             <tr>
                 <td>@item.Id</td>
@@ -31,6 +31,12 @@
 
     </tbody>
 </table>
+
+<div class="mask" role="dialog"></div>
+<div class="modal" role="alert">
+    <button class="close" role="button">X</button>
+    <div class="custom-modal-content"></div>
+</div>
 
 
 

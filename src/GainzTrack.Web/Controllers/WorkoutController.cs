@@ -11,6 +11,7 @@ using GainzTrack.Core.Expressions;
 using GainzTrack.Web.Attributes;
 using GainzTrack.Web.ViewModels.ExerciseViewModels;
 using GainzTrack.Web.Interfaces;
+using GainzTrack.Web.ViewModels;
 
 namespace GainzTrack.Web.Controllers
 {
@@ -21,14 +22,20 @@ namespace GainzTrack.Web.Controllers
         private readonly IExercisesService _exercisesService;
         private readonly IHomeViewService _homeViewService;
         private readonly IWorkoutViewService _workoutViewService;
+        private readonly IWorkoutService _workoutService;
 
-        public WorkoutController(IUserService userService, IRepository repository, IExercisesService exercisesService,IHomeViewService homeViewService, IWorkoutViewService workoutViewService)
+        public WorkoutController(IUserService userService,
+            IRepository repository, IExercisesService exercisesService,
+            IHomeViewService homeViewService, 
+            IWorkoutViewService workoutViewService,
+            IWorkoutService workoutService)
         {
             _userService = userService;
             _repository = repository;
             _exercisesService = exercisesService;
             _homeViewService = homeViewService;
             _workoutViewService = workoutViewService;
+            _workoutService = workoutService;
         }
 
         public IActionResult Index()
@@ -105,10 +112,30 @@ namespace GainzTrack.Web.Controllers
 
             _repository.Update<WorkoutRoutine>(workout);
 
-            return Redirect("/Workout/Index");
+            return Redirect($"/Users/ViewProfile?username={this.User.Identity.Name}");
         }
 
 
+        public IActionResult Delete(string id)
+        {
+            var model = _workoutViewService.GetWorkoutPreviewById(id);
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(DeleteWorkoutViewModel viewModel)
+        {
+            try
+            {
+                _workoutService.DeleteWorkout(viewModel.Id);
+            }
+            catch(InvalidOperationException ex)
+            {
+                return this.View("Error", new ErrorViewModel { Message = ex.Message });
+            }
+
+            return Redirect($"/Users/ViewProfile?username={this.User.Identity.Name}");
+        }
 
         [AjaxOnlyAttribute]
         public IActionResult GetExercises(string id)
@@ -132,12 +159,12 @@ namespace GainzTrack.Web.Controllers
 
         public IActionResult WorkoutPreview(string workoutName)
         {
-            var model = _workoutViewService.GetWorkoutPreview(workoutName,this.User.Identity.Name);
+            var model = _workoutViewService.GetWorkoutPreviewByName(workoutName,this.User.Identity.Name);
             return this.View(model);
         }
         public IActionResult GetWorkoutsByAvailability(string availability)
         {
-            var model = _workoutViewService.GetWorkoutsPreview(this.User.Identity.Name);
+            var model = _workoutViewService.GetWorkoutsPreviewByName(this.User.Identity.Name);
             if (availability == "Public")
             {
                 return this.View("GetPublicWorkouts",model);
@@ -146,6 +173,18 @@ namespace GainzTrack.Web.Controllers
             return this.View("GetPrivateWorkouts",model);
         }
 
+        [AjaxOnlyAttribute]
+        public IActionResult AddExercise()
+        {
+            return this.View();
+        }
+
+        public IActionResult GetWorkoutModal(string workoutName,string username)
+        {
+            var model = _workoutViewService.GetWorkoutPreviewByName(workoutName, username);
+
+            return this.View("WorkoutModal",model);
+        }
 
         private ICollection<WorkoutDay> SetUpInitialWorkoutDays(string workoutRoutineId, DayOfWeek[] days, string[] exercises)
         {

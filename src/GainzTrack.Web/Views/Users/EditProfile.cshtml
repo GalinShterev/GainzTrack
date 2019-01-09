@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+
+@await Html.PartialAsync("_StylesheetsPartial")
+
+<form class="edit-profile-form" asp-controller="Users" asp-action="EditProfile" enctype="multipart/form-data" method="post">
+
+    <div class="media-container">
+        <span class="media-overlay">
+            <input name="Image" type="file" id="media-input" accept="image/*">
+            <i class="glyphicon glyphicon-edit media-icon"></i>
+        </span>
+        <figure class="media-object">
+            <img class="img-object" src="/@ViewData["avatarPath"]">
+        </figure>
+    </div>
+    <div class="media-control">
+        <div class="edit-profile">Edit Profile</div>
+    </div>
+    <button class="save-profile">Save Profile</button>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/upload-avatar.js"></script>

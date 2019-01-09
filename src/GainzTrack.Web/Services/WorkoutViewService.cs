@@ -25,7 +25,7 @@ namespace GainzTrack.Web.Services
             _userManager = userManager;
         }
 
-        public WorkoutPreviewViewModel GetWorkoutPreview(string workoutName,string username)
+        public WorkoutPreviewViewModel GetWorkoutPreviewByName(string workoutName,string username)
         {
             var identityUser = _userManager.FindByNameAsync(username);
             var userExpression = new MainUserWithTitleExpression(identityUser.Result.Id);
@@ -41,7 +41,18 @@ namespace GainzTrack.Web.Services
             };
         }
 
-        public WorkoutsPreviewViewModel GetWorkoutsPreview(string username)
+        public WorkoutPreviewViewModel GetWorkoutPreviewById(string id)
+        {
+            var workoutExpression = new WorkoutRoutineByIdWithIncludes(id);
+            var workout = _repository.GetBy<WorkoutRoutine>(workoutExpression);
+
+            return new WorkoutPreviewViewModel
+            {
+                Workout = workout
+            };
+        }
+
+        public WorkoutsPreviewViewModel GetWorkoutsPreviewByName(string username)
         {
             var user = _userService.GetMainUserByUsername(username);
             var expression = new WorkoutRoutineWithWourkoutDaysExpression(user.Id);

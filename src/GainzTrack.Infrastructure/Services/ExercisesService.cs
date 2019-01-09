@@ -1,4 +1,5 @@
-﻿using GainzTrack.Core.Entities;
+﻿using GainzTrack.Core.DTOs.ExercisesDTOs;
+using GainzTrack.Core.Entities;
 using GainzTrack.Core.Expressions;
 using GainzTrack.Core.Interfaces;
 using GainzTrack.Infrastructure.Data;
@@ -18,6 +19,19 @@ namespace GainzTrack.Infrastructure.Services
             _context = context;
             _repository = repository;
         }
+
+        public Exercise AddExercise(AddExerciseDto dto)
+        {
+            var entity = new Exercise
+            {
+                ExerciseName = dto.ExerciseName,
+                VideoUrl = dto.VideoUrl,
+                MusculeGroup = dto.MusculeGroup
+            };
+            return _repository.Add<Exercise>(entity);
+
+        }
+
         public IEnumerable<string> GetExercisesNames()
         {
             return _context.Exercises.Select(x => x.ExerciseName).ToList();
@@ -28,5 +42,12 @@ namespace GainzTrack.Infrastructure.Services
             return _repository.GetBy<Exercise>(expression);
         }
 
+        public bool HasExercise(string exerciseName)
+        {
+            var expression = new ExerciseByName(exerciseName);
+
+            return _repository.GetBy<Exercise>(expression) == null ? false : true;
+
+        }
     }
 }

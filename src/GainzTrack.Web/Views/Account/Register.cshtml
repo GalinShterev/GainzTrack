@@ -1,16 +1,26 @@
 ﻿@model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
+    Layout = null;
+   
 }
+
+
+ @await  Html.PartialAsync("_StylesheetsPartial")
 
 <h2>@ViewData["Title"]</h2>
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" enctype="multipart/form-data" method="post">
             <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
@@ -26,6 +36,12 @@
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label>Upload profile picture</label>
+                <input asp-for="AvatarImage"  class="form-control"/>
+            </div>
+
             <button type="submit" class="btn btn-default">Register</button>
         </form>
     </div>

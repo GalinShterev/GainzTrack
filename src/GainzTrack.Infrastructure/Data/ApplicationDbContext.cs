@@ -31,6 +31,32 @@ namespace GainzTrack.Infrastructure.Data
         public DbSet<AchievementUser> AchievementUsers { get; set; }
         public DbSet<ExerciseWorkoutDay>ExerciseWorkoutDays{ get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+
+            builder.Entity<WorkoutRoutine>().HasOne(b => b.Creator)
+               .WithMany(b => b.WorkoutRoutines)
+               .HasForeignKey(b => b.CreatorId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<WorkoutRoutine>().HasMany(b => b.WorkoutDays)
+                .WithOne(b => b.WorkoutRoutine)
+                .HasForeignKey(b => b.WorkoutRoutineId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<WorkoutDay>().HasMany(b => b.ExerciseWorkoutDay)
+                .WithOne(b => b.WorkoutDay)
+                .HasForeignKey(b => b.WorkoutDayId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Exercise>().HasMany(b => b.ExerciseWorkoutDays)
+               .WithOne(b => b.Exercise)
+               .HasForeignKey(b => b.ExerciseId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(builder);
+        }
+
     }
 
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -51,5 +77,4 @@ namespace GainzTrack.Infrastructure.Data
             return new ApplicationDbContext(builder.Options);
         }
     }
-
 }

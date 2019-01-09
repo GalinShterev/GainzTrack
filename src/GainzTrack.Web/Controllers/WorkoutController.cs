@@ -40,8 +40,8 @@ namespace GainzTrack.Web.Controllers
 
         public IActionResult Index()
         {
-            var model = _homeViewService.GetHomeViewModel(this.User.Identity.Name);
-            return View("WorkoutFeed",model);
+            var model = _workoutViewService.GetAllWorkoutsPreview();
+            return View(model);
         }
 
         public IActionResult Create()

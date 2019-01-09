@@ -1,10 +1,48 @@
-﻿
+﻿@using GainzTrack.Web.ViewModels.WorkoutViewModels
+@model IEnumerable<WorkoutPreviewViewModel>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
-<h3>Create workouts here</h3>
+<div class="explore-workouts-header">
+    <h1>Explore Workouts</h1>
+</div>
+<hr />
+<div class="create-workout-btn-container">
+    <a href="/Workout/Create" class="create-workout-btn">Create Workout</a>
+</div>
 
-<a href="/Workout/Create">Create workout!</a>
+<div class="explore-workouts-container">
+    @foreach (var item in Model)
+    {
+        <div class="profile-workout-item">
+            <h2 class="profile-workout-name">@item.WorkoutName</h2>
+            <hr />
+            <div class="profile-workout-item-days-container">
+                <span>@item.Days Days</span>
+            </div>
+            <div class="profile-workout-footer">
+                <div class="workout-creator-information-holder">
+                    <div class="workout-creator-information-avatar">
+                        <img src="/@item.AvatarUrl" />
+                        <div class="workout-user-information">
+                            <span class="workout-user-information-username">@item.Creator</span>
+                            <span class="workout-user-information-title"><i>@item.Title</i></span>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="workout-times-used-container">
+                        <span class="workout-times-used-title">Times Used:</span>
+                        <span class="workout-times-used-value">10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="mask" role="dialog"></div>
+    <div id="profile-workouts-modal" class="modal" role="alert">
+        <button class="close" role="button">X</button>
+        <div class="custom-modal-content"></div>
+    </div>
 
+</div>

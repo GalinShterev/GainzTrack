@@ -14,11 +14,15 @@ namespace GainzTrack.Web.Services
     {
         private readonly IRepository _repository;
         private readonly IUserService _userService;
+        private readonly IWorkoutViewService _workoutViewService;
 
-        public UsersViewService(IRepository repository,IUserService userService)
+        public UsersViewService(IRepository repository,
+            IUserService userService,
+            IWorkoutViewService workoutViewService)
         {
             _repository = repository;
             _userService = userService;
+            _workoutViewService = workoutViewService;
         }
 
         public GetAllUsersViewModel FetchAllUsers()
@@ -46,12 +50,12 @@ namespace GainzTrack.Web.Services
             var user = _userService.GetMainUserByUsernameWithIncludes(username);
             var titleForUser = _userService.GetTitleForAchievementPoints(user.AchievementPoints);
             var avatarPath = _userService.GetAvatar(username);
-
+            var workouts = _workoutViewService.GetWorkoutsPreviewByName(username);
             return new ProfileViewModel
             {
                 Username = user.Username,
                 Achievements = user.AchievementUsers.Select(x => x.Achievement).ToArray(),
-                Workouts = user.WorkoutRoutines.ToArray(),
+                Workouts = workouts,
                 Title = titleForUser.Name,
                 Avatar = avatarPath,
                 Color = titleForUser.Color

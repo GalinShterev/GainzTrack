@@ -10,6 +10,7 @@ namespace GainzTrack.Web.Interfaces
     {
         WorkoutPreviewViewModel GetWorkoutPreviewByName(string workoutName,string username);
         WorkoutPreviewViewModel GetWorkoutPreviewById(string id);
-        WorkoutsPreviewViewModel GetWorkoutsPreviewByName(string username);
+        IEnumerable<WorkoutPreviewViewModel> GetWorkoutsPreviewByName(string username);
+        IEnumerable<WorkoutPreviewViewModel> GetAllWorkoutsPreview();
     }
 }

@@ -18,8 +18,26 @@
     @foreach (var workout in Model.Workouts)
     {
         <div class="profile-workout-item">
-            <h2 class="profile-workout-name">@workout.Name</h2>
+            <h2 class="profile-workout-name">@workout.WorkoutName</h2>
+            <hr />
+            <div class="profile-workout-item-days-container">
+                <span>@workout.Days Days</span>
+            </div>
             <div class="profile-workout-footer">
+                <div class="workout-creator-information-holder">
+                    <div class="workout-creator-information-avatar">
+                        <img src="/@workout.AvatarUrl" />
+                        <div class="workout-user-information">
+                            <span class="workout-user-information-username">@workout.Creator</span>
+                            <span class="workout-user-information-title"><i>@workout.Title</i></span>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="workout-times-used-container">
+                        <span class="workout-times-used-title">Times Used:</span>
+                        <span class="workout-times-used-value">10</span>
+                    </div>
+                </div>
             </div>
         </div>
     }

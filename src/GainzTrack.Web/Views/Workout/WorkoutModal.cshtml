@@ -5,7 +5,7 @@
 
 
 <div class="table-title">
-    <h2>@Model.Workout.Name Preview</h2>
+    <h2>@Model.WorkoutName Preview</h2>
 </div>
 
 <table class="table-fill">
@@ -17,7 +17,7 @@
     </thead>
     <tbody class="table-hover">
 
-        @foreach (var item in Model.Workout.WorkoutDays)
+        @foreach (var item in Model.WorkoutRoutine.WorkoutDays)
         {
             <tr>
                 <td class="text-left">@item.Day.ToString()</td>
@@ -32,10 +32,10 @@
     </tbody>
 </table>
 
-@if (Model.Workout.Creator.Username == this.User.Identity.Name)
+@if (Model.Creator == this.User.Identity.Name)
 {
     <div class="profile-workout-controls">
-        <label class="profile-workout-controls-item"><a href="/Workout/Edit?id=@Model.Workout.Id&name=@Model.Workout.Name">Edit</a></label>
-        <label id="profile-workout-controls-item__delete" class="profile-workout-controls-item"><a href="/Workout/Delete?id=@Model.Workout.Id">Delete</a></label>
+        <label class="profile-workout-controls-item"><a href="/Workout/Edit?id=@Model.Id&name=@Model.WorkoutName">Edit</a></label>
+        <label id="profile-workout-controls-item__delete" class="profile-workout-controls-item"><a href="/Workout/Delete?id=@Model.Id">Delete</a></label>
     </div>
 }

@@ -1,4 +1,5 @@
 ﻿using GainzTrack.Core.Entities;
+using GainzTrack.Web.ViewModels.WorkoutViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,6 @@ namespace GainzTrack.Web.ViewModels.UsersViewModels
 
         public Achievement[] Achievements { get; set; }
 
-        public WorkoutRoutine[] Workouts { get; set; }
+        public IEnumerable<WorkoutPreviewViewModel> Workouts { get; set; }
     }
 }

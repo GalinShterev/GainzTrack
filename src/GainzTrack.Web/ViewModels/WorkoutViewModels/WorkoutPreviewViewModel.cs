@@ -8,6 +8,12 @@ namespace GainzTrack.Web.ViewModels.WorkoutViewModels
 {
     public class WorkoutPreviewViewModel
     {
-        public WorkoutRoutine Workout { get; set; }
+        public string Id { get; set; }
+        public string Creator { get; set; }
+        public string AvatarUrl { get; set; }
+        public string Title { get; set; }
+        public int Days { get; set; }
+        public string WorkoutName { get; set; }
+        public WorkoutRoutine WorkoutRoutine { get; set; }
     }
 }

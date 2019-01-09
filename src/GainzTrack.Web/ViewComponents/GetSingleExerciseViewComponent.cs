@@ -22,8 +22,6 @@ namespace GainzTrack.Web.ViewComponents
             var expression = new ExerciseByName(viewModel.Name);
             var exercise = _repository.GetBy<Exercise>(expression);
 
-            this.ViewData["DayId"] = viewModel.Day;
-
             return this.View(exercise);
         }
     }

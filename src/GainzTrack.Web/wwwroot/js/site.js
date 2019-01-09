@@ -122,11 +122,11 @@ if (triggered) {
     $('.days-dropdown').on('click', '.add-exercise-button', function () {
         var exercisesAddDiv = $(this).parents().eq(5).children().eq(2);
         var selectedExerciseName = $(this).parents().eq(0).children().eq(1).text();
-        var selectedDay = $(this).parents().eq(5).children().eq(1).val();
+
         $.ajax({
             url: '/Workout/GetSingleExercise',
             type: "POST",
-            data: { Name: selectedExerciseName, Day: selectedDay },
+            data: { Name: selectedExerciseName},
             dataType: "html",
             success: function (data) {
                 exercisesAddDiv.append(data);
@@ -143,17 +143,24 @@ if (triggered) {
 //allExercises - var b = $('div[id=exercise]').toArray();
 //day - b[0].parentElement.parentElement.children[1].value
 //exerciseName - b[0].children[0].children[0].value
-$('.edit').on('click', function () {
+
+function addExercisesToDays() {
     var allExercises = $('div[id=onPost]').toArray();
     for (var i = 0; i < allExercises.length; i++) {
         var day = allExercises[i].parentElement.parentElement.children[1].value;
         var exerciseName = allExercises[i].children[0].value;
 
-        $('.days-dropdown').append('<input value="'+exerciseName+'-'+day+'" readonly="readonly" style="display:none;" type="text" id = "ExerciseName" name = "ExerciseName" />')
+        $('.days-dropdown').append('<input value="' + exerciseName + '-' + day + '" readonly="readonly" style="display:none;" type="text" id = "ExerciseName" name = "ExerciseName" />')
     }
+}
+
+$('.edit').on('click', function () {
+    addExercisesToDays();
 });
 
-
+$('.submit').on('click', function () {
+    addExercisesToDays();
+});
 
 
 
@@ -320,7 +327,7 @@ $(".show").on("click", function () {
 $(".profile-workout-item").on('click', function () {
 
     var workoutName = $(this).find('.profile-workout-name').text();
-    var username = $('#get-profile-user').text();
+    var username = $(this).find('.workout-user-information-username').text();
     $.ajax({
         url: '/Workout/GetWorkoutModal',
         dataType: "html",

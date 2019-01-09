@@ -37,7 +37,13 @@ namespace GainzTrack.Web.Services
 
             return new WorkoutPreviewViewModel
             {
-                Workout = workout
+                Id = workout.Id,
+                AvatarUrl = _userService.GetAvatar(workout.Creator.Username),
+                Creator = workout.Creator.Username,
+                Days = workout.WorkoutDays.Count,
+                Title = _userService.GetTitleForAchievementPoints(workout.Creator.AchievementPoints).Name,
+                WorkoutName = workout.Name,
+                WorkoutRoutine = workout
             };
         }
 
@@ -48,20 +54,49 @@ namespace GainzTrack.Web.Services
 
             return new WorkoutPreviewViewModel
             {
-                Workout = workout
+                Id = workout.Id,
+                AvatarUrl = _userService.GetAvatar(workout.Creator.Username),
+                Creator = workout.Creator.Username,
+                Days = workout.WorkoutDays.Count,
+                Title = _userService.GetTitleForAchievementPoints(workout.Creator.AchievementPoints).Name,
+                WorkoutName = workout.Name,
+                WorkoutRoutine = workout
             };
         }
 
-        public WorkoutsPreviewViewModel GetWorkoutsPreviewByName(string username)
+        public IEnumerable<WorkoutPreviewViewModel> GetWorkoutsPreviewByName(string username)
         {
             var user = _userService.GetMainUserByUsername(username);
             var expression = new WorkoutRoutineWithWourkoutDaysExpression(user.Id);
             var workouts = _repository.List<WorkoutRoutine>(expression);
 
-            return new WorkoutsPreviewViewModel
+            return workouts.Select(x => new WorkoutPreviewViewModel
             {
-                Workouts = workouts.ToArray()
-            };
+                AvatarUrl = _userService.GetAvatar(username),
+                Creator = username,
+                Days = x.WorkoutDays.Count,
+                Id = x.Id,
+                Title = _userService.GetTitleForAchievementPoints(x.Creator.AchievementPoints).Name,
+                WorkoutRoutine = x,
+                WorkoutName = x.Name
+            });
+        }
+
+        public IEnumerable<WorkoutPreviewViewModel> GetAllWorkoutsPreview()
+        {
+            var expression = new WorkoutRoutineByIdWithIncludes();
+            var workouts = _repository.List<WorkoutRoutine>(expression);
+
+            return workouts.Where(x=>x.IsPublic == true).Select(x => new WorkoutPreviewViewModel
+            {
+                Id = x.Id,
+                Creator = x.Creator.Username,
+                Days = x.WorkoutDays.Count,
+                WorkoutName = x.Name,
+                AvatarUrl = _userService.GetAvatar(x.Creator.Username),
+                Title = _userService.GetTitleForAchievementPoints(x.Creator.AchievementPoints).Name,
+                WorkoutRoutine = x
+            }).ToList();
         }
     }
 }

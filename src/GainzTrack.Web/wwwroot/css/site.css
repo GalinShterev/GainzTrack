@@ -2425,7 +2425,112 @@ a.control_next {
 }
 
 
+.explore-workouts-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap:wrap;
+}
 
+.profile-workout-item {
+    flex-basis: 20%;
+    height: 200px;
+    border-radius: 5px;
+    margin: 5px;
+    min-width:200px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.72);
+}
+
+    .profile-workout-item h2 {
+        text-transform: uppercase;
+        margin-bottom: 0;
+        color: #333333;
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.4), 1px 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+.profile-workout-footer {
+    position: absolute;
+    bottom: 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background-color: crimson;
+}
+
+.explore-workouts-header {
+    text-align: center;
+}
+
+.workout-creator-information-holder {
+    height: 50px;
+}
+
+.workout-creator-information-avatar img {
+    height: 45px;
+    width: 45px;
+    margin: 5px;
+    float: left;
+    border-radius: 3px;
+}
+
+.workout-user-information {
+    text-align: left;
+}
+
+    .workout-user-information span {
+        display: block;
+    }
+
+.workout-user-information-username {
+    font-size: 20px;
+    color: white;
+}
+
+.workout-user-information-title {
+    color: black;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.4), 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+hr {
+    clear: both;
+    margin: 5px;
+}
+
+.workout-times-used-container {
+    text-align: left;
+    line-height: 6px;
+}
+
+.workout-times-used-title {
+    margin-right: 15px;
+    margin-left: 5px;
+    color: white;
+}
+
+.workout-times-used-value {
+    color: white;
+}
+
+.profile-workout-item-days-container {
+    color: crimson;
+    font-size: 20px;
+}
+
+.create-workout-btn{
+    text-decoration:none;
+    background-color:black;
+    padding:10px;
+    color:white;
+}
+.create-workout-btn-container{
+    width:100%;
+    text-align:center;
+    margin:10px;
+}
 /*MEDIA QUERIES*/
 @media only screen and (max-width: 600px) {
     .card {

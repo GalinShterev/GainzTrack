@@ -12,10 +12,10 @@
     <form id="ms-form" asp-controller="Workout" asp-action="Delete" method="post">
         <fieldset>
             <div>
-                <input name="id" type="hidden" value="@Model.Workout.Id" />
+                <input name="id" type="hidden" value="@Model.Id" />
             </div>
             <div>
-                @await Html.PartialAsync("~/Views/Workout/Partials/_WorkoutTable.cshtml", Model.Workout)
+                @await Html.PartialAsync("~/Views/Workout/Partials/_WorkoutTable.cshtml", Model.WorkoutRoutine)
             </div>
             <button id="submit-workout" class="submit action-btn" type="submit">Delete</button>
 

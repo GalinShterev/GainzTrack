@@ -14,6 +14,12 @@ namespace GainzTrack.Core.Expressions
             AddInclude(b => b.WorkoutDays);
             AddInclude("WorkoutDays.ExerciseWorkoutDay.Exercise");
         }
-                    
+        public WorkoutRoutineByIdWithIncludes()
+        : base(b => b.Id == b.Id)
+        {
+            AddInclude(b => b.Creator);
+            AddInclude(b => b.WorkoutDays);
+            AddInclude("WorkoutDays.ExerciseWorkoutDay.Exercise");
+        }
     }
 }

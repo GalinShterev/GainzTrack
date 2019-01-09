@@ -8,6 +8,5 @@ namespace GainzTrack.Web.ViewModels.ExerciseViewModels
     public class ExerciseWithNameAndDayViewModel
     {
         public string Name { get; set; }
-        public int Day { get; set; }
     }
 }

@@ -51,11 +51,18 @@
                     is active so our moderation team can view it.The video will be public on GainzTrack though, as all achievements of everyone are public
                     to avoid cheating and incorrect admissions.
                 </div>
-                <input asp-for="Video" formenctype="multipart/form-data"/>      
+                <input asp-for="Video" formenctype="multipart/form-data" />
                 <input name="Id" type="hidden" value="@Model.Id" />
             </div>
             <button class="previous action-btn" type="button">Prev</button>
-            <button id="submit-workout" class="submit action-btn" type="submit">Submit</button>
+            <button id="submit-achievement" class="submit action-btn" type="submit">Submit</button>
+            <div class="mask" role="dialog"></div>
+            <div class="loading-bro">
+                <h1>Uploading</h1>
+                <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">
+                    <circle id="loading-inner" cx="75" cy="75" r="60" />
+                </svg>
+            </div>
         </fieldset>
     </form>
 </div>

@@ -117,6 +117,7 @@ namespace GainzTrack.Web.Controllers
                 }
 
                 var uploadedVideoId = _videoService.UploadVideoToYotuube(filePath);
+                
 
                 Task.Run(() => System.IO.File.Delete(filePath));
 

@@ -386,6 +386,7 @@ $('.custom-exercise-submit').on('click', function () {
 function closeModal() {
     $(".mask").removeClass("active");
     $('.custom-modal-content').html("");
+    $('.loading-bro').removeClass('loading-bro--active');
 }
 
 // Call the closeModal function on the clicks/keyboard
@@ -403,4 +404,9 @@ $(document).keyup(function (e) {
 
 $('.profile-workout-delete-btn').on('click', function () {
     $('.profile-workout-hidden-option').toggleClass('profile-workout-hidden-option--deactivate');
+});
+
+$('#submit-achievement').on('click', function () {
+    $('.mask').addClass('active');
+    $('.loading-bro').addClass('loading-bro--active');
 });

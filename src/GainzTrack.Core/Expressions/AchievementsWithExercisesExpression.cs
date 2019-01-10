@@ -12,6 +12,7 @@ namespace GainzTrack.Core.Expressions
         {
             AddInclude(b => b.Exercise);
             AddInclude(b => b.CreatedBy);
+            
         }
         public AchievementsWithExercisesExpression()
             :base(b=>b.Id == b.Id)
@@ -19,6 +20,9 @@ namespace GainzTrack.Core.Expressions
         {
             AddInclude(b => b.Exercise);
             AddInclude(b => b.CreatedBy);
+            AddInclude(b => b.AchievementUsers);
+            AddInclude("AchievementUsers.Achievement");
+            AddInclude("AchievementUsers.User");
         }
     }
 }

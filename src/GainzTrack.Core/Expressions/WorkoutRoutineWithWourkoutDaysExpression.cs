@@ -12,6 +12,7 @@ namespace GainzTrack.Core.Expressions
         {
             AddInclude(b => b.WorkoutDays);
             AddInclude("WorkoutDays.ExerciseWorkoutDay.Exercise");
+            AddInclude(b => b.TimesCopied);
         }
         public WorkoutRoutineWithWourkoutDaysExpression(string userId,string workoutName)
             : base(b => b.CreatorId == userId && b.Name == workoutName)
@@ -19,6 +20,7 @@ namespace GainzTrack.Core.Expressions
             AddInclude(b => b.WorkoutDays);
             AddInclude("WorkoutDays.ExerciseWorkoutDay.Exercise");
             AddInclude(b => b.Creator);
+            AddInclude(b => b.TimesCopied);
         }
 
         //public WorkoutRoutineWithWourkoutDaysExpression(string workoutId,string workoutName)

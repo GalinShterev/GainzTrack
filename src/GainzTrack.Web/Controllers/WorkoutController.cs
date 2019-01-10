@@ -12,9 +12,11 @@ using GainzTrack.Web.Attributes;
 using GainzTrack.Web.ViewModels.ExerciseViewModels;
 using GainzTrack.Web.Interfaces;
 using GainzTrack.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GainzTrack.Web.Controllers
 {
+    [Authorize]
     public class WorkoutController : Controller
     {
         private readonly IUserService _userService;
@@ -71,7 +73,7 @@ namespace GainzTrack.Web.Controllers
             var workoutDays = SetUpInitialWorkoutDays(workout.Id, viewModel.Days, viewModel.ExerciseName);
             workout.WorkoutDays = workoutDays;
 
-            //TODO:Validation maybe
+            
             _repository.Add<WorkoutRoutine>(workout);
 
             return Redirect("/Workout/Index");
@@ -91,18 +93,14 @@ namespace GainzTrack.Web.Controllers
             {
                 return this.View(viewModel);
             }
-
-            //Check if workout with such name and id exists in case its modified
-
+            
             var getExpression = new WorkoutWithDaysByWorkoutNameExpression(viewModel.WorkoutId, viewModel.Name);
             var workout = _repository.GetBy<WorkoutRoutine>(getExpression);
 
             var removeExpression = new WorkoutDaysByWorkoutRoutine(viewModel.WorkoutId);
             _repository.DeleteAllBy<WorkoutDay>(removeExpression);
 
-            //Check for null workout
-
-            //var days = workout.WorkoutDays.Select(x => x.Day).ToArray();
+           
             var workoutDays = SetUpInitialWorkoutDays(workout.Id, viewModel.Days, viewModel.ExerciseName);
 
 
@@ -137,6 +135,18 @@ namespace GainzTrack.Web.Controllers
             return Redirect($"/Users/ViewProfile?username={this.User.Identity.Name}");
         }
 
+        public IActionResult Train(string id,string day)
+        {
+            var model = _workoutViewService.GetTrainingModel(id, day);
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Train(string workoutId)
+        {
+            return Redirect("/Workout/Index");
+        }
+
         [AjaxOnlyAttribute]
         public IActionResult GetExercises(string id)
         {
@@ -164,7 +174,7 @@ namespace GainzTrack.Web.Controllers
         }
         public IActionResult GetWorkoutsByAvailability(string availability)
         {
-            var model = _workoutViewService.GetWorkoutsPreviewByName(this.User.Identity.Name);
+            var model = _workoutViewService.GetWorkoutsPreviewByName(this.User.Identity.Name,this.User.Identity.Name);
             if (availability == "Public")
             {
                 return this.View("GetPublicWorkouts",model);

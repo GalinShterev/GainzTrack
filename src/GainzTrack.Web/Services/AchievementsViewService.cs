@@ -66,6 +66,7 @@ namespace GainzTrack.Web.Services
 
         public AchievementViewModel[] ListAchievements(IEnumerable<Achievement> achievements)
         {
+
             return achievements.Select(x => new AchievementViewModel
             {
                 Difficulty = x.Difficulty.ToString(),
@@ -76,6 +77,23 @@ namespace GainzTrack.Web.Services
                 Id = x.Id
                 
             }).ToArray();
+        }
+
+
+        public IEnumerable<AchievementViewModel> ListAchievementUsers(IEnumerable<Achievement> achievements, string username)
+        {
+            
+
+            return achievements.Select(x => new AchievementViewModel
+            {
+                Difficulty = x.Difficulty.ToString(),
+                ExerciseName = x.Exercise.ExerciseName,
+                OverloadAmount = x.OverloadAmount,
+                Points = x.AchievementPointsGain,
+                OverloadType = x.OverloadType.ToString(),
+                Id = x.Id
+
+            }).ToList();
         }
     }
 }

@@ -5,12 +5,11 @@
         <div class="profile-avatar-holder"><img src="/@Model.Avatar" /></div>
         <div class="profile-name">
             <h2 id="get-profile-user">@Model.Username</h2>
-            <h5><i>@Model.Title</i></h5>
+            <h5><i>@Model.Title.Name</i></h5>
         </div>
     </div>
     <nav class="profile-navigation">
         <a href="#" class="profile-navigation-item profile-navigation-item--active">Workouts</a>
-        <a href="#" class="profile-navigation-item">Achievements</a>
     </nav>
 </div>
 
@@ -35,7 +34,7 @@
                     <hr />
                     <div class="workout-times-used-container">
                         <span class="workout-times-used-title">Times Used:</span>
-                        <span class="workout-times-used-value">10</span>
+                        <span class="workout-times-used-value">@workout.TimesUsed</span>
                     </div>
                 </div>
             </div>

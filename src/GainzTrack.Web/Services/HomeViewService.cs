@@ -14,28 +14,31 @@ namespace GainzTrack.Web.Services
     {
         private readonly IRepository _repository;
         private readonly IUserService _userService;
-        public HomeViewService(IRepository repository,IUserService userService)
+        private readonly IWorkoutViewService _workoutViewService;
+        private readonly IUsersViewService _userViewService;
+        public HomeViewService(IRepository repository,
+            IUserService userService,
+            IWorkoutViewService workoutViewService,
+            IUsersViewService userViewService)
         {
             _repository = repository;
             _userService = userService;
+            _workoutViewService = workoutViewService;
+            _userViewService = userViewService;
         }
 
         public HomeViewModel GetHomeViewModel(string username)
         {
-            var identityUserId = _userService.GetIdentityIdByUsername(username);
-            var userExpression = new MainUserWithTitleExpression(identityUserId);
-
-            var user = _repository.GetBy<MainUser>(userExpression);
-
-            var workoutExpression = new WorkoutRoutineWithWourkoutDaysExpression(user.Id);
-            var workout = _repository.List<WorkoutRoutine>(workoutExpression);
-
-
+            var workouts = _workoutViewService.GetAllWorkoutsPreview().Take(6);
+            var user = _userViewService.GetUserProfile(username, username);
+            var nextTitle = _userService.GetNextTitle(user.Title.Name);
+            double progressPercent = ((double)user.Title.RequiredAP / nextTitle.RequiredAP)* 100;
             return new HomeViewModel
             {
-                Username = username,
-                User = user,
-                Workouts = workout
+                Profile = user,
+                NextTitle = nextTitle.Name,
+                ProgressPercent = progressPercent,
+                Workouts = workouts
             };
         }
     }

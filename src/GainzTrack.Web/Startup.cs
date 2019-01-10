@@ -128,7 +128,7 @@ namespace GainzTrack.Web
                 {
                     IdentityUserId = powerUser.Id,
                     AvatarPath = "Default",
-                    Username = "BosaNaKokosa"
+                    Username = "Admin"
 
                 });
 

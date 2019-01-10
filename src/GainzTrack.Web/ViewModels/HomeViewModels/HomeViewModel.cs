@@ -1,4 +1,6 @@
 ﻿using GainzTrack.Core.Entities;
+using GainzTrack.Web.ViewModels.UsersViewModels;
+using GainzTrack.Web.ViewModels.WorkoutViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +10,9 @@ namespace GainzTrack.Web.ViewModels.HomeViewModels
 {
     public class HomeViewModel
     {
-        public string Username { get; set; }
-        public MainUser User { get; set; }
-        public IEnumerable<WorkoutRoutine> Workouts { get; set; }
+        public ProfileViewModel Profile { get; set; }
+        public string NextTitle { get; set; }
+        public double ProgressPercent { get; set; }
+        public IEnumerable<WorkoutPreviewViewModel> Workouts { get; set; }
     }
 }

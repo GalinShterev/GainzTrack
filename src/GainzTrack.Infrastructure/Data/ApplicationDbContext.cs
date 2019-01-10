@@ -54,6 +54,7 @@ namespace GainzTrack.Infrastructure.Data
                .HasForeignKey(b => b.ExerciseId)
                .OnDelete(DeleteBehavior.Cascade);
 
+
             base.OnModelCreating(builder);
         }
 

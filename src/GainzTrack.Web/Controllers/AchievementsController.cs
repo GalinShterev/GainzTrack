@@ -35,7 +35,7 @@ namespace GainzTrack.Web.Controllers
             _environment = environment;
             _videoService = videoService;
         }
-
+        [Authorize]
         public IActionResult Index(string filterAction)
         {
             ExerciseDifficulty difficulty;
@@ -45,6 +45,7 @@ namespace GainzTrack.Web.Controllers
                 difficulty = ExerciseDifficulty.Easy | ExerciseDifficulty.Intermediate | ExerciseDifficulty.Hard;
 
             var filteredAchievements = _achievementService.FilterAchievements(difficulty);
+
             var model = _achivementsViewService.ListAchievements(filteredAchievements);
 
             return this.View(model);
@@ -94,13 +95,13 @@ namespace GainzTrack.Web.Controllers
             return Redirect("/Administration/Index");
         }
 
-
+        [Authorize]
         public IActionResult Attempt(string id)
         {
             var model = _achivementsViewService.GetAchievementAttempt(id);
             return this.View(model);
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult Attempt(AttemptAchievementViewModel viewModel)
         {

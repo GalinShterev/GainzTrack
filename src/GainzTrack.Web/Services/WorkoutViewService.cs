@@ -64,22 +64,26 @@ namespace GainzTrack.Web.Services
             };
         }
 
-        public IEnumerable<WorkoutPreviewViewModel> GetWorkoutsPreviewByName(string username)
+        public IEnumerable<WorkoutPreviewViewModel> GetWorkoutsPreviewByName(string searchedUsername,string loggedInUsername)
         {
-            var user = _userService.GetMainUserByUsername(username);
+            var user = _userService.GetMainUserByUsername(searchedUsername);
             var expression = new WorkoutRoutineWithWourkoutDaysExpression(user.Id);
             var workouts = _repository.List<WorkoutRoutine>(expression);
 
+            if (!workouts.All(x => x.Creator.Username == loggedInUsername))
+                workouts = workouts.Where(x => x.IsPublic == true);
+
             return workouts.Select(x => new WorkoutPreviewViewModel
             {
-                AvatarUrl = _userService.GetAvatar(username),
-                Creator = username,
+                AvatarUrl = _userService.GetAvatar(searchedUsername),
+                Creator = searchedUsername,
                 Days = x.WorkoutDays.Count,
                 Id = x.Id,
                 Title = _userService.GetTitleForAchievementPoints(x.Creator.AchievementPoints).Name,
                 WorkoutRoutine = x,
-                WorkoutName = x.Name
-            });
+                WorkoutName = x.Name,
+                TimesUsed = x.TimesCopied.Count
+            }).ToList();
         }
 
         public IEnumerable<WorkoutPreviewViewModel> GetAllWorkoutsPreview()
@@ -95,7 +99,46 @@ namespace GainzTrack.Web.Services
                 WorkoutName = x.Name,
                 AvatarUrl = _userService.GetAvatar(x.Creator.Username),
                 Title = _userService.GetTitleForAchievementPoints(x.Creator.AchievementPoints).Name,
-                WorkoutRoutine = x
+                WorkoutRoutine = x,
+                TimesUsed = x.TimesCopied.Count
+            }).ToList();
+        }
+
+        public TrainingViewModel GetTrainingModel(string workoutId, string day)
+        {
+            var expression = new WorkoutWithDaysByWorkoutNameExpression(workoutId);
+            var workout = _repository.GetBy<WorkoutRoutine>(expression);
+
+            var actualDay = workout.WorkoutDays.Where(x => x.Day.ToString() == day).First();
+
+            return new TrainingViewModel
+            {
+                WorkoutId = workout.Id,
+                WorkoutName = workout.Name,
+                Day = actualDay.Day.ToString(),
+                Exercises = actualDay.ExerciseWorkoutDay.Select(x => x.Exercise).ToList()
+            };
+        }
+
+        public IEnumerable<WorkoutPreviewViewModel> GetFeaturedWorkoutsPreview()
+        {
+            var expression = new WorkoutRoutineByIdWithIncludes();
+            var workouts = _repository.List<WorkoutRoutine>(expression);
+
+
+
+            return workouts.Where(x => x.IsPublic == true)
+                .OrderByDescending(x => x.TimesCopied.Count).Take(6)
+                .Select(x => new WorkoutPreviewViewModel
+            {
+                Id = x.Id,
+                Creator = x.Creator.Username,
+                Days = x.WorkoutDays.Count,
+                WorkoutName = x.Name,
+                AvatarUrl = _userService.GetAvatar(x.Creator.Username),
+                Title = _userService.GetTitleForAchievementPoints(x.Creator.AchievementPoints).Name,
+                WorkoutRoutine = x,
+                TimesUsed = x.TimesCopied.Count
             }).ToList();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using GainzTrack.Core.Interfaces;
 using GainzTrack.Web.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace GainzTrack.Web.Controllers
 {
+    [Authorize]
     public class ExercisesController : Controller
     {
         private readonly IExercisesService _exercisesService;

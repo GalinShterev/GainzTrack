@@ -1,0 +1,44 @@
+﻿@model GainzTrack.Web.ViewModels.WorkoutViewModels.TrainingViewModel
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+
+<div class="training-container">
+    <div class="training-header">
+        <h1>@Model.WorkoutName</h1>
+    </div>
+    <div class="training-content">
+        @foreach (var item in Model.Exercises)
+        {
+            <div id="onPost" class="tab">
+                @{var guid = Guid.NewGuid().ToString();}
+                <input id="tab-@guid" type="checkbox" name="tabs" />
+                <label for="tab-@guid" style="height:55px;margin:0;">@item.ExerciseName</label>
+                <div class="tab-content">
+                    <iframe src="@item.VideoUrl" frameborder="0"></iframe>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="finish-training-container">
+
+    <form asp-controller="Workout" asp-action="Train" method="post">
+        <input asp-for="WorkoutId" type="hidden" readonly name="WorkoutId" value="@Model.WorkoutId" />
+        <button class="finish-training" type="submit">Finish</button>
+    </form>
+    <a href="/"><i class="fas fa-home"></i>Back to home</a>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

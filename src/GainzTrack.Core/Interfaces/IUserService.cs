@@ -14,5 +14,6 @@ namespace GainzTrack.Core.Interfaces
         Title GetTitleForAchievementPoints(int achievementPoints);
         string GetAvatar(string username);
         void UpdateAvatar(string username,string path = "Default");
+        Title GetNextTitle(string titleName);
     }
 }

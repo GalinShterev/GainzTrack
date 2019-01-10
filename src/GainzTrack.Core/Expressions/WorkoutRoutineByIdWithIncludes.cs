@@ -13,13 +13,17 @@ namespace GainzTrack.Core.Expressions
             AddInclude(b => b.Creator);
             AddInclude(b => b.WorkoutDays);
             AddInclude("WorkoutDays.ExerciseWorkoutDay.Exercise");
+            AddInclude(b => b.TimesCopied);
+            AddInclude("Creator.AchievementUsers.Achievement");
         }
         public WorkoutRoutineByIdWithIncludes()
-        : base(b => b.Id == b.Id)
+        : base(b => b == b)
         {
             AddInclude(b => b.Creator);
             AddInclude(b => b.WorkoutDays);
             AddInclude("WorkoutDays.ExerciseWorkoutDay.Exercise");
+            AddInclude(b => b.TimesCopied);
+            AddInclude("Creator.AchievementUsers.Achievement");
         }
     }
 }

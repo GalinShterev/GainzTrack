@@ -20,7 +20,7 @@
         @foreach (var item in Model.WorkoutRoutine.WorkoutDays)
         {
             <tr>
-                <td class="text-left">@item.Day.ToString()</td>
+                <td class="text-left"><a href="/Workout/Train?id=@Model.Id&day=@item.Day.ToString()">@item.Day.ToString()</a></td>
                 <td class="text-left">
                     @foreach (var exercise in item.ExerciseWorkoutDay)
                     {

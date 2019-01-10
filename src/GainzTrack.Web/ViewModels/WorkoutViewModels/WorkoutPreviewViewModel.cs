@@ -14,6 +14,7 @@ namespace GainzTrack.Web.ViewModels.WorkoutViewModels
         public string Title { get; set; }
         public int Days { get; set; }
         public string WorkoutName { get; set; }
+        public int TimesUsed { get; set; }
         public WorkoutRoutine WorkoutRoutine { get; set; }
     }
 }

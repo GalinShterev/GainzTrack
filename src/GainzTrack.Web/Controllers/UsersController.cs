@@ -1,5 +1,6 @@
 ﻿using GainzTrack.Core.Interfaces;
 using GainzTrack.Web.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace GainzTrack.Web.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly IUsersViewService _usersViewService;
@@ -36,7 +38,7 @@ namespace GainzTrack.Web.Controllers
 
         public IActionResult ViewProfile(string username)
         {
-            var model = _usersViewService.GetUserProfile(username);
+            var model = _usersViewService.GetUserProfile(username,this.User.Identity.Name);
 
             return this.View(model);
         }

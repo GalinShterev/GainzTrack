@@ -12,11 +12,9 @@ namespace GainzTrack.Infrastructure.Services
 {
     public class ExercisesService : IExercisesService
     {
-        private readonly ApplicationDbContext _context;
         private readonly IRepository _repository;
-        public ExercisesService(ApplicationDbContext context,IRepository repository)
+        public ExercisesService(IRepository repository)
         {
-            _context = context;
             _repository = repository;
         }
 
@@ -34,7 +32,7 @@ namespace GainzTrack.Infrastructure.Services
 
         public IEnumerable<string> GetExercisesNames()
         {
-            return _context.Exercises.Select(x => x.ExerciseName).ToList();
+            return _repository.List<Exercise>().Select(x => x.ExerciseName).ToList();
         }
         public Exercise GetSingleExerciseByName(string exerciseName)
         {

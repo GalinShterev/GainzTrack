@@ -3,6 +3,7 @@ using GainzTrack.Core.Expressions;
 using GainzTrack.Core.Interfaces;
 using GainzTrack.Infrastructure.Data;
 using GainzTrack.Infrastructure.Identity;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,12 +48,26 @@ namespace GainzTrack.Infrastructure.Services
 
         public MainUser GetMainUserByUsername(string username)
         {
+
             return _repository.GetBy<MainUser>(b => b.Username == username);
         }
         public MainUser GetMainUserByUsernameWithIncludes(string username)
         {
             var expression = new MainUserWithAllIncludesExpression(username);
             return _repository.GetBy<MainUser>(expression);
+        }
+
+        public Title GetNextTitle(string titleName)
+        {
+            
+            var titles = _repository.List<Title>().OrderBy(x => x.RequiredAP).ToList();
+            var currentTilteIndex = titles.FindIndex(x => x.Name == titleName);
+            if (currentTilteIndex == titles.Count - 1)
+                return titles.Last();
+            var nextTitle = titles[currentTilteIndex + 1];
+
+            return nextTitle;
+ 
         }
 
         public Title GetTitleForAchievementPoints(int achievementPoints)

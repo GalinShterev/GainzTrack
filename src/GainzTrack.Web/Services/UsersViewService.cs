@@ -45,20 +45,22 @@ namespace GainzTrack.Web.Services
             };
         }
 
-        public ProfileViewModel GetUserProfile(string username)
+        public ProfileViewModel GetUserProfile(string searchedUsername, string loggedInUsername)
         {
-            var user = _userService.GetMainUserByUsernameWithIncludes(username);
+            var user = _userService.GetMainUserByUsernameWithIncludes(searchedUsername);
             var titleForUser = _userService.GetTitleForAchievementPoints(user.AchievementPoints);
-            var avatarPath = _userService.GetAvatar(username);
-            var workouts = _workoutViewService.GetWorkoutsPreviewByName(username);
+            var avatarPath = _userService.GetAvatar(searchedUsername);
+            var workouts = _workoutViewService.GetWorkoutsPreviewByName(searchedUsername,loggedInUsername);
+
             return new ProfileViewModel
             {
                 Username = user.Username,
                 Achievements = user.AchievementUsers.Select(x => x.Achievement).ToArray(),
                 Workouts = workouts,
-                Title = titleForUser.Name,
+                Title = titleForUser,
                 Avatar = avatarPath,
-                Color = titleForUser.Color
+                Color = titleForUser.Color,
+                AchievementPoints = user.AchievementPoints
             };
             
         }

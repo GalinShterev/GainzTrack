@@ -24,8 +24,6 @@ namespace GainzTrack.Web.Controllers
             {
                 case "achievements":                   
                     return this.View("AchievementsModeration", _achievementService.ListAchievementUsers());
-                case "reports":
-                    return this.View("ReportsModeration");
             }
 
             var achievements = _achievementService.ListAchievementUsers();

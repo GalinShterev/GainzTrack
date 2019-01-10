@@ -1,18 +1,45 @@
-﻿<div class="dashboard-content-fluid">
-    <section>
-        <div class="featured-workouts">
-            <h1>Featured Workouts</h1>
-            <div id="slider">
-                <a href="#" class="control_next">>></a>
-                <a href="#" class="control_prev"><</a>
-                <ul>
-                    <li>SLIDE 1</li>
-                    <li style="background: #aaa;">SLIDE 2</li>
-                    <li>SLIDE 3</li>
-                    <li style="background: #aaa;">SLIDE 4</li>
-                </ul>
-            </div>
+﻿@model GainzTrack.Web.ViewModels.HomeViewModels.HomeViewModel
+
+<div class="user-information-holder">
+    <div class="title-progression">
+        <span class="current-title">@Model.Profile.Title.Name</span>
+        <div class="title-progress-bar-holder">
+            <div class="title-progress-bar" style="width:@Model.ProgressPercent%"><span>@Model.Profile.Title.RequiredAP</span></div>
         </div>
-    </section>
+        <span class="next-title">@Model.NextTitle</span>
+    </div>
 </div>
 
+<div class="featured-workouts-header">
+    <h1>Featured Workouts</h1>
+</div>
+<div class="featured-workouts">
+    @foreach (var item in Model.Workouts)
+    {
+        <div class="profile-workout-item">
+            <h2 class="profile-workout-name">@item.WorkoutName</h2>
+            <hr />
+            <div class="profile-workout-item-days-container">
+                <span>@item.Days Days</span>
+            </div>
+            <div class="profile-workout-footer">
+                <div class="workout-creator-information-holder">
+                    <div class="workout-creator-information-avatar">
+                        <img src="/@item.AvatarUrl" />
+                        <div class="workout-user-information">
+                            <span class="workout-user-information-username">@item.Creator</span>
+                            <span class="workout-user-information-title"><i>@item.Title</i></span>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="view-more-btn-container"><a href="/Workout/Index">View more</a></div>
+<div class="mask" role="dialog"></div>
+<div id="profile-workouts-modal" class="modal" role="alert">
+    <button class="close" role="button">X</button>
+    <div class="custom-modal-content"></div>
+</div>

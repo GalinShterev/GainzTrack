@@ -25,8 +25,6 @@ namespace GainzTrack.Web.Controllers
                     return this.View("AchievementsAdministration", _achievementService.ListAchievements());
                 case "users":
                     return this.View("UsersAdministration");
-                case "exercises":
-                    return this.View("ExercisesAdministration");
 
             }
 
